@@ -1,9 +1,9 @@
 window.onblur = function() {
-    document.title = "ilady! Please come back :(";
+    document.title = "Milady! Please come back :(";
 };
 
 window.onfocus = function() {
-    document.title = "y Portfolio";
+    document.title = "My Portfolio";
 };
 
 $(document).ready(function() {
