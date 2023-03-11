@@ -296,13 +296,13 @@ section .title::after {
     border-style: solid;
     border-width: 1px;
     border-color: #D8D8F6;
-    background: url("/images/profile.jpg") no-repeat;
+    background: url("/images/profile-3.jpg") no-repeat;
     background-size: contain;
     transition: all 0.8s ease-in;
 }
 
 .about .about-content .left .profile-img:hover {
-    background: url("/images/profile-3.jpg") no-repeat;
+    background: url("/images/profile.jpg") no-repeat;
     background-size: contain;
     transition: all 0.8s ease-out;
 }
@@ -943,5 +943,92 @@ footer span div span a.ico-github {
     }
     to {
         opacity: 1;
+    }
+}
+
+.banner-logo-back {
+    text-align: center;
+    background-color: rgb(255, 202, 255);
+    border-radius: 5px;
+    width: 100px;
+}
+
+
+/*no internet connection*/
+
+.nipopup {
+    position: absolute;
+    left: 50%;
+    top: -25%;
+    visibility: hidden;
+    width: 490px;
+    border-radius: 5px;
+    padding: 13px 17px 20px;
+    background: #303030;
+    display: flex;
+    border-top: 3px solid #894285;
+    transform: translateX(-50%);
+    box-shadow: 0 10px 25px rgba(52, 87, 220, 0.1);
+    transition: all 0.25s ease;
+}
+
+.nipopup.show {
+    top: 0;
+    visibility: visible;
+}
+
+.nipopup.online {
+    border-color: #5372F0;
+}
+
+.nipopup .icon i {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    color: #fff;
+    margin-right: 15px;
+    font-size: 1.2rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #894285;
+}
+
+.nipopup.online .icon i {
+    background: #5372F0;
+}
+
+.nipopup .title {
+    font-size: 1.2rem;
+    color: #fff;
+}
+
+.nipopup .desc {
+    color: #ffffff;
+    margin: 3px 0 10px;
+    font-size: 1.04rem;
+}
+
+.nipopup .reconnect {
+    border: none;
+    outline: none;
+    color: #fff;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 0.95rem;
+    padding: 8px 13px;
+    border-radius: 4px;
+    background: #5372F0;
+}
+
+.nipopup.online .reconnect {
+    background: #bfbfbf;
+    pointer-events: none;
+}
+
+@media screen and (max-width: 550px) {
+    .nipopup {
+        width: 100%;
+        padding: 10px 15px 17px;
     }
 }
