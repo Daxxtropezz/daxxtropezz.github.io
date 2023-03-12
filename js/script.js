@@ -237,3 +237,9 @@ const handlePopup = (status) => {
 // Only if isOnline is true, check the connection status every 3 seconds
 setInterval(() => isOnline && checkConnection(), 3000);
 reconnectBtn.addEventListener("click", checkConnection);
+
+// Counts website
+
+function websiteVisits(response) {
+    document.querySelector("#visits").textContent = response.value;
+}
