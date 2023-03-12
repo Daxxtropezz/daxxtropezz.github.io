@@ -3,7 +3,7 @@ window.onblur = function() {
 };
 
 window.onfocus = function() {
-    document.title = "My Portfolio";
+    document.title = "Mira's Portfolio";
 };
 
 $(document).ready(function() {
