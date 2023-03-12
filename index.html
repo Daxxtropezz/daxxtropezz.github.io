@@ -14,6 +14,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.min.js"></script>
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v3.0.6/css/line.css">
     <script src="https://apis.google.com/js/platform.js"></script>
+
+    <!-- API for number of visits on site -->
+    <script async src="https://api.countapi.xyz/hit/daxxtropezz.github.io/4149d7c9-0321-47ec-85c0-89d50f23e622?callback=websiteVisits"></script>
 </head>
 
 <body oncontextmenu="return false" unselectable="on" onselectstart="return false;" onmousedown="return true;" ondragstart="return false">
@@ -63,7 +66,9 @@
             <div class="about-content">
                 <div class="column left">
                     <!-- <img src="/images/profile.jpg" alt=""> -->
-                    <div class="profile-img"></div>
+                    <div class="profile-img">
+                        <p><span id="visits"></span> number of visits.</p>
+                    </div>
                 </div>
                 <div class="column right">
                     <div class="text">Hi! I am <span class="typing-1"></span>, and I am a <span class="typing-2"></span></div>
