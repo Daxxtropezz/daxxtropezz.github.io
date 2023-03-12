@@ -15,6 +15,13 @@ html {
     -o-user-select: none;
 }
 
+@media print {
+    html,
+    body {
+        display: none;
+        /* hide whole page */
+    }
+}
 
 /* custom scroll bar */
 
