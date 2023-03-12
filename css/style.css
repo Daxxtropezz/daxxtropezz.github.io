@@ -23,6 +23,7 @@ html {
     }
 }
 
+
 /* custom scroll bar */
 
 ::-webkit-scrollbar {
@@ -312,6 +313,11 @@ section .title::after {
     background: url("/images/profile.jpg") no-repeat;
     background-size: contain;
     transition: all 0.8s ease-out;
+}
+
+.about .about-content .left .profile-img p {
+    text-align: left;
+    padding: 10px;
 }
 
 .about .about-content .right {
