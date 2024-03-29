@@ -652,6 +652,8 @@ footer {
 	padding: 15px 23px;
 	color: #d8d8f6;
 	text-align: center;
+	/* position: fixed; */
+	/* display: flex; */
 }
 
 /* footer span a {
