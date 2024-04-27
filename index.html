@@ -281,7 +281,7 @@
                             <textarea id="usermessage" cols="30" rows="10" placeholder="Message Here" required></textarea>
                         </div>
                         <div class="button-area">
-                            <button type="submit">Subsmit</button>&nbsp; &nbsp; &nbsp;
+                            <button type="submit">Submit</button>&nbsp; &nbsp; &nbsp;
                             <button type="reset">Reset</button>
                         </div>
                     </form>
@@ -296,8 +296,10 @@
 
                         Email.send({
                             SecureToken: "76a97749-d841-4a02-a79e-e53930e6d6c7",
-                            To: script_email,
-                            From: "miraflores.john@gmail.com",
+                            To: "miraflores.john@gmail.com",
+                            From: script_email,
+                            // To: script_email,
+                            // From: "miraflores.john@gmail.com",
                             Subject: script_subject,
                             Body: script_body
                         }).then(
