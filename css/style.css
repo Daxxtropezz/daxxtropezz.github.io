@@ -1028,3 +1028,22 @@ footer span div span a.ico-github {
 		padding: 10px 15px 17px;
 	}
 }
+
+#editor {
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	min-height: 200px;
+	/* Set minimum height */
+	padding: 10px;
+	margin-bottom: 20px;
+	font-family: Arial, sans-serif;
+}
+
+/* Style for the toolbar (optional) */
+
+.ck.ck-toolbar {
+	border: none;
+	background-color: #ac03ae;
+	border-radius: 5px;
+	/* margin-bottom: 10px; */
+}

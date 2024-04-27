@@ -1,3 +1,5 @@
 # daxxtropezz.github.io
-## This repository contains my portfolio 
-- [] - Daxxtropezz
+
+## This repository contains my portfolio
+
+- [] Daxxtropezz

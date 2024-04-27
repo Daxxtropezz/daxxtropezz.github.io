@@ -18,6 +18,7 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/41.3.1/classic/ckeditor.js"></script>
     <!-- Don't use, sticky will be in danger -->
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
 
@@ -25,7 +26,7 @@
     <script async src="https://api.countapi.xyz/hit/daxxtropezz.github.io/4149d7c9-0321-47ec-85c0-89d50f23e622?callback=websiteVisits"></script>
 </head>
 
-<body oncontextmenu="return false" unselectable="on" onselectstart="return false;" onmousedown="return true;" ondragstart="return false">
+<body oncontextmenu="return false" unselectable="on" onselectstart="return true;" onmousedown="return true;" ondragstart="return false">
 
     <div class="scroll-up-btn">
         <i class="fas fa-angle-up"></i>
@@ -275,10 +276,11 @@
                             </div>
                         </div>
                         <div class="field subject">
-                            <input type="text" id="subject" placeholder="Subject" required>
+                            <input type="text" id="subject" placeholder="Ssuabject" required>
                         </div>
                         <div class="field textarea">
-                            <textarea id="usermessage" cols="30" rows="10" placeholder="Message Here" required></textarea>
+                            <div id="editor"></div>
+                            <!-- <textarea id="usermessage" cols="30" rows="10" placeholder="Message Here" required></textarea> -->
                         </div>
                         <div class="button-area">
                             <button type="submit">Submit</button>&nbsp; &nbsp; &nbsp;
@@ -288,25 +290,42 @@
                 </div>
                 <script src="https://smtpjs.com/v3/smtp.js"></script>
                 <script>
-                    function sendEmail() {
+                    async function sendEmail() {
+                        // let script_name = document.getElementById("name").value;
+                        // let script_email = document.getElementById("email").value;
+                        // let script_subject = document.getElementById("subject").value;
+                        // let script_body = document.getElementById("editor").value;
+                        // let script_email_sent = "miraflores.john@gmail.com";
+
+                        // Email.send({
+                        //     SecureToken: "76a97749-d841-4a02-a79e-e53930e6d6c7",
+                        //     To: script_email_sent,
+                        //     From: script_email_sent,
+                        //     Subject: script_subject,
+                        //     Body: script_body
+                        // }).then(
+                        //     message => alert(message)
+                        // );
+                        let editorData = await ClassicEditor.create(document.querySelector('#editor'));
+                        let script_body = editorData.getData();
                         let script_name = document.getElementById("name").value;
                         let script_email = document.getElementById("email").value;
                         let script_subject = document.getElementById("subject").value;
-                        let script_body = document.getElementById("usermessage").value;
+                        let script_email_sent = "miraflores.john@gmail.com";
 
+                        // Send email using SMTP
                         Email.send({
                             SecureToken: "76a97749-d841-4a02-a79e-e53930e6d6c7",
-                            To: "miraflores.john@gmail.com",
-                            From: script_email,
-                            // To: script_email,
-                            // From: "miraflores.john@gmail.com",
+                            To: script_email_sent,
+                            From: script_email_sent,
                             Subject: script_subject,
-                            Body: "<b>" + script_body + "</b>"
+                            Body: script_body
                         }).then(
                             message => alert(message)
                         );
                     }
                 </script>
+
             </div>
         </div>
     </section>
@@ -341,6 +360,17 @@
     </footer>
 
     <script src="./js/script.js" defer></script>
+
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#editor'))
+            .then(editor => {
+                console.log(editor);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
 
     <!-- Load Facebook SDK for JavaScript -->
     <div id="fb-root"></div>
