@@ -295,16 +295,16 @@
                         let script_body = document.getElementById("usermessage").value;
 
                         Email.send({
-                            SecureToken: "2e3135e9-f293-43a1-8dd6-866e9a314a76",
-                            To: "miraflores.john@gmail.com",
+                            SecureToken: "76a97749-d841-4a02-a79e-e53930e6d6c7",
+                            To: script_email,
                             From: "miraflores.john@gmail.com",
                             Subject: script_subject,
-                            Body: "<strong>Email:</strong> " + script_email +
-                                "<br><br>Greetings! I'm <strong>" + script_name + "</strong>," +
-                                "<br>" + script_body
+                            Body: script_body
                         }).then(
-                            // message => alert(message)
+                            message => alert(message)
                         );
+
+
                     }
                 </script>
             </div>
