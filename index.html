@@ -311,10 +311,10 @@
                             Body: script_subject + "<br><b>By</b>: " + script_name + "<br><b>Email</b>: " + script_email
                         }).then(function(message) {
                             swal({
-                                title: 'Success!',
-                                text: message + ': The email has been sent successfully.',
-                                icon: 'success',
-                                dangerMode: false,
+                                title: message ? 'Success!' : 'Error!',
+                                text: message ? message + ': The email has been sent sucessfully.' : 'There was an error sending the email.',
+                                icon: message ? 'success' : 'error',
+                                dangerMode: !message,
                                 button: 'Go Back',
                             });
                         });
