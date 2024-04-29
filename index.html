@@ -19,6 +19,12 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"></script>
     <script src="https://unpkg.com/tippy.js@6"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script>
+        $(function() {
+            $("#loadingHtml").load("loading.html");
+        });
+    </script>
 </head>
 
 <body oncontextmenu="return false" unselectable="on" onselectstart="return true;" onmousedown="return true;" ondragstart="return false">
@@ -26,24 +32,7 @@
       <source src="https://www.chosic.com/wp-content/uploads/2022/09/Hidden-Official-(chosic.com).mp3" type="audio/mpeg" />
       Your browser does not support the audio element.
     </audio>
-    <!-- <div class="container">
-        <div class="loader">
-            <div class="layer layer-1"></div>
-            <div class="layer layer-2"></div>
-            <div class="layer layer-3"></div>
-            <div class="layer layer-4"></div>
-            <div class="center-icon">
-                <img src="./assets/33180e7e10c9fcab642b5c5075465f6c.png" alt="Logo" class="logo">
-            </div>
-        </div>
-        <div class="finish-loading" onclick="handleClick()">FINISH</div>
-        <div class="welcome-message"> 
-            <div class="welcoming">Call me</div>
-            <div class="naming"><span class="typing-name"></span></div>
-        </div>
-    </div> -->
-
-
+    <div id="loadingHtml"></div>
     <section>
         <div class="icon-container">
             <div class="icon-box about" data-modal="about">
