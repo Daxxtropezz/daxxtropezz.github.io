@@ -17,6 +17,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.11/typed.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"></script>
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
     <script src="https://unpkg.com/tippy.js@6"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
@@ -35,7 +36,7 @@
     <div id="loadingHtml"></div>
     <section>
         <div class="icon-container">
-            <div class="icon-box about" data-modal="about">
+            <div class="icon-box about" id="aboutbutton" data-modal="about">
                 <i class="fa-brands fa-sith"></i>
             </div>
             <div class="icon-box certificates" data-modal="certificates">
@@ -53,6 +54,14 @@
             <!-- <i class="fa-brands fa-empire"></i> -->
             <!-- <i class="fa-solid fa-book-journal-whills"></i> -->
         </div>
+
+        <script>
+            tippy('#aboutbutton', {
+                content: 'About Me',
+                followCursor: true,
+                theme: 'retro',
+            });
+        </script>
     </section>
 
     <div class="popup" id="about">
@@ -320,9 +329,9 @@
 
     <img class="main-character" src="./assets/images/c6abb7b9e73d0bba068abab5eb7d605f.png" onerror="this.style.display='none'" loading="lazy" />
 
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script> -->
     <script src="script.js"></script>
 </body>
 
