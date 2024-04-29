@@ -17,6 +17,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.11/typed.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"></script>
+    <script src="https://unpkg.com/tippy.js@6"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 
 <body oncontextmenu="return false" unselectable="on" onselectstart="return true;" onmousedown="return true;" ondragstart="return false">
@@ -306,11 +308,17 @@
                             SecureToken: "76a97749-d841-4a02-a79e-e53930e6d6c7",
                             To: script_email_sent,
                             From: script_email_sent,
-                            Subject: "From: daxxtropezz.github.io",
-                            Body: script_subject + "<br><b>By</b>:" + script_name + "<br><b>Email</b>:" + script_email
-                        }).then(
-                            message => alert(message)
-                        );
+                            Subject: "FROM: daxxtropezz.github.io",
+                            Body: script_subject + "<br><b>By</b>: " + script_name + "<br><b>Email</b>: " + script_email
+                        }).then(function(message) {
+                            swal({
+                                title: 'Success!',
+                                text: 'The email has been sent successfully.',
+                                icon: 'success',
+                                dangerMode: false,
+                                button: 'Go Back',
+                            });
+                        });
                     }
                 </script>
             </div>
