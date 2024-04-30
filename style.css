@@ -125,35 +125,23 @@ section {
 }
 
 .about {
-	background: rgb(13, 111, 157);
-	background: linear-gradient(30deg, rgb(14, 75, 190) 0%, rgb(12, 15, 182) 70%);
+	background: #0d6f9d;
+	background: linear-gradient(30deg, #0e4bbe 0%, #0c0fb6 70%);
 }
 
 .certificates {
 	background: rgb(93, 126, 216);
-	background: linear-gradient(
-		310deg,
-		rgb(49, 86, 166) 0%,
-		rgb(12, 61, 174) 60%
-	);
+	background: linear-gradient(310deg, #3156a6 0%, #0c3dae 60%);
 }
 
 .drawings {
-	background: rgb(207, 197, 124);
-	background: linear-gradient(
-		310deg,
-		rgb(207, 188, 124) 0%,
-		rgb(120, 92, 31) 60%
-	);
+	background: #cfc57c;
+	background: linear-gradient(310deg, #cfbc7c 0%, #785c1f 60%);
 }
 
 .contact {
-	background-color: rgb(224, 129, 157);
-	background-image: linear-gradient(
-		340deg,
-		rgb(243, 151, 178) 0%,
-		rgb(147, 20, 58) 100%
-	);
+	background-color: #e0819d;
+	background-image: linear-gradient(340deg, #f397b2 0%, #93143a 100%);
 }
 
 /* ------- */
@@ -177,7 +165,7 @@ body.prevent-background-scroll {
 	display: none;
 	position: fixed;
 	inset: 0;
-	background: rgba(0, 0, 0, 0.5);
+	background: #00000080;
 	z-index: 20;
 	animation: openPopup 0.6s ease-in-out 1 normal;
 }
@@ -198,11 +186,11 @@ body.prevent-background-scroll {
 	transform: translate(-50%, -50%);
 	-ms-transform: translate(-50%, -50%);
 	width: min(900px, 90%);
-	background: rgba(133, 133, 133, 0.2);
-	box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+	background: #85858533;
+	box-shadow: #64646f33 0px 7px 29px 0px;
 	backdrop-filter: blur(10px);
 	-webkit-backdrop-filter: blur(10px);
-	border: 1px solid rgba(255, 255, 255, 0.6);
+	border: 1px solid #ffffff99;
 	border-radius: 12px;
 	color: #fff;
 	z-index: 30;
@@ -267,7 +255,7 @@ body.prevent-background-scroll {
 }
 
 .red {
-	background-color: rgb(255, 96, 92);
+	background-color: #ff605c;
 }
 
 .red i {
@@ -275,7 +263,7 @@ body.prevent-background-scroll {
 }
 
 .yellow {
-	background-color: rgb(255, 189, 68);
+	background-color: #ffbd44;
 }
 
 .yellow i {
@@ -283,7 +271,7 @@ body.prevent-background-scroll {
 }
 
 .green {
-	background-color: rgb(0, 202, 78);
+	background-color: #00ca4e;
 }
 
 .green i {
@@ -299,12 +287,12 @@ body.prevent-background-scroll {
 }
 
 .popup-body::-webkit-scrollbar-track {
-	box-shadow: inset 0 0 0.375rem rgb(79, 78, 78);
+	box-shadow: inset 0 0 0.375rem #4f4e4e;
 	border-radius: 0.8rem;
 }
 
 .popup-body::-webkit-scrollbar-thumb {
-	box-shadow: inset 0 0 0.375rem rgba(238, 238, 238, 0.9);
+	box-shadow: inset 0 0 0.375rem #eeeeeee6;
 	outline: none;
 	border-radius: 0.8rem;
 }
@@ -329,8 +317,7 @@ body.prevent-background-scroll {
 	overflow: hidden;
 	width: 250px;
 	border-radius: 8px;
-	box-shadow: rgba(62, 103, 168, 0.8) 0px 10px 30px 8px,
-		rgba(62, 90, 168, 0.8) 0px 0px 0px 2px;
+	box-shadow: #3e67a8cc 0px 10px 30px 8px, #3e5aa8cc 0px 0px 0px 2px;
 }
 
 .about-container .img-frame img {

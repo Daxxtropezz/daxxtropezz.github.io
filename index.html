@@ -3,32 +3,25 @@
 
 <head>
     <meta charset="UTF-8">
-    <!-- <meta http-equiv="refresh" content="2"> -->
-    <!-- <meta meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"> -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta property="og:title" content="Daxxtropezz's Portfolio" />
     <meta property="og:site_name" content="&copy; 2022">
     <meta property="og:url" content="https://daxxtropezz.github.io/" />
     <meta property="og:description" content="Get to know me better by checking my website." />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://daxxtropezz.github.io/assets/images/fbf88b00e9eec9e03c05b10640d74beb.JPG" />
-    <!-- <meta property="og:image:url" content="https://daxxtropezz.github.io/assets/images/fbf88b00e9eec9e03c05b10640d74beb.JPG" /> -->
+    <!-- <meta property="og:image" content="https://daxxtropezz.github.io/assets/images/fbf88b00e9eec9e03c05b10640d74beb.JPG" /> -->
+    <meta property="og:image:url" content="https://daxxtropezz.github.io/assets/images/fbf88b00e9eec9e03c05b10640d74beb.JPG" />
     <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
     <title>Daxxtropezz | HOME</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.11/typed.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <!-- <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"></script> -->
     <script src="https://unpkg.com/@popperjs/core@2"></script>
     <script src="https://unpkg.com/tippy.js@6"></script>
-    <!-- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-    <script>
-        $(function() {
-            $("#loadingHtml").load("./extras/loading.html");
-        });
-    </script>
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 </head>
 
 
@@ -320,8 +313,11 @@
                         <label for="email">Email</label>
                         <input type="text" id="email" name="email" placeholder="Your mail.." />
 
+                        <!-- <label for="subject">Subject</label>
+                        <textarea id="subject" name="subject" placeholder="Write something.." style="height: 200px"></textarea> -->
+
                         <label for="subject">Subject</label>
-                        <textarea id="subject" name="subject" placeholder="Write something.." style="height: 200px"></textarea>
+                        <div id="editor-container" style="height: 200px"></div>
 
                         <button class="submit-btn more-btn" type="submit">
                               <span>Submit <i class="fa-solid fa-share-from-square"></i></span>
@@ -332,7 +328,8 @@
                         async function sendEmail() {
                             let script_name = document.getElementById("name").value;
                             let script_email = document.getElementById("email").value;
-                            let script_subject = document.getElementById("subject").value;
+                            // let script_subject = document.getElementById("subject").value;
+                            let editorContent = quill.root.innerHTML;
                             let script_email_sent = "miraflores.john@gmail.com";
 
                             Email.send({
@@ -340,7 +337,7 @@
                                 To: script_email_sent,
                                 From: script_email_sent,
                                 Subject: "FROM: daxxtropezz.github.io",
-                                Body: script_subject + "<br><br><b>By</b>: " + script_name + "<br><b>Email</b>: " + script_email
+                                Body: editorContent + "<br><br><b>By</b>: " + script_name + "<br><b>Email</b>: " + script_email
                             }).then(function(message) {
                                 Swal.fire({
                                     title: message ? 'Success!' : 'Error!',
@@ -364,10 +361,14 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <!-- <script src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script> -->
     <script src="script.js"></script>
     <script>
+        $(function() {
+            $("#loadingHtml").load("./extras/loading.html");
+        });
+        var quill = new Quill('#editor-container', {
+            theme: 'snow'
+        });
         document.getElementById('shutdownbutton').addEventListener('click', function() {
             Swal.fire({
                 title: 'Warning!',
