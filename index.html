@@ -63,25 +63,21 @@
         <section>
             <div class="icon-container">
                 <div class="icon-box" id="shutdownbutton">
-                    <i class="fa-solid fa-power-off"></i>
+                    <i class="fa-solid fa-power-off fa-beat-fade"></i>
                     <!-- <i class="fa-brands fa-windows"></i> -->
                 </div>
                 <div class="icon-box about" id="aboutbutton" data-modal="about">
+                    <i class="fa-brands fa-empire fa-shake"></i>
+                </div>
+                <div class="icon-box certificates" id="skillsncerts" data-modal="certificates">
                     <i class="fa-brands fa-sith"></i>
                 </div>
-                <div class="icon-box certificates" data-modal="certificates">
-                    <i class="fa-brands fa-old-republic"></i>
-                </div>
-                <div class="icon-box drawings" data-modal="certificates">
+                <div class="icon-box drawings" id="websitesfin" data-modal="certificates">
                     <i class="fa-solid fa-jedi"></i>
                 </div>
-                <div class="icon-box contact" data-modal="contact">
+                <div class="icon-box contact" id="contactme" data-modal="contact">
                     <i class="fa-brands fa-galactic-senate"></i>
                 </div>
-                <!-- <i class="fa-brands fa-galactic-republic"></i> -->
-                <!-- <i class="fa-brands fa-jedi-order"></i> -->
-                <!-- <i class="fa-brands fa-empire"></i> -->
-                <!-- <i class="fa-solid fa-book-journal-whills"></i> -->
             </div>
         </section>
 
@@ -398,10 +394,30 @@
                 }
             });
         });
-        tippy('#aboutbutton', {
-            content: 'About Me',
-            followCursor: true,
-            // theme: 'retro',
+        const tooltips = [{
+            selector: '#shutdownbutton',
+            content: 'Close Application'
+        }, {
+            selector: '#aboutbutton',
+            content: 'About Me'
+        }, {
+            selector: '#skillsncerts',
+            content: 'Skills & Certificates'
+        }, {
+            selector: '#websitesfin',
+            content: 'Websites & Arts'
+        }, {
+            selector: '#contactme',
+            content: 'Contact Me'
+        }];
+        tooltips.forEach(({
+            selector,
+            content
+        }) => {
+            tippy(selector, {
+                content: content,
+                followCursor: true
+            });
         });
     </script>
 </body>
