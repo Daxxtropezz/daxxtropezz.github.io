@@ -1,3 +1,12 @@
+// WEBSITE HEAD TITLE
+window.onblur = function () {
+	document.title = 'Checkout my portfolio!';
+};
+
+window.onfocus = function () {
+	document.title = 'Daxxtropezz | HOME';
+};
+
 const audio = document.getElementById('background-music');
 const playIcon = document.getElementById('play-music');
 const pauseIcon = document.getElementById('pause-music');
