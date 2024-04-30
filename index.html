@@ -333,13 +333,17 @@
         document.getElementById('shutdownbutton').addEventListener('click', function() {
             swal({
                 title: 'Warning!',
-                text: 'Are you sure you want to shutdown?',
+                text: 'Are you sure you want to exit?',
                 icon: 'warning',
                 buttons: ['Cancel', 'Shutdown'],
                 dangerMode: true,
             }).then((shutdown) => {
                 if (shutdown) {
+                    window.opener = null;
+                    window.open('', '_self');
                     window.close();
+                    window.history.go(-1);
+                    $(document.body).hide()
                 }
             });
         });
