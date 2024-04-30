@@ -820,8 +820,6 @@ input:-webkit-autofill:active {
 	mix-blend-mode: color;
 	inset: 40px;
 	pointer-events: none;
-	/* opacity: 1;
-	animation: shine 1.2s ease-in 1 infinite forwards; */
 }
 
 .shimmer::before {

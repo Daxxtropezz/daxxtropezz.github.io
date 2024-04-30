@@ -48,9 +48,16 @@ const body = document.querySelector('body');
 
 iconBoxes.forEach((btn) => {
 	btn.addEventListener('click', () => {
-		let modal = btn.getAttribute('data-modal');
-		document.getElementById(modal).style.display = 'block';
-		body.classList.add('prevent-background-scroll');
+		let modalId = btn.getAttribute('data-modal');
+		try {
+			let modal = document.getElementById(modalId);
+			if (modal) {
+				modal.style.display = 'block';
+				body.classList.add('prevent-background-scroll');
+			} else {
+				throw new Error(`Element with ID ${modalId} not found`);
+			}
+		} catch (error) {}
 	});
 });
 

@@ -37,7 +37,7 @@
 
     <script>
         $(function() {
-            $("#loadingHtml").load("loading.html", function() {
+            $("#loadingHtml").load("./extras/loading.html", function() {
                 $("#loadingHtml").fadeOut(400, function() {
                     setTimeout(function() {
                         var loadingVisible = $("#loadingHtml").is(":visible");
@@ -85,7 +85,6 @@
                 <div class="icon-box contact" data-modal="contact">
                     <i class="fa-brands fa-galactic-senate"></i>
                 </div>
-
                 <!-- <i class="fa-brands fa-galactic-republic"></i> -->
                 <!-- <i class="fa-brands fa-jedi-order"></i> -->
                 <!-- <i class="fa-brands fa-empire"></i> -->
@@ -384,7 +383,6 @@
                 confirmButtonText: 'Shutdown',
                 cancelButtonText: 'Cancel',
                 reverseButtons: true,
-                dangerMode: true
             }).then((result) => {
                 if (result.isConfirmed) {
                     window.opener = null;
