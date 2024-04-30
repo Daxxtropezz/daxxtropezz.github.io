@@ -29,302 +29,316 @@
     </script>
 </head>
 
+
 <body oncontextmenu="return false" unselectable="on" onselectstart="return true;" onmousedown="return true;" ondragstart="return false">
     <div id="loadingHtml"></div>
-    <audio id="background-music" loop>
-      <source src="https://www.chosic.com/wp-content/uploads/2022/09/Hidden-Official-(chosic.com).mp3" type="audio/mpeg" />
-      Your browser does not support the audio element.
-    </audio>
 
-    <section>
-        <div class="icon-container">
-            <div class="icon-box" id="shutdownbutton">
-                <i class="fa-solid fa-power-off"></i>
-            </div>
-            <div class="icon-box about" id="aboutbutton" data-modal="about">
-                <i class="fa-brands fa-sith"></i>
-            </div>
-            <div class="icon-box certificates" data-modal="certificates">
-                <i class="fa-brands fa-old-republic"></i>
-            </div>
-            <div class="icon-box drawings" data-modal="certificates">
-                <i class="fa-solid fa-jedi"></i>
-            </div>
-            <div class="icon-box contact" data-modal="contact">
-                <i class="fa-brands fa-galactic-senate"></i>
-            </div>
+    <div class="container">
+        <audio id="background-music" loop>
+            <source src="https://www.chosic.com/wp-content/uploads/2022/09/Hidden-Official-(chosic.com).mp3" type="audio/mpeg" />
+            Your browser does not support the audio element.
+          </audio>
 
-            <!-- <i class="fa-brands fa-galactic-republic"></i> -->
-            <!-- <i class="fa-brands fa-jedi-order"></i> -->
-            <!-- <i class="fa-brands fa-empire"></i> -->
-            <!-- <i class="fa-solid fa-book-journal-whills"></i> -->
-        </div>
-    </section>
-
-    <div class="popup" id="about">
-        <div class="popup-container">
-            <div class="popup-header">
-                <div class="button-container">
-                    <button class="close-btn circle-btn red">
-                <i class="fa-solid fa-xmark"></i>
-              </button>
-                    <button class="close-btn circle-btn yellow">
-                <i class="fa-solid fa-window-minimize"></i>
-              </button>
-                    <button class="maximize-btn circle-btn green">
-                <i class="fa-solid fa-up-right-and-down-left-from-center"></i>
-              </button>
+        <section>
+            <div class="icon-container">
+                <div class="icon-box" id="shutdownbutton">
+                    <i class="fa-solid fa-power-off"></i>
+                    <!-- <i class="fa-brands fa-windows"></i> -->
                 </div>
-            </div>
-            <div class="popup-body about-container">
-                <div class="img-frame">
-                    <img />
+                <div class="icon-box about" id="aboutbutton" data-modal="about">
+                    <i class="fa-brands fa-sith"></i>
                 </div>
-                <div class="hero-content">
-                    <div class="naming"><span class="typing-name"></span></div>
-                    <p>
-                        As a front-end developer, I am passionate about creating visually appealing and user-friendly websites and mobile designs that create a lasting impact. With a good eye for design and a dedication to perfection, I attempt to build digital experiences that
-                        are not only visually appealing but also functional and easy to navigate.
-                    </p>
-                    <br>
-                    <a href="./assets/pdfs/896ec0607eae3b2168bb7cd6a6ef200c.pdf" class="button" download="JOHNPAUL_MIRAFLORES_CV.pdf">
-                        <button class="button-glimmer">
-                            <i class="fa-solid fa-download text"> |</i> 
-                            <span class="text">Download CV</span><br>
-                            <span class="bottom-dl">pdf file format, 9.7 MB</span>
-                            <span class="shimmer"></span>
-                        </button>
-                    </a>
+                <div class="icon-box certificates" data-modal="certificates">
+                    <i class="fa-brands fa-old-republic"></i>
                 </div>
-            </div>
-        </div>
-    </div>
+                <div class="icon-box drawings" data-modal="certificates">
+                    <i class="fa-solid fa-jedi"></i>
+                </div>
+                <div class="icon-box contact" data-modal="contact">
+                    <i class="fa-brands fa-galactic-senate"></i>
+                </div>
 
-    <div class="popup" id="certificates">
-        <div class="popup-container">
-            <div class="popup-header">
-                <div class="button-container">
-                    <button class="close-btn circle-btn red">
-                        <i class="fa-solid fa-xmark"></i>
+                <!-- <i class="fa-brands fa-galactic-republic"></i> -->
+                <!-- <i class="fa-brands fa-jedi-order"></i> -->
+                <!-- <i class="fa-brands fa-empire"></i> -->
+                <!-- <i class="fa-solid fa-book-journal-whills"></i> -->
+            </div>
+        </section>
+
+        <div class="popup" id="about">
+            <div class="popup-container">
+                <div class="popup-header">
+                    <div class="button-container">
+                        <button class="close-btn circle-btn red">
+                      <i class="fa-solid fa-xmark"></i>
                     </button>
-                    <button class="close-btn circle-btn yellow"> 
-                        <i class="fa-solid fa-window-minimize"></i> 
+                        <button class="close-btn circle-btn yellow">
+                      <i class="fa-solid fa-window-minimize"></i>
                     </button>
-                    <button class="maximize-btn circle-btn green">
-                        <i class="fa-solid fa-up-right-and-down-left-from-center"></i>
+                        <button class="maximize-btn circle-btn green">
+                      <i class="fa-solid fa-up-right-and-down-left-from-center"></i>
                     </button>
+                    </div>
                 </div>
-            </div>
-
-            <div class="popup-body">
-                <div class="skill-list">
-                    <h1>Skills (Frontend)</h1>
-                    <ul>
-                        <li>Excel</li>
-                        <li>Photoshop</li>
-                        <li>Java</li>
-                        <li>Android Studio</li>
-                        <li>HTML5</li>
-                        <li>CSS3</li>
-                        <li>Javascript</li>
-                        <li>React</li>
-                        <li>Bootstrap</li>
-                        <li>Figma</li>
-                        <li>Typescript</li>
-                    </ul>
-                </div>
-
-                <div class="skill-list">
-                    <h1>Skills (Backend)</h1>
-                    <ul>
-                        <li>Postman</li>
-                        <li>Google Apps Script</li>
-                        <li>Laravel</li>
-                        <li>MySQL</li>
-                        <li>MongoDB</li>
-                        <li>PHP</li>
-                        <li>Springboot</li>
-                        <li>Nest.js</li>
-                        <li>Node.js</li>
-                    </ul>
-                </div>
-
-                <div class="cert-container">
-                    <h1>Certificates</h1>
-                    <div class="all-certificates">
-
-                        <div class="cert-box">
-                            <img src="./assets/images/certifications/d15f8c03838118ed6beb288e10b228d0.png" alt="" />
-                            <div class="overlay">
-                                <h3>CS403: Introduction to Modern Database Systems</h3>
-                                <a href="./assets/images/certifications/d15f8c03838118ed6beb288e10b228d0.png" target="_blank" class="button">
-                                    <button class="more-btn">
-                                        <span>See Full Image</span>
-                                    </button>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="cert-box">
-                            <img src="./assets/images/certifications/eceb485437e6c423dbb50faffb4b75e2.png" alt="" />
-                            <div class="overlay">
-                                <h3>APIs & Web Services</h3>
-                                <a href="./assets/images/certifications/eceb485437e6c423dbb50faffb4b75e2.png" target="_blank" class="button">
-                                    <button class="more-btn">
-                                        <span>See Full Image</span>
-                                    </button>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="cert-box">
-                            <img src="./assets/images/certifications/7d17d9cccfc20aeb282b3113cc10f795.png" alt="" />
-                            <div class="overlay">
-                                <h3>Current Trends & Issues in Computer & Information Technology</h3>
-                                <a href="./assets/images/certifications/7d17d9cccfc20aeb282b3113cc10f795.png" target="_blank" class="button">
-                                    <button class="more-btn">
-                                        <span>See Full Image</span>
-                                    </button>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="cert-box">
-                            <img src="./assets/images/certifications/55d448864ab7ea2a37bfd90e7b6012f6.png" alt="" />
-                            <div class="overlay">
-                                <h3>Computer Hardware Assembly & Disassembly</h3>
-                                <a href="./assets/images/certifications/55d448864ab7ea2a37bfd90e7b6012f6.png" target="_blank" class="button">
-                                    <button class="more-btn">
-                                        <span>See Full Image</span>
-                                    </button>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="cert-box">
-                            <img src="./assets/images/certifications/04ba2e5acb4970912f4c980a0c9095d8.jpg" alt="" />
-                            <div class="overlay">
-                                <h3>Mission 1: A Disclosure on IT Profession</h3>
-                                <a href="./assets/images/certifications/04ba2e5acb4970912f4c980a0c9095d8.jpg" target="_blank" class="button">
-                                    <button class="more-btn">
-                                        <span>See Full Image</span>
-                                    </button>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="cert-box">
-                            <img src="./assets/images/certifications/214837a83d0d9b08a2ee9dd8753525b2.png" alt="" />
-                            <div class="overlay">
-                                <h3>PNPKI and Data Privacy Orientation</h3>
-                                <a href="./assets/images/certifications/214837a83d0d9b08a2ee9dd8753525b2.png" target="_blank" class="button">
-                                    <button class="more-btn">
-                                        <span>See Full Image</span>
-                                    </button>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="cert-box">
-                            <img src="./assets/images/certifications/82c88dc884434b0a41fd3d5f60938a4b.jpg" alt="" />
-                            <div class="overlay">
-                                <h3>Cybersecurity Awareness</h3>
-                                <a href="./assets/images/certifications/82c88dc884434b0a41fd3d5f60938a4b.jpg" target="_blank" class="button">
-                                    <button class="more-btn">
-                                        <span>See Full Image</span>
-                                    </button>
-                                </a>
-                            </div>
-                        </div>
-
-                        <script>
-                            // Function to convert anchor tags to Blob URLs
-                            // function convertToBlobUrl(element) {
-                            //     var xhr = new XMLHttpRequest();
-                            //     xhr.open('GET', element.href, true);
-                            //     xhr.responseType = 'blob';
-                            //     xhr.onload = function() {
-                            //         if (this.status === 200) {
-                            //             var blob = this.response;
-                            //             var blobUrl = URL.createObjectURL(blob);
-                            //             element.href = blobUrl;
-                            //         }
-                            //     };
-                            //     xhr.send();
-                            // }
-                            // var targetBlankLinks = document.querySelectorAll('a[target="_blank"]');
-                            // targetBlankLinks.forEach(function(link) {
-                            //     convertToBlobUrl(link);
-                            // });
-                        </script>
+                <div class="popup-body about-container">
+                    <div class="img-frame">
+                        <img />
+                    </div>
+                    <div class="hero-content">
+                        <div class="naming"><span class="typing-name"></span></div>
+                        <p>
+                            As a front-end developer, I am passionate about creating visually appealing and user-friendly websites and mobile designs that create a lasting impact. With a good eye for design and a dedication to perfection, I attempt to build digital experiences that
+                            are not only visually appealing but also functional and easy to navigate.
+                        </p>
+                        <br>
+                        <a href="./assets/pdfs/896ec0607eae3b2168bb7cd6a6ef200c.pdf" class="button" download="JOHNPAUL_MIRAFLORES_CV.pdf">
+                            <button class="button-glimmer">
+                                  <i class="fa-solid fa-download text"> |</i> 
+                                  <span class="text">Download CV</span><br>
+                                  <span class="bottom-dl">pdf file format, 9.7 MB</span>
+                                  <span class="shimmer"></span>
+                              </button>
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="popup" id="contact">
-        <div class="popup-container">
-            <div class="popup-header">
-                <div class="button-container">
-                    <button class="close-btn circle-btn red">
-                <i class="fa-solid fa-xmark"></i>
-              </button>
-                    <button class="close-btn circle-btn yellow">
-                <i class="fa-solid fa-window-minimize"></i>
-              </button>
-                    <button class="maximize-btn circle-btn green">
-                <i class="fa-solid fa-up-right-and-down-left-from-center"></i>
-              </button>
+        <div class="popup" id="certificates">
+            <div class="popup-container">
+                <div class="popup-header">
+                    <div class="button-container">
+                        <button class="close-btn circle-btn red">
+                              <i class="fa-solid fa-xmark"></i>
+                          </button>
+                        <button class="close-btn circle-btn yellow"> 
+                              <i class="fa-solid fa-window-minimize"></i> 
+                          </button>
+                        <button class="maximize-btn circle-btn green">
+                              <i class="fa-solid fa-up-right-and-down-left-from-center"></i>
+                          </button>
+                    </div>
+                </div>
+
+                <div class="popup-body">
+                    <div class="skill-list">
+                        <h1>Skills (Frontend)</h1>
+                        <ul>
+                            <li>Excel</li>
+                            <li>Photoshop</li>
+                            <li>Java</li>
+                            <li>Android Studio</li>
+                            <li>HTML5</li>
+                            <li>CSS3</li>
+                            <li>Javascript</li>
+                            <li>React</li>
+                            <li>Bootstrap</li>
+                            <li>Figma</li>
+                            <li>Typescript</li>
+                        </ul>
+                    </div>
+
+                    <div class="skill-list">
+                        <h1>Skills (Backend)</h1>
+                        <ul>
+                            <li>Postman</li>
+                            <li>Google Apps Script</li>
+                            <li>Laravel</li>
+                            <li>MySQL</li>
+                            <li>MongoDB</li>
+                            <li>PHP</li>
+                            <li>Springboot</li>
+                            <li>Nest.js</li>
+                            <li>Node.js</li>
+                        </ul>
+                    </div>
+
+                    <div class="cert-container">
+                        <h1>Certificates</h1>
+                        <div class="all-certificates">
+
+                            <div class="cert-box">
+                                <img src="./assets/images/certifications/d15f8c03838118ed6beb288e10b228d0.png" alt="" />
+                                <div class="overlay">
+                                    <h3>CS403: Introduction to Modern Database Systems</h3>
+                                    <a href="./assets/images/certifications/d15f8c03838118ed6beb288e10b228d0.png" target="_blank" class="button">
+                                        <button class="more-btn">
+                                              <span>See Full Image</span>
+                                          </button>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="cert-box">
+                                <img src="./assets/images/certifications/eceb485437e6c423dbb50faffb4b75e2.png" alt="" />
+                                <div class="overlay">
+                                    <h3>APIs & Web Services</h3>
+                                    <a href="./assets/images/certifications/eceb485437e6c423dbb50faffb4b75e2.png" target="_blank" class="button">
+                                        <button class="more-btn">
+                                              <span>See Full Image</span>
+                                          </button>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="cert-box">
+                                <img src="./assets/images/certifications/7d17d9cccfc20aeb282b3113cc10f795.png" alt="" />
+                                <div class="overlay">
+                                    <h3>Current Trends & Issues in Computer & Information Technology</h3>
+                                    <button class="more-btn" id="viewImageBtn">
+                                          <span>See Full Image</span>
+                                      </button>
+                                </div>
+                            </div>
+
+                            <script>
+                                document.getElementById('viewImageBtn').addEventListener('click', function() {
+                                    swal.fire({
+                                        imageUrl: './assets/images/certifications/7d17d9cccfc20aeb282b3113cc10f795.png',
+                                        imageAlt: 'Current Trends & Issues in Computer & Information Technology',
+                                        showCloseButton: true,
+                                        showConfirmButton: false,
+                                    });
+                                });
+                            </script>
+
+                            <div class="cert-box">
+                                <img src="./assets/images/certifications/55d448864ab7ea2a37bfd90e7b6012f6.png" alt="" />
+                                <div class="overlay">
+                                    <h3>Computer Hardware Assembly & Disassembly</h3>
+                                    <a href="./assets/images/certifications/55d448864ab7ea2a37bfd90e7b6012f6.png" target="_blank" class="button">
+                                        <button class="more-btn">
+                                              <span>See Full Image</span>
+                                          </button>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="cert-box">
+                                <img src="./assets/images/certifications/04ba2e5acb4970912f4c980a0c9095d8.jpg" alt="" />
+                                <div class="overlay">
+                                    <h3>Mission 1: A Disclosure on IT Profession</h3>
+                                    <a href="./assets/images/certifications/04ba2e5acb4970912f4c980a0c9095d8.jpg" target="_blank" class="button">
+                                        <button class="more-btn">
+                                              <span>See Full Image</span>
+                                          </button>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="cert-box">
+                                <img src="./assets/images/certifications/214837a83d0d9b08a2ee9dd8753525b2.png" alt="" />
+                                <div class="overlay">
+                                    <h3>PNPKI and Data Privacy Orientation</h3>
+                                    <a href="./assets/images/certifications/214837a83d0d9b08a2ee9dd8753525b2.png" target="_blank" class="button">
+                                        <button class="more-btn">
+                                              <span>See Full Image</span>
+                                          </button>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="cert-box">
+                                <img src="./assets/images/certifications/82c88dc884434b0a41fd3d5f60938a4b.jpg" alt="" />
+                                <div class="overlay">
+                                    <h3>Cybersecurity Awareness</h3>
+                                    <a href="./assets/images/certifications/82c88dc884434b0a41fd3d5f60938a4b.jpg" target="_blank" class="button">
+                                        <button class="more-btn">
+                                              <span>See Full Image</span>
+                                          </button>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <script>
+                                // Function to convert anchor tags to Blob URLs
+                                // function convertToBlobUrl(element) {
+                                //     var xhr = new XMLHttpRequest();
+                                //     xhr.open('GET', element.href, true);
+                                //     xhr.responseType = 'blob';
+                                //     xhr.onload = function() {
+                                //         if (this.status === 200) {
+                                //             var blob = this.response;
+                                //             var blobUrl = URL.createObjectURL(blob);
+                                //             element.href = blobUrl;
+                                //         }
+                                //     };
+                                //     xhr.send();
+                                // }
+                                // var targetBlankLinks = document.querySelectorAll('a[target="_blank"]');
+                                // targetBlankLinks.forEach(function(link) {
+                                //     convertToBlobUrl(link);
+                                // });
+                            </script>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="popup-body contact-container">
-                <h1>Contact Me</h1>
-                <p>Hello there, you can come and contact with me via email.</p>
-                <form onsubmit="sendEmail(); reset(); return false;" autocomplete="off">
-                    <label for="name">Name</label>
-                    <input type="text" id="name" name="name" placeholder="Your name.." />
+        </div>
 
-                    <label for="email">Email</label>
-                    <input type="text" id="email" name="email" placeholder="Your mail.." />
-
-                    <label for="subject">Subject</label>
-                    <textarea id="subject" name="subject" placeholder="Write something.." style="height: 200px"></textarea>
-
-                    <button class="submit-btn more-btn" type="submit">
-                        <span>Submit <i class="fa-solid fa-share-from-square"></i></span>
+        <div class="popup" id="contact">
+            <div class="popup-container">
+                <div class="popup-header">
+                    <div class="button-container">
+                        <button class="close-btn circle-btn red">
+                      <i class="fa-solid fa-xmark"></i>
                     </button>
-                </form>
-                <script src="https://smtpjs.com/v3/smtp.js"></script>
-                <script>
-                    async function sendEmail() {
-                        let script_name = document.getElementById("name").value;
-                        let script_email = document.getElementById("email").value;
-                        let script_subject = document.getElementById("subject").value;
-                        let script_email_sent = "miraflores.john@gmail.com";
+                        <button class="close-btn circle-btn yellow">
+                      <i class="fa-solid fa-window-minimize"></i>
+                    </button>
+                        <button class="maximize-btn circle-btn green">
+                      <i class="fa-solid fa-up-right-and-down-left-from-center"></i>
+                    </button>
+                    </div>
+                </div>
+                <div class="popup-body contact-container">
+                    <h1>Contact Me</h1>
+                    <p>Hello there, you can come and contact with me via email.</p>
+                    <form onsubmit="sendEmail(); reset(); return false;" autocomplete="off">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" placeholder="Your name.." />
 
-                        Email.send({
-                            SecureToken: "76a97749-d841-4a02-a79e-e53930e6d6c7",
-                            To: script_email_sent,
-                            From: script_email_sent,
-                            Subject: "FROM: daxxtropezz.github.io",
-                            Body: script_subject + "<br><br><b>By</b>: " + script_name + "<br><b>Email</b>: " + script_email
-                        }).then(function(message) {
-                            swal({
-                                title: message ? 'Success!' : 'Error!',
-                                text: message ? message + ': The email has been sent sucessfully.' : 'There was an error sending the email.',
-                                icon: message ? 'success' : 'error',
-                                dangerMode: !message,
-                                button: 'Go Back',
+                        <label for="email">Email</label>
+                        <input type="text" id="email" name="email" placeholder="Your mail.." />
+
+                        <label for="subject">Subject</label>
+                        <textarea id="subject" name="subject" placeholder="Write something.." style="height: 200px"></textarea>
+
+                        <button class="submit-btn more-btn" type="submit">
+                              <span>Submit <i class="fa-solid fa-share-from-square"></i></span>
+                          </button>
+                    </form>
+                    <script src="https://smtpjs.com/v3/smtp.js"></script>
+                    <script>
+                        async function sendEmail() {
+                            let script_name = document.getElementById("name").value;
+                            let script_email = document.getElementById("email").value;
+                            let script_subject = document.getElementById("subject").value;
+                            let script_email_sent = "miraflores.john@gmail.com";
+
+                            Email.send({
+                                SecureToken: "76a97749-d841-4a02-a79e-e53930e6d6c7",
+                                To: script_email_sent,
+                                From: script_email_sent,
+                                Subject: "FROM: daxxtropezz.github.io",
+                                Body: script_subject + "<br><br><b>By</b>: " + script_name + "<br><b>Email</b>: " + script_email
+                            }).then(function(message) {
+                                swal({
+                                    title: message ? 'Success!' : 'Error!',
+                                    text: message ? message + ': The email has been sent sucessfully.' : 'There was an error sending the email.',
+                                    icon: message ? 'success' : 'error',
+                                    dangerMode: !message,
+                                    button: 'Go Back',
+                                });
                             });
-                        });
-                    }
-                </script>
+                        }
+                    </script>
+                </div>
             </div>
         </div>
-    </div>
 
-    <img class="main-character" src="./assets/images/c6abb7b9e73d0bba068abab5eb7d605f.png" onerror="this.style.display='none'" loading="lazy" />
+        <img class="main-character" src="./assets/images/c6abb7b9e73d0bba068abab5eb7d605f.png" onerror="this.style.display='none'" loading="lazy" />
+    </div>
 
     <!-- <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
