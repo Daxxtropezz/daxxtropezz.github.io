@@ -248,18 +248,6 @@
                             </div>
 
                             <script>
-                                function showFullscreenModal(imageUrl, imageAlt) {
-                                    swal.fire({
-                                        imageUrl: imageUrl,
-                                        imageAlt: imageAlt,
-                                        showCloseButton: true,
-                                        showConfirmButton: false,
-                                        customClass: {
-                                            popup: 'fullscreen'
-                                        }
-                                    });
-                                }
-
                                 document.getElementById('certImgBtn1').addEventListener('click', () => {
                                     showFullscreenModal('./assets/images/certifications/d15f8c03838118ed6beb288e10b228d0.png', 'CS403: Introduction to Modern Database Systems');
                                 });
@@ -313,11 +301,7 @@
                         <label for="email">Email</label>
                         <input type="text" id="email" name="email" placeholder="Your mail.." />
 
-                        <!-- <label for="subject">Subject</label>
-                        <textarea id="subject" name="subject" placeholder="Write something.." style="height: 200px"></textarea> -->
-
-                        <label for="subject">Subject</label>
-                        <div id="editor-container" style="height: 200px"></div>
+                        <div id="editor-container" style="height: 200px;"></div>
 
                         <button class="submit-btn more-btn" type="submit">
                               <span>Submit <i class="fa-solid fa-share-from-square"></i></span>
@@ -328,7 +312,6 @@
                         async function sendEmail() {
                             let script_name = document.getElementById("name").value;
                             let script_email = document.getElementById("email").value;
-                            // let script_subject = document.getElementById("subject").value;
                             let editorContent = quill.root.innerHTML;
                             let script_email_sent = "miraflores.john@gmail.com";
 
@@ -363,10 +346,31 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="script.js"></script>
     <script>
+        function showFullscreenModal(imageUrl, imageAlt) {
+            swal.fire({
+                imageUrl: imageUrl,
+                imageAlt: imageAlt,
+                showCloseButton: true,
+                showConfirmButton: false,
+                customClass: {
+                    popup: 'fullscreen'
+                }
+            });
+        }
         $(function() {
             $("#loadingHtml").load("./extras/loading.html");
         });
         var quill = new Quill('#editor-container', {
+            modules: {
+                toolbar: [
+                    [{
+                        'header': [1, 2, false]
+                    }],
+                    ['bold', 'italic', 'underline'],
+                    ['image', 'code-block']
+                ]
+            },
+            placeholder: 'Write something...',
             theme: 'snow'
         });
         document.getElementById('shutdownbutton').addEventListener('click', function() {
