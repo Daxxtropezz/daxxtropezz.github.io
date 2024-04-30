@@ -1,3 +1,13 @@
+// PREVENT OPENING THE TERMINAL
+document.addEventListener('contextmenu', function (event) {
+	event.preventDefault();
+});
+document.addEventListener('keydown', function (event) {
+	if (event.key === 'F12') {
+		event.preventDefault();
+	}
+});
+
 // WEBSITE HEAD TITLE
 window.onblur = function () {
 	document.title = 'Checkout my portfolio!';
@@ -118,14 +128,4 @@ var swiper = new Swiper('.swiper', {
 			slidesPerView: 4,
 		},
 	},
-});
-
-// PREVENT OPENING THE TERMINAL
-document.addEventListener('contextmenu', function (event) {
-	event.preventDefault();
-});
-document.addEventListener('keydown', function (event) {
-	if (event.key === 'F12') {
-		event.preventDefault();
-	}
 });
