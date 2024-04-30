@@ -883,3 +883,9 @@ a:hover span.bottom-dl {
 	font-size: 10px;
 	padding: 0%;
 }
+
+/* FOR MODAL IMAGE POPUP */
+
+.fullscreen {
+	width: 60%;
+}
