@@ -1,2 +1,2 @@
-ErrorDocument 404 /daxxtropezz.github.io/error.html
-ErrorDocument 404 /error.html
+ErrorDocument 404 /daxxtropezz.github.io/extras/error.html
+ErrorDocument 404 /extras/error.html
