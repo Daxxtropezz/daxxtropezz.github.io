@@ -30,13 +30,16 @@
 </head>
 
 <body oncontextmenu="return false" unselectable="on" onselectstart="return true;" onmousedown="return true;" ondragstart="return false">
+    <div id="loadingHtml"></div>
     <audio id="background-music" loop>
       <source src="https://www.chosic.com/wp-content/uploads/2022/09/Hidden-Official-(chosic.com).mp3" type="audio/mpeg" />
       Your browser does not support the audio element.
     </audio>
-    <div id="loadingHtml"></div>
     <section>
         <div class="icon-container">
+            <div class="icon-box" id="shutdownbutton">
+                <i class="fa-solid fa-power-off"></i>
+            </div>
             <div class="icon-box about" id="aboutbutton" data-modal="about">
                 <i class="fa-brands fa-sith"></i>
             </div>
@@ -55,14 +58,6 @@
             <!-- <i class="fa-brands fa-empire"></i> -->
             <!-- <i class="fa-solid fa-book-journal-whills"></i> -->
         </div>
-
-        <script>
-            tippy('#aboutbutton', {
-                content: 'About Me',
-                followCursor: true,
-                // theme: 'retro',
-            });
-        </script>
     </section>
 
     <div class="popup" id="about">
@@ -334,6 +329,26 @@
     <script src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script> -->
     <script src="script.js"></script>
+    <script>
+        document.getElementById('shutdownbutton').addEventListener('click', function() {
+            swal({
+                title: 'Warning!',
+                text: 'Are you sure you want to shutdown?',
+                icon: 'warning',
+                buttons: ['Cancel', 'Shutdown'],
+                dangerMode: true,
+            }).then((shutdown) => {
+                if (shutdown) {
+                    window.close();
+                }
+            });
+        });
+        tippy('#aboutbutton', {
+            content: 'About Me',
+            followCursor: true,
+            // theme: 'retro',
+        });
+    </script>
 </body>
 
 </html>
