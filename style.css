@@ -90,7 +90,7 @@ section {
 /* ICON STYLES */
 
 .icon-container {
-	position: absolute;
+	position: fixed;
 	bottom: 18px;
 	display: flex;
 	z-index: 20;
