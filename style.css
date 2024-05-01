@@ -896,4 +896,5 @@ a:hover span.bottom-dl {
 
 .fullscreen {
 	width: auto;
+	background: transparent;
 }
