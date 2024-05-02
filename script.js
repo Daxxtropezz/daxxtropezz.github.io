@@ -1,4 +1,65 @@
 // -------
+document.getElementById('certImgBtn1').addEventListener('click', () => {
+	showFullscreenModal(
+		'./assets/images/certifications/d15f8c03838118ed6beb288e10b228d0.png',
+		'CS403: Introduction to Modern Database Systems'
+	);
+});
+document.getElementById('certImgBtn2').addEventListener('click', () => {
+	showFullscreenModal(
+		'./assets/images/certifications/eceb485437e6c423dbb50faffb4b75e2.png',
+		'APIs & Web Services'
+	);
+});
+document.getElementById('certImgBtn3').addEventListener('click', () => {
+	showFullscreenModal(
+		'./assets/images/certifications/7d17d9cccfc20aeb282b3113cc10f795.png',
+		'Current Trends & Issues in Computer & Information Technology'
+	);
+});
+document.getElementById('certImgBtn4').addEventListener('click', () => {
+	showFullscreenModal(
+		'./assets/images/certifications/55d448864ab7ea2a37bfd90e7b6012f6.png',
+		'Computer Hardware Assembly & Disassembly'
+	);
+});
+document.getElementById('certImgBtn5').addEventListener('click', () => {
+	showFullscreenModal(
+		'./assets/images/certifications/04ba2e5acb4970912f4c980a0c9095d8.jpg',
+		'Mission 1: A Disclosure on IT Profession'
+	);
+});
+document.getElementById('certImgBtn6').addEventListener('click', () => {
+	showFullscreenModal(
+		'./assets/images/certifications/214837a83d0d9b08a2ee9dd8753525b2.png',
+		'PNPKI and Data Privacy Orientation'
+	);
+});
+document.getElementById('certImgBtn7').addEventListener('click', () => {
+	showFullscreenModal(
+		'./assets/images/certifications/82c88dc884434b0a41fd3d5f60938a4b.jpg',
+		'Cybersecurity Awareness'
+	);
+});
+document.getElementById('mobImgBtn1').addEventListener('click', () => {
+	showFullscreenModal(
+		'./assets/images/apps/918f3caf4bb1080ab388ec775980940f.png',
+		'Mobile Applications'
+	);
+});
+document.getElementById('mockImgBtn1').addEventListener('click', () => {
+	showFullscreenModal(
+		'./assets/images/mock/7e81ada7856bfc9947d43e1c6c62128f.png',
+		'Mockups'
+	);
+});
+document.getElementById('waImgBtn1').addEventListener('click', () => {
+	showFullscreenModal(
+		'./assets/images/apps/58c52c965c4d7f6a0301c5dc08c423a7.png',
+		'Web Applications'
+	);
+});
+
 function showFullscreenModal(imageUrl, imageAlt) {
 	swal.fire({
 		imageUrl: imageUrl,
