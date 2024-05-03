@@ -1,4 +1,16 @@
 // -------
+document.getElementById('artImgBtn5').addEventListener('click', () => {
+	showFullscreenModal(
+		'./assets/images/arts/e8d80a5115a22eeb0788d72ae7d0b30c.png',
+		'Draftings'
+	);
+});
+document.getElementById('artImgBtn4').addEventListener('click', () => {
+	showFullscreenModal(
+		'./assets/images/arts/85eba8bcf9604dd52dccd264d56e2ef4.png',
+		'Draftings'
+	);
+});
 document.getElementById('artImgBtn3').addEventListener('click', () => {
 	showFullscreenModal(
 		'./assets/images/arts/8d4f9e3fdd5754cd3fc81ba492b86dda.png',
