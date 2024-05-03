@@ -1,4 +1,10 @@
 // -------
+document.getElementById('artImgBtn3').addEventListener('click', () => {
+	showFullscreenModal(
+		'./assets/images/arts/8d4f9e3fdd5754cd3fc81ba492b86dda.png',
+		'Draftings'
+	);
+});
 document.getElementById('artImgBtn2').addEventListener('click', () => {
 	showFullscreenModal(
 		'./assets/images/arts/097dc82661b70ab38132811fe3759155.png',
