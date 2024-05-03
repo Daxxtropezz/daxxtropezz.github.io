@@ -165,18 +165,6 @@ window.onfocus = function () {
 	document.title = 'Daxxtropezz | HOME';
 };
 
-// const audio = document.getElementById('background-music');
-// const playIcon = document.getElementById('play-music');
-// const pauseIcon = document.getElementById('pause-music');
-
-// let isPlaying = true;
-// audio.play();
-
-// audio.addEventListener('ended', function () {
-// 	audio.currentTime = 0;
-// 	audio.play();
-// });
-
 const audio = document.getElementById('background-music');
 const playIcon = document.getElementById('play-music');
 const pauseIcon = document.getElementById('pause-music');
