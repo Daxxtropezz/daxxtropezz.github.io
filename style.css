@@ -6,6 +6,10 @@ body {
 		auto;
 }
 
+.swal2-container {
+	z-index: 9999;
+}
+
 button:hover .ql-stroke,
 .ql-picker-label:hover .ql-stroke {
 	fill: none;

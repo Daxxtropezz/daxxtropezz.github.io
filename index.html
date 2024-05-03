@@ -24,17 +24,23 @@
     <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
     <script>
         function hideLoader() {
-            // document.getElementById('loadingHtml').style.opacity = '0';
-            // document.getElementById('loadingHtml').style.zIndex = '-1';
             setTimeout(function() {
-                // Check if loader is still visible after 3 seconds
                 if ($('#loadingHtml').is(':visible')) {
-                    // If loader is still visible, show SweetAlert message
-                    Swal.fire("Loading taking too long", "Please check your internet connection.", "warning");
+                    Swal.fire({
+                        title: 'Warning!',
+                        text: 'The loading operation is taking longer than expected. Please refresh the page.',
+                        imageUrl: "./assets/images/33180e7e10c9fcab642b5c5075465f6c.png",
+                        color: "#FFF",
+                        background: "#1f317dc0",
+                        imageWidth: 150,
+                        imageAlt: "Gang Logo",
+                        timer: 3000,
+                        timerProgressBar: true,
+                        showConfirmButton: false,
+                    });
                 }
-            }, 3000); // 3 seconds
+            }, 3000);
 
-            // Fade out the loader
             $('#loadingHtml').fadeOut('slow');
         }
     </script>
@@ -42,33 +48,6 @@
 
 <body onload="hideLoader();" oncontextmenu="return false" unselectable="on" onselectstart="return true;" onmousedown="return true;" ondragstart="return false">
     <div id="loadingHtml"></div>
-
-    <!-- <script>
-        $(function() {
-            $("#loadingHtml").load("./extras/loading.html", function() {
-                $("#loadingHtml").fadeOut(400, function() {
-                    setTimeout(function() {
-                        var loadingVisible = $("#loadingHtml").is(":visible");
-                        if (loadingVisible) {
-                            Swal.fire({
-                                title: 'Warning!',
-                                text: 'The loading operation is taking longer than expected. Please refresh the page.',
-                                imageUrl: "./assets/images/33180e7e10c9fcab642b5c5075465f6c.png",
-                                color: "#FFF",
-                                background: "#1f317dc0",
-                                imageWidth: 150,
-                                imageAlt: "Gang Logo",
-                                timer: 3000,
-                                timerProgressBar: true,
-                                showConfirmButton: false,
-                            });
-                        }
-                    }, 3000);
-                });
-            });
-        });
-    </script> -->
-
     <div class="container">
         <audio id="background-music" loop>
             <source src="https://www.chosic.com/wp-content/uploads/2022/09/Hidden-Official-(chosic.com).mp3" type="audio/mpeg" />
@@ -79,7 +58,6 @@
             <div class="icon-container">
                 <div class="icon-box" id="shutdownbutton">
                     <i class="fa-solid fa-power-off fa-beat-fade"></i>
-                    <!-- <i class="fa-brands fa-windows"></i> -->
                 </div>
                 <div class="icon-box about" id="aboutbutton" data-modal="about">
                     <i class="fa-brands fa-empire fa-shake"></i>
