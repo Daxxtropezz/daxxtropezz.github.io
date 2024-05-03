@@ -22,13 +22,28 @@
     <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
     <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
     <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <script>
+        function hideLoader() {
+            // document.getElementById('loadingHtml').style.opacity = '0';
+            // document.getElementById('loadingHtml').style.zIndex = '-1';
+            setTimeout(function() {
+                // Check if loader is still visible after 3 seconds
+                if ($('#loadingHtml').is(':visible')) {
+                    // If loader is still visible, show SweetAlert message
+                    Swal.fire("Loading taking too long", "Please check your internet connection.", "warning");
+                }
+            }, 3000); // 3 seconds
+
+            // Fade out the loader
+            $('#loadingHtml').fadeOut('slow');
+        }
+    </script>
 </head>
 
-
-<body oncontextmenu="return false" unselectable="on" onselectstart="return true;" onmousedown="return true;" ondragstart="return false">
+<body onload="hideLoader();" oncontextmenu="return false" unselectable="on" onselectstart="return true;" onmousedown="return true;" ondragstart="return false">
     <div id="loadingHtml"></div>
 
-    <script>
+    <!-- <script>
         $(function() {
             $("#loadingHtml").load("./extras/loading.html", function() {
                 $("#loadingHtml").fadeOut(400, function() {
@@ -52,7 +67,7 @@
                 });
             });
         });
-    </script>
+    </script> -->
 
     <div class="container">
         <audio id="background-music" loop>
