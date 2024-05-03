@@ -1,4 +1,16 @@
 // -------
+document.getElementById('artImgBtn2').addEventListener('click', () => {
+	showFullscreenModal(
+		'./assets/images/arts/097dc82661b70ab38132811fe3759155.png',
+		'Draftings'
+	);
+});
+document.getElementById('artImgBtn1').addEventListener('click', () => {
+	showFullscreenModal(
+		'./assets/images/arts/b6d63bcde6761ae7777cbab09283fac2.png',
+		'Draftings'
+	);
+});
 document.getElementById('certImgBtn1').addEventListener('click', () => {
 	showFullscreenModal(
 		'./assets/images/certifications/d15f8c03838118ed6beb288e10b228d0.png',
