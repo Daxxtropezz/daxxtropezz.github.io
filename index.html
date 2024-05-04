@@ -385,10 +385,19 @@
 
                             Email.send({
                                 SecureToken: "76a97749-d841-4a02-a79e-e53930e6d6c7",
-                                To: script_email_sent,
+                                To: [
+                                    script_email_sent,
+                                    // "johnpaul.miraflores@cvsu.edu.ph"
+                                ],
                                 From: script_email_sent,
                                 Subject: "FROM: daxxtropezz.github.io",
-                                Body: editorContent + "<br><br><b>By</b>: " + script_name + "<br><b>Email</b>: " + script_email
+                                Body: '<div style="font-family: Arial, sans-serif; font-size: 14px; color: #333; padding: 10px;">' +
+                                    editorContent +
+                                    '<br><br><b>By</b>: ' +
+                                    script_name +
+                                    '<br><b>Email</b>: ' +
+                                    script_email +
+                                    '</div>'
                             }).then(function(message) {
                                 Swal.fire({
                                     title: message ? 'Success!' : 'Error!',
