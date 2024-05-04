@@ -1,6 +1,8 @@
 # daxxtropezz.github.io
 
-## Welcome to my GitHub portfolio repository, a curated collection of my professional achievements, creative projects, and technical endeavors. Within these digital walls, you'll find a comprehensive showcase of my skills, expertise, and passion for innovation.
+## Welcome to my GitHub portfolio repository
+
+A curated collection of my professional achievements, creative projects, and technical endeavors. Within these digital walls, you'll find a comprehensive showcase of my skills, expertise, and passion for innovation.
 
 Each folder within this repository represents a chapter in my professional journey, housing a diverse range of projects spanning various industries, technologies, and creative disciplines. From web development and software engineering to graphic design and data analysis, each project is a testament to my dedication to mastering my craft and pushing the boundaries of what's possible.
 
