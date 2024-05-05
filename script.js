@@ -1,4 +1,23 @@
 // -------
+document.getElementById('orcCertBtn1').addEventListener('click', () => {
+	showFullscreenModal(
+		'./assets/images/certifications/1c77eec6f493bdef4aeafbf948afc0a8.jpg',
+		'Draftings'
+	);
+});
+document.getElementById('orcCertBtn2').addEventListener('click', () => {
+	showFullscreenModal(
+		'./assets/images/certifications/1c9487aee34cf4a8f18d2ac36c2b79bf.jpg',
+		'Draftings'
+	);
+});
+document.getElementById('orcCertBtn3').addEventListener('click', () => {
+	showFullscreenModal(
+		'./assets/images/certifications/950c4790da8075c470fa8f241c11888f.jpg',
+		'Draftings'
+	);
+});
+
 document.getElementById('artImgBtn5').addEventListener('click', () => {
 	showFullscreenModal(
 		'./assets/images/arts/e8d80a5115a22eeb0788d72ae7d0b30c.png',
