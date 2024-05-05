@@ -2,114 +2,132 @@
 document.getElementById('orcCertBtn1').addEventListener('click', () => {
 	showFullscreenModal(
 		'./assets/images/certifications/1c77eec6f493bdef4aeafbf948afc0a8.jpg',
-		'Draftings'
+		'./assets/images/wmrker.png',
+		'Oracle Certificate'
 	);
 });
 document.getElementById('orcCertBtn2').addEventListener('click', () => {
 	showFullscreenModal(
 		'./assets/images/certifications/1c9487aee34cf4a8f18d2ac36c2b79bf.jpg',
-		'Draftings'
+		'./assets/images/wmrker.png',
+		'Oracle Certificate'
 	);
 });
 document.getElementById('orcCertBtn3').addEventListener('click', () => {
 	showFullscreenModal(
 		'./assets/images/certifications/950c4790da8075c470fa8f241c11888f.jpg',
-		'Draftings'
+		'./assets/images/wmrker.png',
+		'Oracle Certificate'
 	);
 });
 
 document.getElementById('artImgBtn5').addEventListener('click', () => {
 	showFullscreenModal(
 		'./assets/images/arts/e8d80a5115a22eeb0788d72ae7d0b30c.png',
+		null,
 		'Draftings'
 	);
 });
 document.getElementById('artImgBtn4').addEventListener('click', () => {
 	showFullscreenModal(
 		'./assets/images/arts/85eba8bcf9604dd52dccd264d56e2ef4.png',
+		null,
 		'Draftings'
 	);
 });
 document.getElementById('artImgBtn3').addEventListener('click', () => {
 	showFullscreenModal(
 		'./assets/images/arts/8d4f9e3fdd5754cd3fc81ba492b86dda.png',
+		null,
 		'Draftings'
 	);
 });
 document.getElementById('artImgBtn2').addEventListener('click', () => {
 	showFullscreenModal(
 		'./assets/images/arts/097dc82661b70ab38132811fe3759155.png',
+		null,
 		'Draftings'
 	);
 });
 document.getElementById('artImgBtn1').addEventListener('click', () => {
 	showFullscreenModal(
 		'./assets/images/arts/b6d63bcde6761ae7777cbab09283fac2.png',
+		null,
 		'Draftings'
 	);
 });
 document.getElementById('certImgBtn1').addEventListener('click', () => {
 	showFullscreenModal(
 		'./assets/images/certifications/d15f8c03838118ed6beb288e10b228d0.png',
+		'./assets/images/wmrker.png',
 		'CS403: Introduction to Modern Database Systems'
 	);
 });
 document.getElementById('certImgBtn2').addEventListener('click', () => {
 	showFullscreenModal(
 		'./assets/images/certifications/eceb485437e6c423dbb50faffb4b75e2.png',
+		'./assets/images/wmrker.png',
 		'APIs & Web Services'
 	);
 });
 document.getElementById('certImgBtn3').addEventListener('click', () => {
 	showFullscreenModal(
 		'./assets/images/certifications/7d17d9cccfc20aeb282b3113cc10f795.png',
+		'./assets/images/wmrker.png',
 		'Current Trends & Issues in Computer & Information Technology'
 	);
 });
 document.getElementById('certImgBtn4').addEventListener('click', () => {
 	showFullscreenModal(
 		'./assets/images/certifications/55d448864ab7ea2a37bfd90e7b6012f6.png',
+		'./assets/images/wmrker.png',
 		'Computer Hardware Assembly & Disassembly'
 	);
 });
 document.getElementById('certImgBtn5').addEventListener('click', () => {
 	showFullscreenModal(
 		'./assets/images/certifications/04ba2e5acb4970912f4c980a0c9095d8.jpg',
+		'./assets/images/wmrker.png',
 		'Mission 1: A Disclosure on IT Profession'
 	);
 });
 document.getElementById('certImgBtn6').addEventListener('click', () => {
 	showFullscreenModal(
 		'./assets/images/certifications/214837a83d0d9b08a2ee9dd8753525b2.png',
+		'./assets/images/wmrker.png',
 		'PNPKI and Data Privacy Orientation'
 	);
 });
 document.getElementById('certImgBtn7').addEventListener('click', () => {
 	showFullscreenModal(
 		'./assets/images/certifications/82c88dc884434b0a41fd3d5f60938a4b.jpg',
+		'./assets/images/wmrker.png',
 		'Cybersecurity Awareness'
 	);
 });
 document.getElementById('mobImgBtn1').addEventListener('click', () => {
 	showFullscreenModal(
 		'./assets/images/apps/918f3caf4bb1080ab388ec775980940f.png',
+		null,
 		'Mobile Applications'
 	);
 });
 document.getElementById('mockImgBtn1').addEventListener('click', () => {
 	showFullscreenModal(
 		'./assets/images/mock/7e81ada7856bfc9947d43e1c6c62128f.png',
+		null,
 		'Mockups'
 	);
 });
 document.getElementById('waImgBtn1').addEventListener('click', () => {
 	showFullscreenModal(
 		'./assets/images/apps/58c52c965c4d7f6a0301c5dc08c423a7.png',
+		null,
 		'Web Applications'
 	);
 });
 
-function showFullscreenModal(imageUrl, imageAlt) {
+function showFullscreenModal(imageUrl, watermarkUrl, imageAlt) {
 	swal.fire({
 		imageUrl: imageUrl,
 		imageAlt: imageAlt,
@@ -117,6 +135,17 @@ function showFullscreenModal(imageUrl, imageAlt) {
 		showConfirmButton: false,
 		customClass: {
 			popup: 'fullscreen',
+		},
+		didOpen: function () {
+			if (watermarkUrl) {
+				const mainImage = document.querySelector('.swal2-image');
+				const watermarkImage = document.createElement('img');
+				watermarkImage.src = watermarkUrl;
+				watermarkImage.className = 'watermark';
+				watermarkImage.style.width = mainImage.width + 'px';
+				watermarkImage.style.height = mainImage.height + 'px';
+				document.querySelector('.swal2-popup').appendChild(watermarkImage);
+			}
 		},
 	});
 }

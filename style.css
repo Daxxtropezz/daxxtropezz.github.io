@@ -10,6 +10,14 @@ body {
 	z-index: 9999;
 }
 
+.watermark {
+	position: absolute;
+	bottom: 10px;
+	right: 10px;
+	opacity: 0.5;
+	z-index: 9999;
+}
+
 button:hover .ql-stroke,
 .ql-picker-label:hover .ql-stroke {
 	fill: none;
