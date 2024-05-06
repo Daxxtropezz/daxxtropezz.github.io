@@ -21,6 +21,35 @@ document.getElementById('orcCertBtn3').addEventListener('click', () => {
 	);
 });
 
+document.getElementById('hrCertBtn1').addEventListener('click', () => {
+	showFullscreenModal(
+		'./assets/images/certifications/b690160a432af4cf4c19e877199749d6.png',
+		'./assets/images/wmrker.png',
+		'SQL (Basic)'
+	);
+});
+document.getElementById('hrCertBtn2').addEventListener('click', () => {
+	showFullscreenModal(
+		'./assets/images/certifications/a3a47433d9da4b10243246c925b2b6bf.png',
+		'./assets/images/wmrker.png',
+		'Frontend Developer (React)'
+	);
+});
+document.getElementById('hrCertBtn3').addEventListener('click', () => {
+	showFullscreenModal(
+		'./assets/images/certifications/2522d3987a1f3492ed977900658bfb69.png',
+		'./assets/images/wmrker.png',
+		'Python (Basic)'
+	);
+});
+document.getElementById('hrCertBtn4').addEventListener('click', () => {
+	showFullscreenModal(
+		'./assets/images/certifications/5c047afbb4b0aac395be9124894eae73.png',
+		'./assets/images/wmrker.png',
+		'Problem Solving (Basic)'
+	);
+});
+
 document.getElementById('artImgBtn5').addEventListener('click', () => {
 	showFullscreenModal(
 		'./assets/images/arts/e8d80a5115a22eeb0788d72ae7d0b30c.png',
