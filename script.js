@@ -1,4 +1,11 @@
 // -------
+document.getElementById('seCertBtn1').addEventListener('click', () => {
+	showFullscreenModal(
+		'./assets/images/certifications/2b14fb3228a3188d0896925bc5ac3220.png',
+		'./assets/images/wmrker.png',
+		'Software Engineer'
+	);
+});
 document.getElementById('orcCertBtn1').addEventListener('click', () => {
 	showFullscreenModal(
 		'./assets/images/certifications/1c77eec6f493bdef4aeafbf948afc0a8.jpg',
