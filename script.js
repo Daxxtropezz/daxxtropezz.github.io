@@ -61,6 +61,21 @@ document.getElementById('orcCertBtn3').addEventListener('click', () => {
 	);
 });
 
+document.getElementById('daBtn1').addEventListener('click', () => {
+	showFullscreenModal(
+		'./assets/images/certifications/db8a0582cbfabfbd1b1caa71f90aba88.jpg',
+		'./assets/images/wmrker.png',
+		'Data Analytics Essentials'
+	);
+});
+document.getElementById('daBtn2').addEventListener('click', () => {
+	showFullscreenModal(
+		'./assets/images/certifications/83cffe57f3598a164ebfd9f437f6a259.jpg',
+		'./assets/images/wmrker.png',
+		'Introduction to Data Science'
+	);
+});
+
 document.getElementById('hrCertBtn1').addEventListener('click', () => {
 	showFullscreenModal(
 		'./assets/images/certifications/b690160a432af4cf4c19e877199749d6.png',
