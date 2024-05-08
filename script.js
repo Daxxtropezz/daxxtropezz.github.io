@@ -1,4 +1,37 @@
 // -------
+const audio = document.getElementById('background-music');
+let isPlaying;
+
+function playAudio() {
+	if (isPlaying) {
+		audio.play().then(() => {
+			isPlaying = false;
+		});
+	}
+	// isPlaying = true;
+}
+document.addEventListener('click', playAudio);
+
+Swal.fire({
+	title: 'Trigger Warning!',
+	text: 'This system has background audio. Do you want to mute the sound?',
+	imageUrl: './assets/images/33180e7e10c9fcab642b5c5075465f6c.png',
+	color: '#FFF',
+	background: '#1f317dc0',
+	imageWidth: 150,
+	imageAlt: 'Gang Logo',
+	showCancelButton: true,
+	confirmButtonText: 'Yes, please?',
+	cancelButtonText: 'No, thanks!',
+	reverseButtons: true,
+}).then((result) => {
+	if (result.isConfirmed) {
+		audio.pause();
+	} else if (result.dismiss === Swal.DismissReason.cancel) {
+		audio.play();
+	}
+});
+// -------
 document.getElementById('seCertBtn1').addEventListener('click', () => {
 	showFullscreenModal(
 		'./assets/images/certifications/2b14fb3228a3188d0896925bc5ac3220.png',
@@ -278,32 +311,6 @@ window.onblur = function () {
 window.onfocus = function () {
 	document.title = 'Daxxtropezz | HOME';
 };
-
-const audio = document.getElementById('background-music');
-const playIcon = document.getElementById('play-music');
-const pauseIcon = document.getElementById('pause-music');
-
-let isPlaying = false;
-
-function playAudio() {
-	if (!isPlaying) {
-		audio
-			.play()
-			.then(() => {
-				isPlaying = true;
-			})
-			.catch((error) => {
-				console.error('Error playing audio:', error);
-			});
-	}
-}
-
-document.addEventListener('click', playAudio);
-
-audio.addEventListener('ended', function () {
-	audio.currentTime = 0;
-	audio.play();
-});
 
 var elements = document.querySelectorAll('.typing-name');
 
