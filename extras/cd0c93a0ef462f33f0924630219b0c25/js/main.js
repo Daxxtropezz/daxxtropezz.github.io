@@ -90,7 +90,7 @@ function commander(cmd) {
       break;
     case "clear":
       setTimeout(function () {
-        terminal.innerHTML = "";
+        terminal.innerHTML = '<a id="before"></a>';
         before = document.getElementById("before");
       }, 1);
       break;

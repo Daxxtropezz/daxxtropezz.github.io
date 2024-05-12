@@ -34,19 +34,19 @@ aboutme = [
 
 social = [
   "<br>",
-  'dev        <a href="' +
+  'dev\t&nbsp;<a href="' +
     dev +
     '" target="blank">dev.to/cosmicwanderer7' +
     "</a>",
-  'twitter        <a href="' +
+  'twitter         <a href="' +
     twitter +
     '" target="blank">twitter.com/PrithviYewale' +
     "</a>",
-  'linkedin       <a href="' +
+  'linkedin         <a href="' +
     linkedin +
     '" target="blank">linkedin/prithviYewale' +
     "</a>",
-  'instagram      <a href="' +
+  'instagram         <a href="' +
     instagram +
     '" target="blank">instagram/prithvi_yewale' +
     "</a>",
@@ -54,7 +54,6 @@ social = [
     github +
     '" target="blank">github/cosmicwanderer7' +
     "</a>",
-
   "<br>",
 ];
 
@@ -97,34 +96,21 @@ Built With
   "<br>",
 ];
 
+// back = [(window.location.href = "../")];
 help = [
   `<br><pre class="whitespace-pre-wrap">
-  <span class="command">aboutme</span>    
-   <span class="command">↳</span>&nbsp;Diplays Who I am?
-  <span class="command">social</span>     
-   <span class="command">↳</span>&nbsp;Lists social networks.
-  <span class="command">projects</span>   
-   <span class="command">↳</span>&nbsp;View coding projects.
-  <span class="command">email</span>      
-   <span class="command">↳</span>&nbsp;To send me a email.
-  <span class="command">history</span>    
-   <span class="command">↳</span>&nbsp;View command history.
-  <span class="command">help</span>       
-   <span class="command">↳</span>&nbsp;Displays this help msg.
-  <span class="command">sudo</span>       
-   <span class="command">↳</span>&nbsp;Try it out for yourself.
-  <span class="command">clear</span>
-   <span class="command">↳</span>&nbsp;Clear terminal.</pre><br>`,
+  <span class="command">aboutme</span>      &nbsp;Diplays Who I am?
+  <span class="command">social</span>       &nbsp;Lists social networks.
+  <span class="command">projects</span>     &nbsp;View coding projects.
+  <span class="command">email</span>        &nbsp;To send me a email.
+  <span class="command">history</span>      &nbsp;View command history.
+  <span class="command">help</span>         &nbsp;Displays this help msg.
+  <span class="command">sudo</span>         &nbsp;Try it out for yourself.
+  <span class="command">clear</span>          &numsp;clears the terminal.
+  <span class="command">back</span>        &numsp;return to the main portfolio.
+  </pre><br>`,
 ];
 banner = [
-  "      / / --o o- \\   --(_)--   ",
-  " ::'                                    `:: ",
-  ":: :.                                  .: ::",
-  `<div><div>`,
-  `<div class="pt-2">
-    <span class="text-[#7d82d7db]">
-      Welcome to my portfolio! — Type 
-      <span class="command text-[#75e1e7]">help</span> for a list of supported commands.
-    </span>
-   </div>`,
+  `<div class="pt-2"><span class="text-[#7d82d7db]">Welcome to my portfolio! — Type <span class="command text-[#75e1e7]">help</span> for a list of supported commands.</span></div>`,
+  `Or you can click <a onclick="history.back()" target="blank">return</a> to go back to the main portfolio.`,
 ];
