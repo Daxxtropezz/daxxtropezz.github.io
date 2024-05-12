@@ -8,6 +8,28 @@ document.addEventListener('keydown', function (event) {
 	}
 });
 
+// -- TERMINAL NAV
+Swal.fire({
+	title: 'Terminal Warning!',
+	text: 'Do you want to proceed to the new terminal portfolio instead?',
+	imageUrl: '../assets/images/33180e7e10c9fcab642b5c5075465f6c.png',
+	color: '#FFF',
+	background: '#1f317dc0',
+	imageWidth: 150,
+	imageAlt: 'Gang Logo',
+	showCancelButton: true,
+	confirmButtonText: 'Sure',
+	cancelButtonText: 'No',
+	reverseButtons: true,
+}).then((result) => {
+	if (result.isConfirmed) {
+		// audio.pause();
+	} else if (result.dismiss === Swal.DismissReason.cancel) {
+		// audio.play();
+	}
+});
+// -- TERMINAL NAV
+
 // -------
 const audio = document.getElementById('background-music');
 let isPlaying;
@@ -20,26 +42,6 @@ function playAudio() {
 	}
 }
 document.addEventListener('click', playAudio);
-
-Swal.fire({
-	title: 'Trigger Warning!',
-	text: 'Do you want to proceed to the terminal portfolio instead?',
-	imageUrl: '../assets/images/33180e7e10c9fcab642b5c5075465f6c.png',
-	color: '#FFF',
-	background: '#1f317dc0',
-	imageWidth: 150,
-	imageAlt: 'Gang Logo',
-	showCancelButton: true,
-	confirmButtonText: 'Yes please?',
-	cancelButtonText: 'No thanks!',
-	reverseButtons: true,
-}).then((result) => {
-	if (result.isConfirmed) {
-		audio.pause();
-	} else if (result.dismiss === Swal.DismissReason.cancel) {
-		audio.play();
-	}
-});
 // -------
 
 // SOUND
@@ -372,6 +374,10 @@ const tooltips = [
 	{
 		selector: '#contactme',
 		content: 'Contact Me',
+	},
+	{
+		selector: '#terminalbutton',
+		content: 'Open Terminal Portfolio',
 	},
 ];
 tooltips.forEach(({ selector, content }) => {
