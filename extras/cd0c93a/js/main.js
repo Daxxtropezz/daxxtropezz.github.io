@@ -127,7 +127,7 @@ function commander(cmd) {
       break;
     case "sudo":
     case "sudo su":
-      addLine("Oh no, you're not an admin...", "color2", 0);
+      addLine("oh no, you're not an admin...", "color2", 0);
       newTab(sudo);
       break;
     default:

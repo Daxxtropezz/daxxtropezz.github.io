@@ -23,13 +23,9 @@ help = [
 
 whoami = [
   "<br>",
-  "<span class='underline'>Hey, I'm Daxxtropezz!👋</span>",
-  "<br>",
-  "<li>🔭 I’m currently a 3rd year undergrad, pursuing BSc.</li>",
-  "<li>🌱 My fields of intetest are</li>",
-  `<pre class="whitespace-pre-wrap">
-        - Fullstack Development
-        - UI/UX Designing</pre>`,
+  "<span>Hey, I'm Daxxtropezz!👋</span>",
+  '<li>🔭 I’m a graduate student from CvSU - Imus Campus, with a degree of <span class="command text-[#75e1e7]">Bachelor of Science in Information Technology</span>.</li>',
+  `<ul>🌱 My fields of intetests are:<li>Fullstack Development</li><li>UI/UX Designing</li></ul>`,
   `<li><pre class="whitespace-pre-wrap">👯 I would love to work with anyone who wants to build a 
    professional website for their business or even a personal 
    website to showcase their portfolio.
@@ -66,7 +62,7 @@ projects = [
 
 banner = [
   `<pre
-  class="ascii ascii-sep pt-2 pb-5 prose lg:prose-xl text-[#9ccfd8B3] whitespace-pre-wrap inline-block break-words leading-none" style="font-family: monospace,-webkit-pictograph;">
+  class="ascii" style="font-family: monospace,-webkit-pictograph;">
   
   ░██╗░░░░░░░██╗███████╗██╗░░░░░░█████╗░░█████╗░███╗░░░███╗███████╗  ████████╗░█████╗░
   ░██║░░██╗░░██║██╔════╝██║░░░░░██╔══██╗██╔══██╗████╗░████║██╔════╝  ╚══██╔══╝██╔══██╗
