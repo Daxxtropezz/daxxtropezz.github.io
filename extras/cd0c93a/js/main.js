@@ -59,7 +59,9 @@ function commander(cmd) {
       break;
     case "back":
       addLine("returning to main profile...", "color2", 80);
-      newTab("../../");
+      setTimeout(function () {
+        window.open("../../", "_self");
+      }, 500);
       break;
     case "whoami":
       loopLines(whoami, "color2 margin", 80);
