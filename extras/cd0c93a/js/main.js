@@ -57,12 +57,12 @@ function commander(cmd) {
     case "help":
       loopLines(help, "color2 margin", 80);
       break;
+    case "back":
+      addLine("returning to main profile...", "color2", 80);
+      newTab("../../");
+      break;
     case "whoami":
       loopLines(whoami, "color2 margin", 80);
-      break;
-    case "DEV":
-      addLine("opening Dev.to...", "color2", 80);
-      newTab(Dev);
       break;
     case "social":
       loopLines(social, "color2 margin", 80);
