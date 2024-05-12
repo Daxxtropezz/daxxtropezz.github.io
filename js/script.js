@@ -350,8 +350,7 @@ document
       reverseButtons: true,
     }).then((result) => {
       if (result.isConfirmed) {
-        window.location.href =
-          "./extras/cd0c93a0ef462f33f0924630219b0c25/index.html";
+        window.location.href = "./extras/cd0c93a/";
       } else if (result.dismiss === Swal.DismissReason.cancel) {
       }
     });

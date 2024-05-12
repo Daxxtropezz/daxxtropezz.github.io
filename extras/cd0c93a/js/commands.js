@@ -6,6 +6,19 @@ var github = "https://github.com/cosmicwanderer7";
 var sudo = "https://www.youtube.com/watch?v=dQw4w9WgXcQ?autoplay=1";
 var email = "mailto:yewaleprithvi2003@gmail.com";
 
+help = [
+  `<br><pre class="whitespace-pre-wrap">
+  <span class="command">aboutme</span>      &nbsp;Diplays Who I am?
+  <span class="command">social</span>       &nbsp;Lists social networks.
+  <span class="command">projects</span>     &nbsp;View coding projects.
+  <span class="command">email</span>        &nbsp;To send me a email.
+  <span class="command">history</span>      &nbsp;View command history.
+  <span class="command">help</span>         &nbsp;Displays this help msg.
+  <span class="command">sudo</span>         &nbsp;Try it out for yourself.
+  <span class="command">clear</span>          &numsp;clears the terminal.
+  </pre><br>`,
+];
+
 aboutme = [
   "<br>",
   "<span class='underline'>Hey, I'm prithvi!👋</span>",
@@ -96,21 +109,8 @@ Built With
   "<br>",
 ];
 
-// back = [(window.location.href = "../")];
-help = [
-  `<br><pre class="whitespace-pre-wrap">
-  <span class="command">aboutme</span>      &nbsp;Diplays Who I am?
-  <span class="command">social</span>       &nbsp;Lists social networks.
-  <span class="command">projects</span>     &nbsp;View coding projects.
-  <span class="command">email</span>        &nbsp;To send me a email.
-  <span class="command">history</span>      &nbsp;View command history.
-  <span class="command">help</span>         &nbsp;Displays this help msg.
-  <span class="command">sudo</span>         &nbsp;Try it out for yourself.
-  <span class="command">clear</span>          &numsp;clears the terminal.
-  <span class="command">back</span>        &numsp;return to the main portfolio.
-  </pre><br>`,
-];
 banner = [
-  `<div class="pt-2"><span class="text-[#7d82d7db]">Welcome to my portfolio! — Type <span class="command text-[#75e1e7]">help</span> for a list of supported commands.</span></div>`,
+  `<div class="pt-2"><span class="text-[#7d82d7db]">Welcome to my interactive web terminal! — Type <span class="command text-[#75e1e7]">help</span> for a list of supported commands.</span></div>`,
   `Or you can click <a onclick="history.back()" target="blank">return</a> to go back to the main portfolio.`,
+  `<span class="command text-[#75e1e7]">Created by Daxxtropezz. All rights reserved.</span>`,
 ];

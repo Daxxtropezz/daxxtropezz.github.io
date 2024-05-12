@@ -60,16 +60,13 @@ function commander(cmd) {
     case "aboutme":
       loopLines(aboutme, "color2 margin", 80);
       break;
-
     case "DEV":
       addLine("Opening Dev.to...", "color2", 80);
       newTab(Dev);
       break;
-
     case "social":
       loopLines(social, "color2 margin", 80);
       break;
-
     case "projects":
       loopLines(projects, "color2 margin", 80);
       break;
@@ -84,8 +81,6 @@ function commander(cmd) {
         "color2",
         80
       );
-      newTab(email);
-      break;
       newTab(email);
       break;
     case "clear":
