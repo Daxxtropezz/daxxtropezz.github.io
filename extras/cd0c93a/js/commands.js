@@ -24,19 +24,16 @@ help = [
 whoami = [
   "<br>",
   "<span>Hey, I'm Daxxtropezz!👋</span>",
-  '<li>🔭 I’m a graduate student from CvSU - Imus Campus, with a degree of <span class="command text-[#75e1e7]">Bachelor of Science in Information Technology</span>.</li>',
+  '🔭 I’m a graduate student from CvSU - Imus Campus, with a degree of <span class="command text-[#75e1e7]">Bachelor of Science in Information Technology</span>.',
   `<ul>🌱 My fields of intetests are:<li>Fullstack Development</li><li>UI/UX Designing</li></ul>`,
   `<li><pre class="whitespace-pre-wrap">👯 I would love to work with anyone who wants to build a 
    professional website for their business or even a personal 
    website to showcase their portfolio.
    I love learning new stuff and using it to improve my skills.
-   I primarily use NextJS and Tailwind CSS when building my 
-   websites (projects).
    You can learn more about the projects that I have built using 
-   the project command.
+   the <span class="command text-[#75e1e7]">'projects'</span> command.
    You can browse around my website to find out more about 
-   me.
-   *Try using <span class="command text-[#75e1e7]">social commands</span>.</pre>`,
+   me. Try using <span class="command text-[#75e1e7]">social commands</span> and/or <span class="command text-[#75e1e7]">'help'</span> to explore more.</pre>`,
   `<li>👨‍💻 You can use the <span class="command text-[#75e1e7]">'github'</span> command to take a look at my GitHub profile.`,
   `<li>📫 Contact me at <a href= "https://mail.google.com/mail/u/0/?fs=1&tf=cm&source=mailto&to=miraflores.john@gmail.com">miraflores.john@gmail.com</a>`,
   "<br>",
