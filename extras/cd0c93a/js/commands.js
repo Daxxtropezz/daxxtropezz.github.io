@@ -9,6 +9,7 @@ help = [
   `<br><pre class="whitespace-pre-wrap">
   <span class="command">banner</span>\t\t&nbsp;\tdisplays the header for this terminal
   <span class="command">clear</span>\t\t&nbsp;\t\t\tclears the terminal
+  <span class="command">cls</span>\t\t&nbsp;\t\t\t\tclears the terminal
   <span class="command">emailme</span>\t\t&nbsp;\tdon't try to send me an email
   <span class="command">help</span>\t\t&nbsp;\t\t\tprovides help information for commands
   <span class="command">history</span>\t\t&nbsp;\t\tviews command history

@@ -84,6 +84,7 @@ function commander(cmd) {
       newTab(emailme);
       break;
     case "clear":
+    case "cls":
       setTimeout(function () {
         terminal.innerHTML = '<a id="before"></a>';
         before = document.getElementById("before");
@@ -125,7 +126,7 @@ function commander(cmd) {
       addLine(
         // '<span class="inherit">Command not found. For a list of commands, type <span class="command">\'help\'</span>.</span>',
         `<span>Command not found. For a list of commands, type <span class="command">'help'</span>.</span>
-        <br><span> <b>Note</b>: Press <span class = "command">'↳ Tab'</span> key or click the <span class = "command"><i>typer</i></span> if you cannot type</span>`,
+        <br><span> <b>Note</b>: Press <span class = "command">'↳ Tab'</span> key or click <b class="cursor" id="cursor">█</b> if you cannot type</span>`,
         "error",
         100
       );
