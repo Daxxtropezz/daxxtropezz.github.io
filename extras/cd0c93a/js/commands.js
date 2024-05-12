@@ -8,7 +8,7 @@ var emailme = "mailto:miraflores.john@gmail.com";
 
 help = [
   `<br><pre class="whitespace-pre-wrap">
-  <span class="command">back</span>\t\t&nbsp;\treturns to main portfolio
+  <span class="command">back</span>\t\t&nbsp;\t\t\treturns to main portfolio
   <span class="command">banner</span>\t\t&nbsp;\tdisplays the header for this terminal
   <span class="command">clear</span>\t\t&nbsp;\t\t\tclears the terminal
   <span class="command">cls</span>\t\t&nbsp;\t\t\t\tclears the terminal
