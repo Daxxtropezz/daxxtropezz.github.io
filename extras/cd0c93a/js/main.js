@@ -61,7 +61,7 @@ function commander(cmd) {
       loopLines(aboutme, "color2 margin", 80);
       break;
     case "DEV":
-      addLine("Opening Dev.to...", "color2", 80);
+      addLine("opening Dev.to...", "color2", 80);
       newTab(Dev);
       break;
     case "social":
@@ -77,7 +77,7 @@ function commander(cmd) {
       break;
     case "email":
       addLine(
-        'Opening mailto:<a href="mailto:yewaleprithvi2003@gmail.com"> yewaleprithvi2003@gmail.com</a>...',
+        'opening mailto:<a href="mailto:miraflores.john@gmail.com"> miraflores.john@gmail.com</a>...',
         "color2",
         80
       );
@@ -93,24 +93,24 @@ function commander(cmd) {
       loopLines(banner, "", 80);
       break;
     // socials
-    case "dev":
-      addLine("Opening Dev.to...", "color2", 80);
-      newTab(dev);
-      break;
+    // case "dev":
+    //   addLine("opening Dev.to...", "color2", 80);
+    //   newTab(dev);
+    //   break;
     case "twitter":
-      addLine("Opening Twitter...", "color2", 0);
+      addLine("opening Twitter...", "color2", 0);
       newTab(twitter);
       break;
     case "linkedin":
-      addLine("Opening LinkedIn...", "color2", 0);
+      addLine("opening LinkedIn...", "color2", 0);
       newTab(linkedin);
       break;
     case "instagram":
-      addLine("Opening Instagram...", "color2", 0);
+      addLine("opening Instagram...", "color2", 0);
       newTab(instagram);
       break;
     case "github":
-      addLine("Opening GitHub...", "color2", 0);
+      addLine("opening GitHub...", "color2", 0);
       newTab(github);
       break;
     case "sudo":
@@ -119,7 +119,8 @@ function commander(cmd) {
       break;
     default:
       addLine(
-        '<span class="inherit">Command not found. For a list of commands, type <span class="command">\'help\'</span>.</span>',
+        // '<span class="inherit">Command not found. For a list of commands, type <span class="command">\'help\'</span>.</span>',
+        "<span>Command not found. For a list of commands, type <span class=\"command\">'help'</span>.</span>",
         "error",
         100
       );
