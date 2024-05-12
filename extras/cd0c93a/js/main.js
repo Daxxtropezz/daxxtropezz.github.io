@@ -28,7 +28,7 @@ function enterKey(e) {
     commands.push(command.innerHTML);
     git = commands.length;
     addLine(
-      "guest@daxxtropezz.github.io:~$" + command.innerHTML,
+      "guest@daxxtropezz.github.io:~$⠀" + command.innerHTML,
       "no-animation",
       0
     );
@@ -102,6 +102,11 @@ function commander(cmd) {
       );
       break;
     // socials
+    case "facebook":
+    case "fb":
+      addLine("opening Facebook...", "color2", 0);
+      newTab(facebook);
+      break;
     case "twitter":
       addLine("opening Twitter...", "color2", 0);
       newTab(twitter);
@@ -111,14 +116,17 @@ function commander(cmd) {
       newTab(linkedin);
       break;
     case "instagram":
+    case "ig":
       addLine("opening Instagram...", "color2", 0);
       newTab(instagram);
       break;
     case "github":
+    case "git":
       addLine("opening GitHub...", "color2", 0);
       newTab(github);
       break;
     case "sudo":
+    case "sudo su":
       addLine("Oh no, you're not an admin...", "color2", 0);
       newTab(sudo);
       break;
