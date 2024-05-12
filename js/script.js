@@ -15,7 +15,7 @@ document.addEventListener('click', playAudio);
 Swal.fire({
 	title: 'Trigger Warning!',
 	text: 'This system has background audio. Do you want to mute the sound?',
-	imageUrl: './assets/images/33180e7e10c9fcab642b5c5075465f6c.png',
+	imageUrl: '../assets/images/33180e7e10c9fcab642b5c5075465f6c.png',
 	color: '#FFF',
 	background: '#1f317dc0',
 	imageWidth: 150,
@@ -34,178 +34,178 @@ Swal.fire({
 // -------
 document.getElementById('seCertBtn1').addEventListener('click', () => {
 	showFullscreenModal(
-		'./assets/images/certifications/2b14fb3228a3188d0896925bc5ac3220.png',
-		'./assets/images/wmrker.png',
+		'../assets/images/certifications/2b14fb3228a3188d0896925bc5ac3220.png',
+		'../assets/images/wmrker.png',
 		'Software Engineer'
 	);
 });
 document.getElementById('orcCertBtn1').addEventListener('click', () => {
 	showFullscreenModal(
-		'./assets/images/certifications/1c77eec6f493bdef4aeafbf948afc0a8.jpg',
-		'./assets/images/wmrker.png',
+		'../assets/images/certifications/1c77eec6f493bdef4aeafbf948afc0a8.jpg',
+		'../assets/images/wmrker.png',
 		'Oracle Certificate'
 	);
 });
 document.getElementById('orcCertBtn2').addEventListener('click', () => {
 	showFullscreenModal(
-		'./assets/images/certifications/1c9487aee34cf4a8f18d2ac36c2b79bf.jpg',
-		'./assets/images/wmrker.png',
+		'../assets/images/certifications/1c9487aee34cf4a8f18d2ac36c2b79bf.jpg',
+		'../assets/images/wmrker.png',
 		'Oracle Certificate'
 	);
 });
 document.getElementById('orcCertBtn3').addEventListener('click', () => {
 	showFullscreenModal(
-		'./assets/images/certifications/950c4790da8075c470fa8f241c11888f.jpg',
-		'./assets/images/wmrker.png',
+		'../assets/images/certifications/950c4790da8075c470fa8f241c11888f.jpg',
+		'../assets/images/wmrker.png',
 		'Oracle Certificate'
 	);
 });
 
 document.getElementById('daBtn1').addEventListener('click', () => {
 	showFullscreenModal(
-		'./assets/images/certifications/db8a0582cbfabfbd1b1caa71f90aba88.jpg',
-		'./assets/images/wmrker.png',
+		'../assets/images/certifications/db8a0582cbfabfbd1b1caa71f90aba88.jpg',
+		'../assets/images/wmrker.png',
 		'Data Analytics Essentials'
 	);
 });
 document.getElementById('daBtn2').addEventListener('click', () => {
 	showFullscreenModal(
-		'./assets/images/certifications/83cffe57f3598a164ebfd9f437f6a259.jpg',
-		'./assets/images/wmrker.png',
+		'../assets/images/certifications/83cffe57f3598a164ebfd9f437f6a259.jpg',
+		'../assets/images/wmrker.png',
 		'Introduction to Data Science'
 	);
 });
 
 document.getElementById('hrCertBtn1').addEventListener('click', () => {
 	showFullscreenModal(
-		'./assets/images/certifications/b690160a432af4cf4c19e877199749d6.png',
-		'./assets/images/wmrker.png',
+		'../assets/images/certifications/b690160a432af4cf4c19e877199749d6.png',
+		'../assets/images/wmrker.png',
 		'SQL (Basic)'
 	);
 });
 document.getElementById('hrCertBtn2').addEventListener('click', () => {
 	showFullscreenModal(
-		'./assets/images/certifications/a3a47433d9da4b10243246c925b2b6bf.png',
-		'./assets/images/wmrker.png',
+		'../assets/images/certifications/a3a47433d9da4b10243246c925b2b6bf.png',
+		'../assets/images/wmrker.png',
 		'Frontend Developer (React)'
 	);
 });
 document.getElementById('hrCertBtn3').addEventListener('click', () => {
 	showFullscreenModal(
-		'./assets/images/certifications/2522d3987a1f3492ed977900658bfb69.png',
-		'./assets/images/wmrker.png',
+		'../assets/images/certifications/2522d3987a1f3492ed977900658bfb69.png',
+		'../assets/images/wmrker.png',
 		'Python (Basic)'
 	);
 });
 document.getElementById('hrCertBtn4').addEventListener('click', () => {
 	showFullscreenModal(
-		'./assets/images/certifications/5c047afbb4b0aac395be9124894eae73.png',
-		'./assets/images/wmrker.png',
+		'../assets/images/certifications/5c047afbb4b0aac395be9124894eae73.png',
+		'../assets/images/wmrker.png',
 		'Problem Solving (Basic)'
 	);
 });
 
 document.getElementById('artImgBtn5').addEventListener('click', () => {
 	showFullscreenModal(
-		'./assets/images/arts/e8d80a5115a22eeb0788d72ae7d0b30c.png',
+		'../assets/images/arts/e8d80a5115a22eeb0788d72ae7d0b30c.png',
 		null,
 		'Draftings'
 	);
 });
 document.getElementById('artImgBtn4').addEventListener('click', () => {
 	showFullscreenModal(
-		'./assets/images/arts/85eba8bcf9604dd52dccd264d56e2ef4.png',
+		'../assets/images/arts/85eba8bcf9604dd52dccd264d56e2ef4.png',
 		null,
 		'Draftings'
 	);
 });
 document.getElementById('artImgBtn3').addEventListener('click', () => {
 	showFullscreenModal(
-		'./assets/images/arts/8d4f9e3fdd5754cd3fc81ba492b86dda.png',
+		'../assets/images/arts/8d4f9e3fdd5754cd3fc81ba492b86dda.png',
 		null,
 		'Draftings'
 	);
 });
 document.getElementById('artImgBtn2').addEventListener('click', () => {
 	showFullscreenModal(
-		'./assets/images/arts/097dc82661b70ab38132811fe3759155.png',
+		'../assets/images/arts/097dc82661b70ab38132811fe3759155.png',
 		null,
 		'Draftings'
 	);
 });
 document.getElementById('artImgBtn1').addEventListener('click', () => {
 	showFullscreenModal(
-		'./assets/images/arts/b6d63bcde6761ae7777cbab09283fac2.png',
+		'../assets/images/arts/b6d63bcde6761ae7777cbab09283fac2.png',
 		null,
 		'Draftings'
 	);
 });
 document.getElementById('certImgBtn1').addEventListener('click', () => {
 	showFullscreenModal(
-		'./assets/images/certifications/d15f8c03838118ed6beb288e10b228d0.png',
-		'./assets/images/wmrker.png',
+		'../assets/images/certifications/d15f8c03838118ed6beb288e10b228d0.png',
+		'../assets/images/wmrker.png',
 		'CS403: Introduction to Modern Database Systems'
 	);
 });
 document.getElementById('certImgBtn2').addEventListener('click', () => {
 	showFullscreenModal(
-		'./assets/images/certifications/eceb485437e6c423dbb50faffb4b75e2.png',
-		'./assets/images/wmrker.png',
+		'../assets/images/certifications/eceb485437e6c423dbb50faffb4b75e2.png',
+		'../assets/images/wmrker.png',
 		'APIs & Web Services'
 	);
 });
 document.getElementById('certImgBtn3').addEventListener('click', () => {
 	showFullscreenModal(
-		'./assets/images/certifications/7d17d9cccfc20aeb282b3113cc10f795.png',
-		'./assets/images/wmrker.png',
+		'../assets/images/certifications/7d17d9cccfc20aeb282b3113cc10f795.png',
+		'../assets/images/wmrker.png',
 		'Current Trends & Issues in Computer & Information Technology'
 	);
 });
 document.getElementById('certImgBtn4').addEventListener('click', () => {
 	showFullscreenModal(
-		'./assets/images/certifications/55d448864ab7ea2a37bfd90e7b6012f6.png',
-		'./assets/images/wmrker.png',
+		'../assets/images/certifications/55d448864ab7ea2a37bfd90e7b6012f6.png',
+		'../assets/images/wmrker.png',
 		'Computer Hardware Assembly & Disassembly'
 	);
 });
 document.getElementById('certImgBtn5').addEventListener('click', () => {
 	showFullscreenModal(
-		'./assets/images/certifications/04ba2e5acb4970912f4c980a0c9095d8.jpg',
-		'./assets/images/wmrker.png',
+		'../assets/images/certifications/04ba2e5acb4970912f4c980a0c9095d8.jpg',
+		'../assets/images/wmrker.png',
 		'Mission 1: A Disclosure on IT Profession'
 	);
 });
 document.getElementById('certImgBtn6').addEventListener('click', () => {
 	showFullscreenModal(
-		'./assets/images/certifications/214837a83d0d9b08a2ee9dd8753525b2.png',
-		'./assets/images/wmrker.png',
+		'../assets/images/certifications/214837a83d0d9b08a2ee9dd8753525b2.png',
+		'../assets/images/wmrker.png',
 		'PNPKI and Data Privacy Orientation'
 	);
 });
 document.getElementById('certImgBtn7').addEventListener('click', () => {
 	showFullscreenModal(
-		'./assets/images/certifications/82c88dc884434b0a41fd3d5f60938a4b.jpg',
-		'./assets/images/wmrker.png',
+		'../assets/images/certifications/82c88dc884434b0a41fd3d5f60938a4b.jpg',
+		'../assets/images/wmrker.png',
 		'Cybersecurity Awareness'
 	);
 });
 document.getElementById('mobImgBtn1').addEventListener('click', () => {
 	showFullscreenModal(
-		'./assets/images/apps/918f3caf4bb1080ab388ec775980940f.png',
+		'../assets/images/apps/918f3caf4bb1080ab388ec775980940f.png',
 		null,
 		'Mobile Applications'
 	);
 });
 document.getElementById('mockImgBtn1').addEventListener('click', () => {
 	showFullscreenModal(
-		'./assets/images/mock/7e81ada7856bfc9947d43e1c6c62128f.png',
+		'../assets/images/mock/7e81ada7856bfc9947d43e1c6c62128f.png',
 		null,
 		'Mockups'
 	);
 });
 document.getElementById('waImgBtn1').addEventListener('click', () => {
 	showFullscreenModal(
-		'./assets/images/apps/58c52c965c4d7f6a0301c5dc08c423a7.png',
+		'../assets/images/apps/58c52c965c4d7f6a0301c5dc08c423a7.png',
 		null,
 		'Web Applications'
 	);
@@ -257,7 +257,7 @@ document
 		Swal.fire({
 			title: 'Warning!',
 			text: 'Are you sure you want to exit?',
-			imageUrl: './assets/images/33180e7e10c9fcab642b5c5075465f6c.png',
+			imageUrl: '../assets/images/33180e7e10c9fcab642b5c5075465f6c.png',
 			color: '#FFF',
 			background: '#1f317dc0',
 			imageWidth: 150,

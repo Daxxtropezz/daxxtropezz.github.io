@@ -106,7 +106,7 @@ body {
 	position: relative;
 	height: 100vh;
 	width: 100%;
-	background-image: url('./assets/images/5f42f40866d5b076884670b5d660f051.jpg');
+	background-image: url('../assets/images/5f42f40866d5b076884670b5d660f051.jpg');
 	background-repeat: no-repeat;
 	background-size: cover;
 }
@@ -361,7 +361,7 @@ body.prevent-background-scroll {
 	aspect-ratio: 1;
 	transform: scale(1.05);
 	object-fit: cover;
-	background: url('./assets/images/21bfd997e2e0fd56425685cd592f4d2c.jpg'),
+	background: url('../assets/images/21bfd997e2e0fd56425685cd592f4d2c.jpg'),
 		no-repeat;
 	background-size: contain;
 	transition: all 0.8s ease-in;
@@ -369,7 +369,7 @@ body.prevent-background-scroll {
 
 .about-container .img-frame:hover img {
 	transform: rotate(2deg) scale(1.05);
-	background: url('./assets/images/c483f6ce851c9ecd9fb835ff7551737c.jpg'),
+	background: url('../assets/images/c483f6ce851c9ecd9fb835ff7551737c.jpg'),
 		no-repeat;
 	background-size: contain;
 	transition: all 0.8s ease-out;
