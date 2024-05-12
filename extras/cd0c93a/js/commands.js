@@ -49,6 +49,7 @@ whoami = [
 // prettier-ignore
 social = [
     "<br><pre class='whitespace-pre-wrap'>",
+    'typing them as command also opens their link in new tab:',
     'twitter&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\t\t\t\t<a href="' + twitter + '" target="blank">twitter.com/daxxtropezz</a>',
     'linkedin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\t\t\t\t<a href="' + linkedin + '" target="blank">linkedin/daxxtropezz</a>',
     'instagram&nbsp;&nbsp;&nbsp;&nbsp;\t\t\t\t<a href="' + instagram + '" target="blank">instagram/daxxtropezz</a>',
