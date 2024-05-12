@@ -8,28 +8,6 @@ document.addEventListener('keydown', function (event) {
 	}
 });
 
-// -- TERMINAL NAV
-Swal.fire({
-	title: 'Terminal Warning!',
-	text: 'Do you want to proceed to the new terminal portfolio instead?',
-	imageUrl: '../assets/images/33180e7e10c9fcab642b5c5075465f6c.png',
-	color: '#FFF',
-	background: '#1f317dc0',
-	imageWidth: 150,
-	imageAlt: 'Gang Logo',
-	showCancelButton: true,
-	confirmButtonText: 'Sure',
-	cancelButtonText: 'No',
-	reverseButtons: true,
-}).then((result) => {
-	if (result.isConfirmed) {
-		// audio.pause();
-	} else if (result.dismiss === Swal.DismissReason.cancel) {
-		// audio.play();
-	}
-});
-// -- TERMINAL NAV
-
 // -------
 const audio = document.getElementById('background-music');
 let isPlaying;
@@ -353,6 +331,29 @@ document
 				$(document.body).hide();
 			}
 		});
+	});
+document
+	.getElementById('terminalbutton')
+	.addEventListener('click', function () {
+		// -- TERMINAL NAV
+		Swal.fire({
+			title: 'Warning!',
+			text: 'Do you really wish to proceed to my new terminal portfolio?',
+			imageUrl: '../assets/images/33180e7e10c9fcab642b5c5075465f6c.png',
+			color: '#FFF',
+			background: '#1f317dc0',
+			imageWidth: 150,
+			imageAlt: 'Gang Logo',
+			showCancelButton: true,
+			confirmButtonText: 'Yes',
+			cancelButtonText: 'No',
+			reverseButtons: true,
+		}).then((result) => {
+			if (result.isConfirmed) {
+			} else if (result.dismiss === Swal.DismissReason.cancel) {
+			}
+		});
+		// -- TERMINAL NAV
 	});
 const tooltips = [
 	{
