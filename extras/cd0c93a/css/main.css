@@ -2,6 +2,11 @@
 ! tailwindcss v3.4.1 | MIT License | https://tailwindcss.com
 */
 
+::selection {
+  color: rgb(180, 155, 201);
+  background: rgb(255, 255, 255);
+}
+
 /*
 1. Prevent padding and border from affecting element width. (https://github.com/mozdevs/cssremedy/issues/4)
 2. Allow adding a border to an element by just adding a border-width. (https://github.com/tailwindcss/tailwindcss/pull/116)
@@ -623,9 +628,9 @@ video {
   overflow-wrap: break-word;
 }
 
-.rounded-\[7px\] {
+/* .rounded-\[7px\] {
   border-radius: 7px;
-}
+} */
 
 /* .border {
   border-width: 1px;
@@ -840,6 +845,10 @@ b {
   /* Default font size */
 }
 
+.ascii-sep {
+  font-size: 1px;
+}
+
 /* Define breakpoints and font sizes */
 
 @media only screen and (min-width: 360px) {
@@ -917,7 +926,7 @@ b {
 #command {
   cursor: text;
   height: 50px;
-  color: #31748f;
+  color: #f9f9f9;
 }
 
 #liner {
@@ -933,9 +942,9 @@ b {
   content: "guest@daxxtropezz.github.io:~$";
 }
 
-#liner.password::before {
+/* #liner.password::before {
   content: "Password:";
-}
+} */
 
 @keyframes show {
   from {
@@ -988,7 +997,7 @@ a {
 }
 
 a:hover {
-  color: #211830;
+  color: #cfb1e1;
 }
 
 a:focus {

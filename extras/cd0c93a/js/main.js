@@ -57,8 +57,8 @@ function commander(cmd) {
     case "help":
       loopLines(help, "color2 margin", 80);
       break;
-    case "aboutme":
-      loopLines(aboutme, "color2 margin", 80);
+    case "whoami":
+      loopLines(whoami, "color2 margin", 80);
       break;
     case "DEV":
       addLine("opening Dev.to...", "color2", 80);
@@ -75,13 +75,13 @@ function commander(cmd) {
       loopLines(commands, "color2", 80);
       addLine("<br>", "command", 80 * commands.length + 50);
       break;
-    case "email":
+    case "emailme":
       addLine(
         'opening mailto:<a href="mailto:miraflores.john@gmail.com"> miraflores.john@gmail.com</a>...',
         "color2",
         80
       );
-      newTab(email);
+      newTab(emailme);
       break;
     case "clear":
       setTimeout(function () {
@@ -92,11 +92,15 @@ function commander(cmd) {
     case "banner":
       loopLines(banner, "", 80);
       break;
+    case "secret":
+      addLine(
+        `<br><pre class="whitespace-pre-wrap">\t<span class="command">sudo</span>\t\t&nbsp;\ta secret code for ADMIN ONLY
+        </pre>`,
+        "color2",
+        0
+      );
+      break;
     // socials
-    // case "dev":
-    //   addLine("opening Dev.to...", "color2", 80);
-    //   newTab(dev);
-    //   break;
     case "twitter":
       addLine("opening Twitter...", "color2", 0);
       newTab(twitter);
@@ -120,7 +124,8 @@ function commander(cmd) {
     default:
       addLine(
         // '<span class="inherit">Command not found. For a list of commands, type <span class="command">\'help\'</span>.</span>',
-        "<span>Command not found. For a list of commands, type <span class=\"command\">'help'</span>.</span>",
+        `<span>Command not found. For a list of commands, type <span class="command">'help'</span>.</span>
+        <br><span> <b>Note</b>: Press <span class = "command">'↳ Tab'</span> key or click the <span class = "command"><i>typer</i></span> if you cannot type</span>`,
         "error",
         100
       );
@@ -160,3 +165,15 @@ function loopLines(name, style, time) {
     addLine(item, style, index * time);
   });
 }
+
+console.log(
+  "%cYou're a Hacker!😠",
+  "color: #04ff00; font-weight: bold; font-size: 24px;"
+);
+
+document.addEventListener("keydown", function (event) {
+  if (event.key === "Tab") {
+    event.preventDefault();
+    document.getElementById("texter").focus();
+  }
+});

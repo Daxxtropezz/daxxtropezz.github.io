@@ -1,24 +1,25 @@
-var twitter = "https://twitter.com/Daxxtropezz";
+var twitter = "https://twitter.com/daxxtropezz";
 var linkedin = "https://www.linkedin.com/in/daxxtropezz/";
 var instagram = "https://www.instagram.com/daxxtropezz/";
 var github = "https://github.com/daxxtropezz";
 var sudo = "https://www.youtube.com/watch?v=dQw4w9WgXcQ?autoplay=1";
-var email = "mailto:miraflores.john@gmail.com";
+var emailme = "mailto:miraflores.john@gmail.com";
 
 help = [
   `<br><pre class="whitespace-pre-wrap">
-  <span class="command">banner</span>          &numsp;displays the header
-  <span class="command">aboutme</span>      &nbsp;Diplays Who I am?
-  <span class="command">social</span>       &nbsp;displays social networks
-  <span class="command">projects</span>     &nbsp;View coding projects
-  <span class="command">email</span>        &nbsp;To send me a email
-  <span class="command">history</span>      &nbsp;View command history
-  <span class="command">help</span>         &nbsp;Displays this help msg
-  <span class="command">clear</span>          &numsp;clears the terminal
-  </pre><br>`,
+  <span class="command">banner</span>\t\t&nbsp;\tdisplays the header for this terminal
+  <span class="command">clear</span>\t\t&nbsp;\t\t\tclears the terminal
+  <span class="command">emailme</span>\t\t&nbsp;\tdon't try to send me an email
+  <span class="command">help</span>\t\t&nbsp;\t\t\tprovides help information for commands
+  <span class="command">history</span>\t\t&nbsp;\t\tviews command history
+  <span class="command">projects</span>\t\t&nbsp;\tviews my projects
+  <span class="command">secret</span>\t\t&nbsp;\t\topens a secret command code
+  <span class="command">social</span> \t\t&nbsp;\t\tdisplays social networks
+  <span class="command">whoami</span>\t\t&nbsp;\tdiplays a description of who i am
+  </pre>`,
 ];
 
-aboutme = [
+whoami = [
   "<br>",
   "<span class='underline'>Hey, I'm Daxxtropezz!👋</span>",
   "<br>",
@@ -44,25 +45,14 @@ aboutme = [
   "<br>",
 ];
 
+// prettier-ignore
 social = [
-  "<br>",
-  'twitter         <a href="' +
-    twitter +
-    '" target="blank">twitter.com/Daxxtropezz' +
-    "</a>",
-  'linkedin         <a href="' +
-    linkedin +
-    '" target="blank">linkedin/daxxtropezz' +
-    "</a>",
-  'instagram         <a href="' +
-    instagram +
-    '" target="blank">instagram/daxxtropezz' +
-    "</a>",
-  'github         <a href="' +
-    github +
-    '" target="blank">github/daxxtropezz' +
-    "</a>",
-  "<br>",
+    "<br><pre class='whitespace-pre-wrap'>",
+    'twitter&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\t\t\t\t<a href="' + twitter + '" target="blank">twitter.com/daxxtropezz</a>',
+    'linkedin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\t\t\t\t<a href="' + linkedin + '" target="blank">linkedin/daxxtropezz</a>',
+    'instagram&nbsp;&nbsp;&nbsp;&nbsp;\t\t\t\t<a href="' + instagram + '" target="blank">instagram/daxxtropezz</a>',
+    'github&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\t\t\t\t<a href="' + github + '" target="blank">github/daxxtropezz</a>',
+    "</pre><br>",
 ];
 
 projects = [
@@ -105,7 +95,23 @@ Built With
 ];
 
 banner = [
-  `<div class="pt-2"><span class="text-[#7d82d7db]">Welcome to my interactive web terminal! — Type <span class="command text-[#75e1e7]">help</span> for a list of supported commands.</span></div>`,
+  `<pre
+  class="ascii ascii-sep pt-2 pb-5 prose lg:prose-xl text-[#9ccfd8B3] whitespace-pre-wrap inline-block break-words leading-none" style="font-family: monospace,-webkit-pictograph;">
+  
+  ░██╗░░░░░░░██╗███████╗██╗░░░░░░█████╗░░█████╗░███╗░░░███╗███████╗  ████████╗░█████╗░
+  ░██║░░██╗░░██║██╔════╝██║░░░░░██╔══██╗██╔══██╗████╗░████║██╔════╝  ╚══██╔══╝██╔══██╗
+  ░╚██╗████╗██╔╝█████╗░░██║░░░░░██║░░╚═╝██║░░██║██╔████╔██║█████╗░░  ░░░██║░░░██║░░██║
+  ░░████╔═████║░██╔══╝░░██║░░░░░██║░░██╗██║░░██║██║╚██╔╝██║██╔══╝░░  ░░░██║░░░██║░░██║
+  ░░╚██╔╝░╚██╔╝░███████╗███████╗╚█████╔╝╚█████╔╝██║░╚═╝░██║███████╗  ░░░██║░░░╚█████╔╝
+  ░░░╚═╝░░░╚═╝░░╚══════╝╚══════╝░╚════╝░░╚════╝░╚═╝░░░░░╚═╝╚══════╝  ░░░╚═╝░░░░╚════╝░ © 2023
+  ██████╗░░█████╗░██╗░░██╗██╗░░██╗██╗░░░██╗██╗░██████╗  ░██╗░░░░░░░██╗░█████╗░██████╗░██╗░░░░░██████╗░
+  ██╔══██╗██╔══██╗╚██╗██╔╝╚██╗██╔╝╚██╗░██╔╝╚█║██╔════╝  ░██║░░██╗░░██║██╔══██╗██╔══██╗██║░░░░░██╔══██╗
+  ██║░░██║███████║░╚███╔╝░░╚███╔╝░░╚████╔╝░░╚╝╚█████╗░  ░╚██╗████╗██╔╝██║░░██║██████╔╝██║░░░░░██║░░██║
+  ██║░░██║██╔══██║░██╔██╗░░██╔██╗░░░╚██╔╝░░░░░░╚═══██╗  ░░████╔═████║░██║░░██║██╔══██╗██║░░░░░██║░░██║
+  ██████╔╝██║░░██║██╔╝╚██╗██╔╝╚██╗░░░██║░░░░░░██████╔╝  ░░╚██╔╝░╚██╔╝░╚█████╔╝██║░░██║███████╗██████╔╝
+  ╚═════╝░╚═╝░░╚═╝╚═╝░░╚═╝╚═╝░░╚═╝░░░╚═╝░░░░░░╚═════╝░  ░░░╚═╝░░░╚═╝░░░╚════╝░╚═╝░░╚═╝╚══════╝╚═════╝░
+  </pre>`,
+  `<div class="pt-2"><span class="text-[#7d82d7db]">Welcome to my interactive web terminal! — Type <span class="command text-[#75e1e7]">'help'</span> for a list of supported commands.</span></div>`,
   `Or you can click <a onclick="history.back()" target="blank">return</a> to go back to the main portfolio.`,
   `<span class="command text-[#75e1e7]">Created by Daxxtropezz. All rights reserved.</span>`,
 ];
