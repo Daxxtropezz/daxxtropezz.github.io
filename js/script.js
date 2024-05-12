@@ -1,28 +1,37 @@
+// PREVENT OPENING THE TERMINAL
+document.addEventListener('contextmenu', function (event) {
+	event.preventDefault();
+});
+document.addEventListener('keydown', function (event) {
+	if (event.key === 'F12') {
+		event.preventDefault();
+	}
+});
+
 // -------
 const audio = document.getElementById('background-music');
 let isPlaying;
 
 function playAudio() {
-	if (isPlaying) {
+	if (!isPlaying && !audio.paused) {
 		audio.play().then(() => {
-			isPlaying = false;
+			isPlaying = true;
 		});
 	}
-	// isPlaying = true;
 }
 document.addEventListener('click', playAudio);
 
 Swal.fire({
 	title: 'Trigger Warning!',
-	text: 'This system has background audio. Do you want to mute the sound?',
+	text: 'Do you want to proceed to the terminal portfolio instead?',
 	imageUrl: '../assets/images/33180e7e10c9fcab642b5c5075465f6c.png',
 	color: '#FFF',
 	background: '#1f317dc0',
 	imageWidth: 150,
 	imageAlt: 'Gang Logo',
 	showCancelButton: true,
-	confirmButtonText: 'Yes, please?',
-	cancelButtonText: 'No, thanks!',
+	confirmButtonText: 'Yes please?',
+	cancelButtonText: 'No thanks!',
 	reverseButtons: true,
 }).then((result) => {
 	if (result.isConfirmed) {
@@ -32,6 +41,70 @@ Swal.fire({
 	}
 });
 // -------
+
+// SOUND
+
+function toggleMode() {
+	const body = document.body;
+	const currentMode = body.classList.contains('mute-mode') ? 'mute' : 'unmute';
+	const newMode = currentMode === 'mute' ? 'unmute' : 'mute';
+
+	body.classList.remove(currentMode + '-mode');
+	body.classList.add(newMode + '-mode');
+
+	localStorage.setItem('soundOptions', newMode);
+	updateModeBtn(newMode);
+}
+
+function updateModeBtn(mode) {
+	const modeIcon = document.getElementById('mode-icon');
+	const button = document.querySelector('.sound-float-btn');
+	if (mode === 'mute') {
+		audio.pause();
+		isPlaying = false;
+		modeIcon.classList.remove('fa-volume-high');
+		modeIcon.classList.add('fa-volume-xmark');
+		button.style.backgroundColor = '#f0f0f0';
+		button.style.color = '#265cc1';
+	} else {
+		document.addEventListener(
+			'click',
+			function () {
+				audio
+					.play()
+					.then(() => {
+						isPlaying = true;
+					})
+					.catch((error) => {
+						console.error('Failed to play audio:', error);
+					});
+			},
+			{ once: true }
+		);
+		modeIcon.classList.remove('fa-volume-xmark');
+		modeIcon.classList.add('fa-volume-high');
+		button.style.backgroundColor = '#265cc1';
+		button.style.color = '#f0f0f0';
+	}
+}
+
+let storedMode = localStorage.getItem('soundOptions');
+
+if (!storedMode) {
+	storedMode = 'unmute';
+	localStorage.setItem('soundOptions', storedMode);
+}
+updateModeBtn(storedMode);
+document.body.classList.add(storedMode + '-mode');
+
+window.addEventListener('load', function () {
+	if (storedMode === 'mute') {
+		audio.pause();
+	}
+});
+
+// SOUND END
+
 document.getElementById('seCertBtn1').addEventListener('click', () => {
 	showFullscreenModal(
 		'../assets/images/certifications/2b14fb3228a3188d0896925bc5ac3220.png',
@@ -270,6 +343,7 @@ document
 			reverseButtons: true,
 		}).then((result) => {
 			if (result.isConfirmed) {
+				localStorage.clear();
 				window.opener = null;
 				window.open('', '_self');
 				window.close();
@@ -307,16 +381,6 @@ tooltips.forEach(({ selector, content }) => {
 	});
 });
 // ---------
-
-// PREVENT OPENING THE TERMINAL
-document.addEventListener('contextmenu', function (event) {
-	event.preventDefault();
-});
-document.addEventListener('keydown', function (event) {
-	if (event.key === 'F12') {
-		event.preventDefault();
-	}
-});
 
 // WEBSITE HEAD TITLE
 window.onblur = function () {
