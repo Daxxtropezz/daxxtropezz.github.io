@@ -185,16 +185,30 @@ function commander(cmd) {
       newTab(github)
       break
     default:
-      //prettier-ignore
-      addLine(
-                `<br>
-        <span class="command">'${textarea.value.replace(/^\s+|\s+$/gm, '')}'</span> is not recognized as an internal or external command. For a list of commands, type <span class="command"> 'help'</span>.<br>
-        <b>Note</b>: Press <span class="command"> '↳ Tab'</span> key or click <b class="cursor" id="cursor">█</b> if you're unable to type.
-        <br>
-        `,
-                'error',
-                100,
-            )
+      if (cmd.includes('?')) {
+        addLine(
+          `<br>
+        Why ask a question here?<br>
+        Do you think I made this to be like an AI like ChatGPT?<br>
+        (╯°□°）╯︵ ┻━┻...
+          <br>
+          `,
+          'color2',
+          80,
+        )
+      } else {
+        //prettier-ignore
+        addLine(
+                    `<br>
+<span class="command">'${textarea.value.replace(/^\s+|\s+$/gm, '')}'</span> is not recognized as an internal or external command. For a list of commands, type <span class="command"> 'help'</span>.<br>
+<b>Note</b>: Press <span class="command"> '↳ Tab'</span> key or click <b class="cursor" id="cursor">█</b> if you're unable to type.
+  <br>
+    `,
+                    'error',
+                    100,
+                )
+      }
+
       break
   }
 }
@@ -258,6 +272,8 @@ async function pasteFromClipboard() {
     console.log('Failed to read clipboard')
   }
 }
+document.addEventListener('contextmenu', pasteFromClipboard)
+
 document.addEventListener('contextmenu', function (event) {
   event.preventDefault()
 
@@ -276,5 +292,3 @@ document.addEventListener('contextmenu', function (event) {
     onClick: function () {}, // Callback after click
   }).showToast()
 })
-
-document.addEventListener('contextmenu', pasteFromClipboard)
