@@ -21,6 +21,8 @@ help = [
   '<span class="command">social</span>            displays social networks',
   '<span>visitors</span>          number of visitors who visited this site',
   '<span class="command">whoami</span>            diplays a description of who i am',
+
+  "<br><b>Note</b>: commands that doesn't <span class='command'>glow</span> is not available",
   '<br>',
 ]
 
