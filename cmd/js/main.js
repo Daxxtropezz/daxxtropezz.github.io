@@ -80,6 +80,16 @@ function commander(cmd) {
   switch (cmd.toLowerCase()) {
     case '':
       break
+    case 'daxxyishere':
+      addLine(
+        `<br>
+      you think you can use it here? (╯°□°）╯︵ ┻━┻...
+        <br>
+        `,
+        'color2',
+        80,
+      )
+      break
     case 'help':
       loopLines(help, 'color2 margin', 80)
       break
@@ -223,11 +233,13 @@ function loopLines(name, style, time) {
 }
 
 console.log(
-  '%cWhat a Hacker!😠\nnow you know my password!',
+  '%cWhat a Hacker!😠\nNow you know my password!',
   'color: #04ff00; font-weight: bold; font-size: 24px;',
 )
 console.log(
-  "%cPassword: '" + password + "' - do you even know how to use it?🤔",
+  "%cPassword: '" +
+    password +
+    "' - do you even know how to use it?🤔\nI bet you don't 😈",
   'color: grey',
 )
 
@@ -237,3 +249,32 @@ document.addEventListener('keydown', function (event) {
     document.getElementById('texter').focus()
   }
 })
+
+async function pasteFromClipboard() {
+  try {
+    document.querySelector('#texter').value +=
+      await navigator.clipboard.readText()
+  } catch (error) {
+    console.log('Failed to read clipboard')
+  }
+}
+document.addEventListener('contextmenu', function (event) {
+  event.preventDefault()
+
+  Toastify({
+    text: "You pasted from clipboard,\nPress 'Tab' key to continue",
+    duration: 3000,
+    destination: 'https://github.com/apvarun/toastify-js',
+    newWindow: true,
+    close: false,
+    gravity: 'bottom',
+    position: 'left',
+    stopOnFocus: true,
+    style: {
+      background: 'linear-gradient(to right, #c07489, #8a9ce8)',
+    },
+    onClick: function () {}, // Callback after click
+  }).showToast()
+})
+
+document.addEventListener('contextmenu', pasteFromClipboard)
