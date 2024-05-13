@@ -2,6 +2,18 @@
 <html lang="en">
 
 <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=GT-NSVFL944"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'GT-NSVFL944');
+    </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta property="og:title" content="Daxxtropezz's Portfolio" />
@@ -13,32 +25,28 @@
     <link rel="shortcut icon" href="./terminal.ico" type="image/x-icon" />
     <title>Daxxtropezz | TERMINAL</title>
     <link href="./css/main.css" rel="stylesheet" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" />
-    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet" />
-    <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
 </head>
 
-<body style="font-family: 'Ubuntu', sans-serif" class="overflow-hidden lazy text-[1.1rem] overflow-y-scroll">
+<body>
 
-    <div class="m-2 relative overflow-hidden" onclick="document.getElementById('texter').focus();">
-        <div class="bg-[#1A1825D9] border-[#c4a7e7] border rounded-[7px] shadow-xl shadow-[#1d1e1fb4] resize overflow-y-scroll backdrop-blur-none transition-backdrop-filter duration-700 hover:backdrop-blur-lg" style="max-height: calc(100vh + 2rem);">
+    <div onclick="document.getElementById('texter').focus();">
+        <div style="max-height: calc(100vh + 2rem);">
             <header>
-                <p class="p-2 text-center text-slate-400">
+                <p class="text-center">
                     <a href="https://github.com/daxxtropezz/" target="blank">
                         <i class="fa-brands fa-github"></i>guest@daxxtropezz.github.io
                     </a>
                 </p>
-                <hr class="border-[#9893a5]">
+                <hr />
             </header>
 
-            <div class="p-4">
+            <div>
                 <div id="terminal">
                     <a id="before"></a>
                 </div>
 
                 <div id="command" onclick="$('texter').focus();">
-                    <input type="text" id="texter" class="texter" onkeyup="typeIt(this, event)" onkeydown="typeIt(this, event); moveIt(this.value.length, event)" onkeypress="typeIt(this, event);"></input>
+                    <textarea type="text" id="texter" class="texter" onkeyup="typeIt(this, event)" onkeydown="typeIt(this, event); moveIt(this.value.length, event)" onkeypress="typeIt(this, event);"></textarea>
                     <div id="liner">
                         <span id="typer"></span><b class="cursor" id="cursor">█</b>
                         <div class="list"></div>
