@@ -181,44 +181,56 @@ li {
 /* Define breakpoints and font sizes */
 
 @media only screen and (min-width: 360px) {
-  .ascii {
-    font-size: 20px;
+  p,
+  #liner {
+    font-size: 6.5px;
   }
 }
 
 @media only screen and (min-width: 522px) {
-  .ascii {
-    font-size: 21px;
+  p,
+  #liner {
+    font-size: 9px;
   }
 }
 
 @media only screen and (min-width: 591px) {
-  .ascii {
-    font-size: 22px;
+  p,
+  #liner {
+    font-size: 9px;
   }
 }
 
 @media only screen and (min-width: 621px) {
-  .ascii {
-    font-size: 23px;
+  p {
+    font-size: 12px;
+  }
+  #liner {
+    font-size: 12px;
   }
 }
 
 @media only screen and (min-width: 810px) {
-  .ascii {
-    font-size: 24px;
+  p {
+    font-size: 12px;
+  }
+  #liner {
+    font-size: 12px;
   }
 }
 
 @media only screen and (min-width: 1024px) {
-  .ascii {
-    font-size: 38px;
+  p {
+    font-size: 16px;
+  }
+  #liner {
+    font-size: 16px;
   }
 }
 
 @media only screen and (min-width: 1437px) {
-  .ascii {
-    font-size: 41px;
+  p {
+    font-size: 14px;
   }
 }
 
