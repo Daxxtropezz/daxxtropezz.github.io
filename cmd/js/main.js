@@ -50,7 +50,7 @@ function enterKey(e) {
       commands.push(command.innerHTML)
       git = commands.length
       addLine(
-        'guest@daxxtropezz.github.io:~$⠀' + command.innerHTML,
+        'guest@daxxtropezz.github.io:~$' + command.innerHTML,
         'no-animation',
         0,
       )
@@ -80,14 +80,7 @@ function commander(cmd) {
     case '':
       break
     case 'daxxyishere':
-      addLine(
-        `<br>
-      you think you can use it here? (╯°□°）╯︵ ┻━┻...
-        <br>
-        `,
-        'color2',
-        80,
-      )
+      loopLines(daxxyishere, 'color2', 80)
       break
     case 'help':
       loopLines(help, 'color2 margin', 80)
@@ -138,25 +131,11 @@ function commander(cmd) {
       pw = true
       break
     case 'password':
-      addLine(
-        `<br>
-        do you even know what you're doing?
-        <br>
-        `,
-        'color2',
-        0,
-      )
+      loopLines(sec_pass, 'color2', 0)
       break
     case 'sudo':
     case 'sudo su':
-      addLine(
-        `<br>
-        oh no, you're not an admin...
-        <br>
-        `,
-        'color2',
-        0,
-      )
+      loopLines(sec_sudo, 'color2', 0)
       newTab(sudo)
       break
     // socials
@@ -185,22 +164,13 @@ function commander(cmd) {
       break
     default:
       if (cmd.includes('?')) {
-        addLine(
-          `<br>
-        Why ask a question here?<br>
-        Do you think I made this to be like an AI like ChatGPT?<br>
-        (╯°□°）╯︵ ┻━┻...
-          <br>
-          `,
-          'color2',
-          80,
-        )
+        loopLines(question, 'error', 80)
       } else {
         //prettier-ignore
         addLine(
                     `<br>
-<span class="command">'${textarea.value.replace(/^\s+|\s+$/gm, '')}'</span> is not recognized as an internal or external command. For a list of commands, type <span class="command"> 'help'</span>.<br>
-<b>Note</b>: Press <span class="command"> '↳ Tab'</span> key or click <b class="cursor" id="cursor">█</b> if you're unable to type.
+<span class="command">'${cmd.replace(/^\s+|\s+$/gm, '')}'</span> is not recognized as an internal or external command. For a list of commands, type <span class="command"> 'help'</span>.<br>
+<b>Note</b>: Press <span class="command"> '↳ Tab'</span> key or click <b class="cursor" id="cursor">█d</b> if you're unable to type.
   <br>
     `,
                     'error',
@@ -277,7 +247,7 @@ document.addEventListener('contextmenu', function (event) {
   Toastify({
     text: "You pasted from clipboard,\nPress 'Tab' key to continue",
     duration: 3000,
-    destination: 'https://github.com/apvarun/toastify-js',
+    destination: '',
     newWindow: true,
     close: false,
     gravity: 'bottom',
@@ -286,7 +256,7 @@ document.addEventListener('contextmenu', function (event) {
     style: {
       background: 'linear-gradient(to right, #c07489, #8a9ce8)',
     },
-    onClick: function () {}, // Callback after click
+    onClick: function () {},
   }).showToast()
 })
 

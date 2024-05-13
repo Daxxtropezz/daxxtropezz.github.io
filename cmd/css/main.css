@@ -81,7 +81,7 @@ b {
 
 #liner::before {
   color: #c07489;
-  content: 'guest@daxxtropezz.github.io:~$⠀';
+  content: 'guest@daxxtropezz.github.io:~$';
 }
 
 #liner.password::before {
@@ -156,6 +156,7 @@ a {
 a {
   text-decoration: inherit;
   transform: translateY(4px);
+  transition: 0.5s;
 }
 
 a:hover {

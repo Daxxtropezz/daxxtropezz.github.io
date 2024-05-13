@@ -7,6 +7,21 @@ var sudo = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ?autoplay=1'
 var emailme = 'mailto:miraflores.john@gmail.com'
 var password = 'daxxyishere'
 
+daxxyishere = [
+  '<br>',
+  '   YOU GOT SOME NERVE!!! You think you can use it here? (╯°□°）╯︵ ┻━┻...',
+  '<br>',
+]
+
+question = [
+  '<br>',
+  '   Why ask a question here?<br>   Do you think I made this to be like an AI like ChatGPT?<br>   (╯°□°）╯︵ ┻━┻...',
+  '<br>',
+]
+
+sec_pass = ['<br>', "   do you even know what you're doing ? ", '<br>']
+sec_sudo = ['<br>', "   oh no, you're not an admin... ", '<br>']
+
 help = [
   '<br>',
   '<span class="command">banner</span>            displays the header for this terminal',
