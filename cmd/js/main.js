@@ -158,6 +158,7 @@ function commander(cmd) {
         oh no, you're not an admin...
         <br>
         `,
+<<<<<<< HEAD
           'color2',
           0,
         )
@@ -215,6 +216,50 @@ function commander(cmd) {
         break
     }
   })
+=======
+        'color2',
+        0,
+      )
+      newTab(sudo)
+      break
+    // socials
+    case 'facebook':
+    case 'fb':
+      addLine('opening Facebook...', 'color2', 0)
+      newTab(facebook)
+      break
+    case 'twitter':
+      addLine('opening Twitter...', 'color2', 0)
+      newTab(twitter)
+      break
+    case 'linkedin':
+      addLine('opening LinkedIn...', 'color2', 0)
+      newTab(linkedin)
+      break
+    case 'instagram':
+    case 'ig':
+      addLine('opening Instagram...', 'color2', 0)
+      newTab(instagram)
+      break
+    case 'github':
+    case 'git':
+      addLine('opening GitHub...', 'color2', 0)
+      newTab(github)
+      break
+    default:
+      //prettier-ignore
+      addLine(
+                `<br>
+        <span class="command">'${textarea.value.replace(/^\s+|\s+$/gm, '')}'</span> is not recognized as an internal or external command. For a list of commands, type <span class="command"> 'help'</span>.<br>
+        <b>Note</b>: Press <span class="command"> '↳ Tab'</span> key or click <b class="cursor" id="cursor">█</b> if you're unable to type.
+        <br>
+        `,
+                'error',
+                100,
+            )
+      break
+  }
+>>>>>>> parent of c8607d7 (update: responsive added done)
 }
 
 function newTab(link) {
@@ -276,8 +321,6 @@ async function pasteFromClipboard() {
     console.log('Failed to read clipboard')
   }
 }
-document.addEventListener('contextmenu', pasteFromClipboard)
-
 document.addEventListener('contextmenu', function (event) {
   event.preventDefault()
 
@@ -296,3 +339,5 @@ document.addEventListener('contextmenu', function (event) {
     onClick: function () {}, // Callback after click
   }).showToast()
 })
+
+document.addEventListener('contextmenu', pasteFromClipboard)
