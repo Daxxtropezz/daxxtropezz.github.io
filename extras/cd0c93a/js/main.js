@@ -76,7 +76,10 @@ function enterKey(e) {
 }
 
 function commander(cmd) {
+  cmd = cmd.trim()
   switch (cmd.toLowerCase()) {
+    case '':
+      break
     case 'help':
       loopLines(help, 'color2 margin', 80)
       break
@@ -172,17 +175,16 @@ function commander(cmd) {
       newTab(github)
       break
     default:
+      //prettier-ignore
       addLine(
-        // '<span class="inherit">Command not found. For a list of commands, type <span class="command">\'help\'</span>.</span>',
-        `<br>
-        Command not found. For a list of commands, type <span class="command">'help'</span>.
-        <br>
-        <b>Note</b>: Press <span class = "command">'↳ Tab'</span> key or click <b class="cursor" id="cursor">█</b> if you cannot type.
+                `<br>
+        <span class="command">'${textarea.value.replace(/^\s+|\s+$/gm, '')}'</span> is not recognized as an internal or external command. For a list of commands, type <span class="command"> 'help'</span>.<br>
+        <b>Note</b>: Press <span class="command"> '↳ Tab'</span> key or click <b class="cursor" id="cursor">█</b> if you're unable to type.
         <br>
         `,
-        'error',
-        100,
-      )
+                'error',
+                100,
+            )
       break
   }
 }
