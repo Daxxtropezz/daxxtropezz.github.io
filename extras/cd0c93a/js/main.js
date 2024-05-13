@@ -83,7 +83,7 @@ function commander(cmd) {
     case 'help':
       loopLines(help, 'color2 margin', 80)
       break
-    case 'back':
+    case 'return':
       addLine('returning to main profile...', 'color2', 80)
       setTimeout(function () {
         window.open('../../', '_self')

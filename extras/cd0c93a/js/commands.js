@@ -9,7 +9,6 @@ var password = 'daxxyishere'
 
 help = [
   '<br>',
-  '<span class="command">back</span>              returns to main portfolio',
   '<span class="command">banner</span>            displays the header for this terminal',
   '<span class="command">clear</span>             clears the terminal',
   '<span class="command">cls</span>               clears the terminal',
@@ -17,8 +16,10 @@ help = [
   '<span class="command">help</span>              provides help information for commands',
   '<span class="command">history</span>           views command history',
   '<span class="command">projects</span>          views my projects',
+  '<span class="command">return</span>            returns to main portfolio',
   '<span class="command">secret</span>            opens a secret command code',
   '<span class="command">social</span>            displays social networks',
+  '<span>visitors</span>          number of visitors who visited this site',
   '<span class="command">whoami</span>            diplays a description of who i am',
   '<br>',
 ]
