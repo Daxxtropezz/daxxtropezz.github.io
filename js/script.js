@@ -1,4 +1,3 @@
-// PREVENT OPENING THE TERMINAL
 document.addEventListener('contextmenu', function (event) {
   event.preventDefault()
 })
@@ -6,6 +5,20 @@ document.addEventListener('keydown', function (event) {
   if (event.key === 'F12') {
     event.preventDefault()
   }
+})
+
+// ICON HOVER
+const imageElement = document.querySelector('.main-character')
+const buttonElement = document.querySelector('.terminal')
+const imageSources = [
+  './assets/images/a223ab17b8c472d2174799e210484171.gif',
+  './assets/images/8b858be36d6367ad826d6154507417f3.gif',
+  './assets/images/aa477a3ebd270f4d9a5731224b81d5b5.gif',
+]
+
+buttonElement.addEventListener('mouseenter', () => {
+  const randomIndex = Math.floor(Math.random() * imageSources.length)
+  imageElement.src = imageSources[randomIndex]
 })
 
 // -------
@@ -379,7 +392,7 @@ const tooltips = [
   },
   {
     selector: '#terminalbutton',
-    content: 'Open Terminal Portfolio',
+    content: 'Terminal Portfolio',
   },
 ]
 tooltips.forEach(({ selector, content }) => {
@@ -506,3 +519,26 @@ var swiper = new Swiper('.swiper', {
     },
   },
 })
+
+function hiddenLinkHover(id, url, filename) {
+  const linkElement = document.getElementById(id)
+  linkElement.addEventListener('mouseenter', function () {
+    this.href = 'javascript:'
+  })
+  linkElement.addEventListener('click', function () {
+    this.href = './assets' + url
+    this.setAttribute('download', filename)
+  })
+}
+
+hiddenLinkHover(
+  'resume_pdf',
+  '/pdfs/f2fae3663347cd42cdca215c3eac8485.pdf',
+  'JOHNPAUL_MIRAFLORES_RESUME.pdf',
+)
+
+hiddenLinkHover(
+  'cv_pdf',
+  '/pdfs/b9bbe50d4f9369d48a713696f7a067fa.pdf',
+  'JOHNPAUL_MIRAFLORES_RESUME.pdf',
+)
