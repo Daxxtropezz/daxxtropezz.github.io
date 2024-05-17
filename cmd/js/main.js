@@ -233,31 +233,44 @@ document.addEventListener('keydown', function (event) {
   }
 })
 
-async function pasteFromClipboard() {
-  try {
-    document.querySelector('#texter').value +=
-      await navigator.clipboard.readText()
-  } catch (error) {
-    console.log('Failed to read clipboard')
-  }
+function isWeb() {
+  return /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+    window.navigator.userAgent,
+  )
 }
-document.addEventListener('contextmenu', function (event) {
-  event.preventDefault()
 
-  Toastify({
-    text: "You pasted from clipboard,\nPress 'Tab' key to continue",
-    duration: 3000,
-    destination: '',
-    newWindow: true,
-    close: false,
-    gravity: 'bottom',
-    position: 'left',
-    stopOnFocus: true,
-    style: {
-      background: 'linear-gradient(to right, #c07489, #8a9ce8)',
-    },
-    onClick: function () {},
-  }).showToast()
-})
+if (isWeb) {
+  async function pasteFromClipboard() {
+    try {
+      document.querySelector('#texter').value +=
+        await navigator.clipboard.readText()
+    } catch (error) {
+      console.log('Failed to read clipboard')
+    }
+  }
+  document.addEventListener('contextmenu', function (event) {
+    event.preventDefault()
 
-document.addEventListener('contextmenu', pasteFromClipboard)
+    var answer = window.orientation > 1
+    alert(),
+      Toastify({
+        text:
+          "You pasted from clipboard,\nPress 'Tab' key to continue." + answer
+            ? 'It is a mobile device'
+            : 'It is not a mobile device',
+        duration: 3000,
+        destination: '',
+        newWindow: true,
+        close: false,
+        gravity: 'bottom',
+        position: 'left',
+        stopOnFocus: true,
+        style: {
+          background: 'linear-gradient(to right, #c07489, #8a9ce8)',
+        },
+        onClick: function () {},
+      }).showToast()
+  })
+
+  document.addEventListener('contextmenu', pasteFromClipboard)
+}
