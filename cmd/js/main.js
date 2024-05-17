@@ -233,12 +233,11 @@ document.addEventListener('keydown', function (event) {
   }
 })
 
-function isWebOS() {
-  let regexp = /android|webOS/i
-  return regexp.test(window.navigator.userAgent)
-}
+let details = navigator.userAgent
+let regexp = /android|iphone|kindle|ipad|webOS/i
+let isMobileDevice = regexp.test(details)
 
-if (isWebOS) {
+if (!isMobileDevice) {
   async function pasteFromClipboard() {
     try {
       document.querySelector('#texter').value +=
