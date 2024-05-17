@@ -88,7 +88,7 @@ function commander(cmd) {
     case 'return':
       addLine('returning to main profile...', 'color2', 80)
       setTimeout(function () {
-        window.open('../../', '_self')
+        window.open('../../web', '_self')
       }, 500)
       break
     case 'whoami':
