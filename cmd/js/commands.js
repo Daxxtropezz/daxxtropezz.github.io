@@ -25,8 +25,7 @@ sec_sudo = ['<br>', "   oh no, you're not an admin... ", '<br>']
 help = [
   '<br>',
   '<span class="command">banner</span>            displays the header for this terminal',
-  '<span class="command">clear</span>             clears the terminal',
-  '<span class="command">cls</span>               clears the terminal',
+  '<span class="command">clear</span>/<span class="command">cls</span>         clears the terminal',
   '<span class="command">emailme</span>           don\'t try to send me an email',
   '<span class="command">help</span>              provides help information for commands',
   '<span class="command">history</span>           views command history',

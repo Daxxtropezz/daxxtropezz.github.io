@@ -249,12 +249,9 @@ if (!isMobileDevice) {
   document.addEventListener('contextmenu', function (event) {
     event.preventDefault()
 
-    var answer = window.orientation > 1
     alert(),
       Toastify({
-        text: answer
-          ? 'It is a mobile device'
-          : "You pasted from clipboard,\nPress 'Tab' key to continue.",
+        text: "You pasted from clipboard,\nPress 'Tab' key to continue.",
         duration: 3000,
         destination: '',
         newWindow: true,
