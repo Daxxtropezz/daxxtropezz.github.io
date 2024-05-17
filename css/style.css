@@ -12,6 +12,11 @@ body {
   background-size: cover;
 }
 
+::selection {
+  color: #274895;
+  background: #c5c8ed;
+}
+
 .swal2-container {
   z-index: 9999;
 }

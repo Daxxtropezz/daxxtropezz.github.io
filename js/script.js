@@ -98,6 +98,42 @@ window.addEventListener('load', function () {
 
 // SOUND END
 
+document.getElementById('fcvsuCertBtn1').addEventListener('click', () => {
+  showFullscreenModal(
+    '../assets/images/certifications/f3f6cfea27d820e8eff34b91ad38b0b9.png',
+    '../assets/images/wmrker.png',
+    'Microservices Development w/ Springboot',
+  )
+})
+document.getElementById('fcvsuCertBtn2').addEventListener('click', () => {
+  showFullscreenModal(
+    '../assets/images/certifications/f4a7f1bd0e229c76aa1ce573969a00a4.png',
+    '../assets/images/wmrker.png',
+    'Springboot Fundamental',
+  )
+})
+document.getElementById('fcvsuCertBtn3').addEventListener('click', () => {
+  showFullscreenModal(
+    '../assets/images/certifications/f7eb05a624d11843d8f0edb97bea2169.png',
+    '../assets/images/wmrker.png',
+    'API Fundamental',
+  )
+})
+document.getElementById('fcvsuCertBtn4').addEventListener('click', () => {
+  showFullscreenModal(
+    '../assets/images/certifications/fb0ba786c371f70e9b6092e11971fb88.jpg',
+    '../assets/images/wmrker.png',
+    'Data that Delivers - Insights to Results',
+  )
+})
+document.getElementById('fcvsuCertBtn5').addEventListener('click', () => {
+  showFullscreenModal(
+    '../assets/images/certifications/fc71a76015c29a1aa3e83f6167ceb855.png',
+    '../assets/images/wmrker.png',
+    'What Does GPT Really Mean for Digital Marketing?',
+  )
+})
+
 document.getElementById('seCertBtn1').addEventListener('click', () => {
   showFullscreenModal(
     '../assets/images/certifications/2b14fb3228a3188d0896925bc5ac3220.png',
@@ -520,25 +556,6 @@ var swiper = new Swiper('.swiper', {
   },
 })
 
-function hiddenLinkHover(id, url, filename) {
-  const linkElement = document.getElementById(id)
-  linkElement.addEventListener('mouseenter', function () {
-    this.href = 'javascript:'
-  })
-  linkElement.addEventListener('click', function () {
-    this.href = './assets' + url
-    this.setAttribute('download', filename)
-  })
-}
+hiddenLinkHover('resume_pdf', '/pdfs/f2fae3663347cd42cdca215c3eac8485.pdf')
 
-hiddenLinkHover(
-  'resume_pdf',
-  '/pdfs/f2fae3663347cd42cdca215c3eac8485.pdf',
-  'JOHNPAUL_MIRAFLORES_RESUME.pdf',
-)
-
-hiddenLinkHover(
-  'cv_pdf',
-  '/pdfs/b9bbe50d4f9369d48a713696f7a067fa.pdf',
-  'JOHNPAUL_MIRAFLORES_RESUME.pdf',
-)
+hiddenLinkHover('cv_pdf', '/pdfs/b9bbe50d4f9369d48a713696f7a067fa.pdf')
