@@ -8,18 +8,18 @@ document.addEventListener('keydown', function (event) {
 })
 
 // ICON HOVER
-const imageElement = document.querySelector('.main-character')
-const buttonElement = document.querySelector('.terminal')
-const imageSources = [
-  './assets/images/a223ab17b8c472d2174799e210484171.gif',
-  './assets/images/8b858be36d6367ad826d6154507417f3.gif',
-  './assets/images/aa477a3ebd270f4d9a5731224b81d5b5.gif',
-]
+// const imageElement = document.querySelector('.main-character')
+// const buttonElement = document.querySelector('.terminal')
+// const imageSources = [
+//   './assets/images/a223ab17b8c472d2174799e210484171.gif',
+//   './assets/images/8b858be36d6367ad826d6154507417f3.gif',
+//   './assets/images/aa477a3ebd270f4d9a5731224b81d5b5.gif',
+// ]
 
-buttonElement.addEventListener('mouseenter', () => {
-  const randomIndex = Math.floor(Math.random() * imageSources.length)
-  imageElement.src = imageSources[randomIndex]
-})
+// buttonElement.addEventListener('mouseenter', () => {
+//   const randomIndex = Math.floor(Math.random() * imageSources.length)
+//   imageElement.src = imageSources[randomIndex]
+// })
 
 // -------
 const audio = document.getElementById('background-music')
@@ -555,7 +555,3 @@ var swiper = new Swiper('.swiper', {
     },
   },
 })
-
-hiddenLinkHover('resume_pdf', '/pdfs/f2fae3663347cd42cdca215c3eac8485.pdf')
-
-hiddenLinkHover('cv_pdf', '/pdfs/b9bbe50d4f9369d48a713696f7a067fa.pdf')

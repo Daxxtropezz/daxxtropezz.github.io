@@ -10,6 +10,7 @@ body {
   background-image: url('../assets/images/94892e34003fba5e9a986bca6bdd2e67.jpg');
   background-repeat: no-repeat;
   background-size: cover;
+  background-position: center;
 }
 
 ::selection {
@@ -916,9 +917,7 @@ input:-webkit-autofill:active {
   display: inline;
   flex-wrap: wrap;
   justify-content: space-between;
-  /* Adjust alignment as needed */
   margin-bottom: 10px;
-  /* Add spacing between rows */
 }
 
 a span.bottom-dl {
