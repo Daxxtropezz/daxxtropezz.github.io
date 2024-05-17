@@ -254,10 +254,9 @@ if (isWeb) {
     var answer = window.orientation > 1
     alert(),
       Toastify({
-        text:
-          "You pasted from clipboard,\nPress 'Tab' key to continue." + answer
-            ? 'It is a mobile device'
-            : 'It is not a mobile device',
+        text: +answer
+          ? 'It is a mobile device'
+          : "You pasted from clipboard,\nPress 'Tab' key to continue.",
         duration: 3000,
         destination: '',
         newWindow: true,
