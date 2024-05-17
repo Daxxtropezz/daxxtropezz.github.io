@@ -233,13 +233,12 @@ document.addEventListener('keydown', function (event) {
   }
 })
 
-function isWeb() {
-  return /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-    window.navigator.userAgent,
-  )
+function isWebOS() {
+  let regexp = /android|webOS/i
+  return regexp.test(window.navigator.userAgent)
 }
 
-if (isWeb) {
+if (isWebOS) {
   async function pasteFromClipboard() {
     try {
       document.querySelector('#texter').value +=
@@ -254,7 +253,7 @@ if (isWeb) {
     var answer = window.orientation > 1
     alert(),
       Toastify({
-        text: +answer
+        text: answer
           ? 'It is a mobile device'
           : "You pasted from clipboard,\nPress 'Tab' key to continue.",
         duration: 3000,
