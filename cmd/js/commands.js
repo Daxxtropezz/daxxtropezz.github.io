@@ -84,12 +84,25 @@ projects = [
   '<br>',
 ]
 
+const OSName =
+  navigator.appVersion.indexOf('Win') !== -1
+    ? 'Windows'
+    : navigator.appVersion.indexOf('Mac') !== -1
+    ? 'MacOS'
+    : navigator.appVersion.indexOf('X11') !== -1
+    ? 'UNIX'
+    : navigator.appVersion.indexOf('Linux') !== -1
+    ? 'Linux'
+    : 'Unknown OS'
+
 banner = [
   '<br>',
   '       .+#%%%%*:       	',
   '      +%@@@@%%%%-      	',
-  '     .@%##*++++%*      	░█▀▄▀█ █▀▀ █▀▀ ▀▀█▀▀',
-  '      +***++****-      	░█░█░█ █▀▀ █▀▀ ──█──',
+  '     .@%##*++++%*      	░█▀▄▀█ █▀▀ █▀▀ ▀▀█▀▀     <span class="command">' +
+    OSName +
+    '</span>',
+  '      +***++****-      	░█░█░█ █▀▀ █▀▀ ──█──     © 2023 | v2.3.79',
   '      +++=+++=++-      	░█──░█ ▀▀▀ ▀▀▀ ──▀──',
   '       -+++++++:       		',
   '        +*++**+.         ░█▀▀█ █▀▀█ █──█ █── ──█── █▀▀ █▀▀█ █── ─▀─',
@@ -97,8 +110,9 @@ banner = [
   ':=*%@@@@+.###-+@@@@%*+-  ░█─── ▀──▀ ─▀▀▀ ▀▀▀ ──▀── ▀── ▀▀▀▀ ▀▀▀ ▀▀▀',
   '@@@@@@@@% =@ :@@@@@@@@@',
   '<br>',
-  'Welcome to my interactive web terminal! — Type <span class="command">\'help\'</span> for a list of supported commands.',
+  'Welcome to my interactive web terminal! — Type <span class="command">\'help\'</span> for a list of commands.',
   'Or you can click <a href="../../web/">return</a> to go back to the main portfolio.',
   '<span class="command">Created by Daxxtropezz. All rights reserved.</span>',
+
   '<br>',
 ]
