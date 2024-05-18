@@ -90,7 +90,7 @@ function commander(cmd) {
       loopLines(certificates, 'color2 margin', 80)
       break
     case 'return':
-      addLine('returning to main profile...', 'color2', 80)
+      addLine('closing console, returning to main profile...', 'color2', 80)
       setTimeout(function () {
         window.open('../../web', '_self')
       }, 500)
