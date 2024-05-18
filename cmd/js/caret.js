@@ -33,6 +33,6 @@ function moveIt(count, e) {
   }
 }
 
-function alert(txt) {
-  console.log(txt)
-}
+// function alert(txt) {
+//   console.log(txt)
+// }

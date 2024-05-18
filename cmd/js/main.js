@@ -4,6 +4,7 @@ var command = document.getElementById('typer')
 var textarea = document.getElementById('texter')
 var terminal = document.getElementById('terminal')
 
+let currentToast = null
 var git = 0
 var pw = false
 let pwd = false
@@ -243,22 +244,21 @@ let isMobileDevice = regexp.test(details)
 
 if (!isMobileDevice) {
   async function pasteFromClipboard() {
-    try {
-      document.querySelector('#texter').value +=
-        await navigator.clipboard.readText()
-    } catch (error) {
-      console.log('Failed to read clipboard')
-    }
+    document.querySelector('#texter').value +=
+      await navigator.clipboard.readText()
   }
   document.addEventListener('contextmenu', function (event) {
     event.preventDefault()
-
-    alert(),
-      Toastify({
+    // alert(),
+    pasteFromClipboard().then(() => {
+      if (currentToast) {
+        currentToast.hideToast()
+      }
+      currentToast = Toastify({
         text: "You pasted from clipboard,\nPress 'Tab' key to continue.",
-        duration: 3000,
+        duration: 2000,
         destination: '',
-        newWindow: true,
+        newWindow: false,
         close: false,
         gravity: 'bottom',
         position: 'left',
@@ -268,7 +268,6 @@ if (!isMobileDevice) {
         },
         onClick: function () {},
       }).showToast()
+    })
   })
-
-  document.addEventListener('contextmenu', pasteFromClipboard)
 }
