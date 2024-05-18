@@ -272,3 +272,12 @@ if (!isMobileDevice) {
 
   document.addEventListener('contextmenu', pasteFromClipboard)
 }
+
+function reqNotif() {
+  Notification.requestPermission().then((permission) => {
+    if (permission === 'granted') {
+      new Notification('What a Notification')
+    }
+  })
+}
+reqNotif()
