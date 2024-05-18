@@ -70,7 +70,7 @@ whoami = [
 
 social = [
   '<br>',
-  `<span class='command'>behance</span>             <a href="javascript:" onclick="this.href='${behance}'" target="_blank">github/daxxtropezz</a>`,
+  `<span class='command'>behance</span>            <a href="javascript:" onclick="this.href='${behance}'" target="_blank">behance/daxxtropezz</a>`,
   `<span class='command'>facebook</span>           <a href="javascript:" onclick="this.href='${facebook}'" target="_blank">facebook/daxxtropezz</a>`,
   `<span class='command'>github</span>             <a href="javascript:" onclick="this.href='${github}'" target="_blank">github/daxxtropezz</a>`,
   `<span class='command'>instagram</span>          <a href="javascript:" onclick="this.href='${instagram}'" target="_blank">instagram/daxxtropezz</a>`,
