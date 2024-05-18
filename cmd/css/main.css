@@ -185,55 +185,50 @@ li {
 
 @media only screen and (min-width: 360px) {
   p,
-  #liner {
+  #liner::before {
     font-size: 6.5px;
   }
 }
 
 @media only screen and (min-width: 522px) {
   p,
-  #liner {
+  #liner::before {
     font-size: 9px;
   }
 }
 
 @media only screen and (min-width: 591px) {
   p,
-  #liner {
+  #liner::before {
     font-size: 9px;
   }
 }
 
 @media only screen and (min-width: 621px) {
-  p {
-    font-size: 12px;
-  }
-  #liner {
+  p,
+  #liner::before {
     font-size: 12px;
   }
 }
 
 @media only screen and (min-width: 810px) {
-  p {
-    font-size: 12px;
-  }
-  #liner {
+  p,
+  #liner::before {
     font-size: 12px;
   }
 }
 
 @media only screen and (min-width: 1024px) {
-  p {
-    font-size: 16px;
-  }
-  #liner {
+  p,
+  #liner::before {
     font-size: 16px;
   }
 }
 
 @media only screen and (min-width: 1437px) {
-  p {
-    font-size: 14px;
+  p,
+  #liner::before {
+    font-size: 15px;
   }
 }
 

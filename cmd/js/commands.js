@@ -6,6 +6,7 @@ var github = 'https://github.com/daxxtropezz'
 var sudo = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ?autoplay=1'
 var emailme = 'mailto:miraflores.john@gmail.com'
 var password = 'daxxyishere'
+const currentYear = new Date().getFullYear()
 
 daxxyishere = [
   '<br>',
@@ -25,8 +26,9 @@ sec_sudo = ['<br>', "   oh no, you're not an admin... ", '<br>']
 help = [
   '<br>',
   '<span class="command">banner</span>            displays the header for this terminal',
+  '<span class="command">certificates</span>      shows all of my certificates',
   '<span class="command">clear</span>/<span class="command">cls</span>         clears the terminal',
-  '<span class="command">emailme</span>           don\'t try to send me an email',
+  '<span class="command">emailme</span>           let\'s communicate and tell me ',
   '<span class="command">help</span>              provides help information for commands',
   '<span class="command">history</span>           views command history',
   '<span class="command">projects</span>          views my projects',
@@ -35,8 +37,8 @@ help = [
   '<span class="command">social</span>            displays social networks',
   '<span>visitors</span>          number of visitors who visited this site',
   '<span class="command">whoami</span>            diplays a description of who i am',
-
-  "<br><b>Note</b>: commands that doesn't <span class='command'>glow</span> is not available",
+  '<br>',
+  "<b>Note</b>: commands that doesn't <span class='command'>glow</span> is not available",
   '<br>',
 ]
 
@@ -65,16 +67,16 @@ whoami = [
   '<br>',
 ]
 
-// prettier-ignore
 social = [
-    '<br>',
-    '<span class="command">can be used as command:</span>',
-    'twitter            <a href="' + twitter + '" target="blank">twitter/daxxtropezz</a>',
-    'linkedin           <a href="' + linkedin + '" target="blank">linkedin/daxxtropezz</a>',
-    'facebook           <a href="' + facebook + '" target="blank">facebook/daxxtropezz</a>',
-    'instagram          <a href="' + instagram + '" target="blank">instagram/daxxtropezz</a>',
-    'github             <a href="' + github + '" target="blank">github/daxxtropezz</a>',
-    '<br>',
+  '<br>',
+  `<span class='command'>twitter</span>            <a href="javascript:" onclick="this.href='${twitter}'" target="_blank">twitter/daxxtropezz</a>`,
+  `<span class='command'>linkedin</span>           <a href="javascript:" onclick="this.href='${linkedin}'" target="_blank">linkedin/daxxtropezz</a>`,
+  `<span class='command'>facebook</span>           <a href="javascript:" onclick="this.href='${facebook}'" target="_blank">facebook/daxxtropezz</a>`,
+  `<span class='command'>instagram</span>          <a href="javascript:" onclick="this.href='${instagram}'" target="_blank">instagram/daxxtropezz</a>`,
+  `<span class='command'>github</span>             <a href="javascript:" onclick="this.href='${github}'" target="_blank">github/daxxtropezz</a>`,
+  '<br>',
+  "<b>Note</b>: commands that <span class='command'>glow</span> can be used as a command in this terminal",
+  '<br>',
 ]
 
 projects = [
@@ -83,26 +85,61 @@ projects = [
   '<br>',
 ]
 
-const OSName =
-  navigator.appVersion.indexOf('Win') !== -1
-    ? 'Windows'
-    : navigator.appVersion.indexOf('Mac') !== -1
-    ? 'MacOS'
-    : navigator.appVersion.indexOf('X11') !== -1
-    ? 'UNIX'
-    : navigator.appVersion.indexOf('Linux') !== -1
-    ? 'Linux'
-    : 'Unknown OS'
-const date = new Date()
+certificates = [
+  '<br>',
+  `2021 | Apr.  <a href="javascript:" onclick="this.href='https://drive.google.com/file/d/1BugIZZQTw7hOy1XEzdWSn06xFESokk0w/view?usp=sharing'" target="_blank"
+      >CS403: Introduction to Modern Database Systems</a>`,
+  `     | Oct.  <a href="javascript:" onclick="this.href='https://drive.google.com/file/d/1nejt5LDAL7I3hA_xxMXQzjXkZnuIf_GK/view?usp=sharing'" target="_blank"
+      >Cybersecurity Awareness</a>`,
+  `     | Nov.  <a href="javascript:" onclick="this.href='https://drive.google.com/file/d/1tq7NsX3QjYlGJ-spuUhFiBfLoypwXyuV/view?usp=sharing'" target="_blank"
+      >APIs & Web Services</a>`,
+  `2022 | Feb.  <a href="javascript:" onclick="this.href='https://drive.google.com/file/d/1C6GKkK1o9Dtf2Wnhy-88TKKoqAFK7qxJ/view?usp=sharing'" target="_blank"
+      >Current Trends & Issues on Computer & Information Technology</a>`,
+  `     |       <a href="javascript:" onclick="this.href='https://drive.google.com/file/d/1vvNMczFEnXXN7dbPisB29TRLsSlci5be/view?usp=sharing'" target="_blank"
+      >Mission 1: A Discourse on IT Profession</a>`,
+  `     |       <a href="javascript:" onclick="this.href='https://drive.google.com/file/d/1QyqxAZNMBpOwLd0UhFLA_DqJpwvH3zeg/view?usp=sharing'" target="_blank"
+      >PNPKI & Data Privacy Orientation</a>`,
+  `     |       <a href="javascript:" onclick="this.href='https://drive.google.com/file/d/1n76HvCw8EX5cF-eWfu1437PWZtM5u2P6/view?usp=sharing'" target="_blank"
+      >WebTech Conference 2022</a>`,
+  `2023 | Feb.  <a href="javascript:" onclick="this.href='https://drive.google.com/file/d/1p73D9MuZVD2FeafxZNV2PVpXsu5lqn__/view?usp=sharing'" target="_blank"
+      >Springboot Fundamental</a>`,
+  `     |       <a href="javascript:" onclick="this.href='https://drive.google.com/file/d/1KYTPiITW3N5HVy2SwUBZLcgL2PPXlQj4/view?usp=sharing'" target="_blank"
+      >API Fundamental</a>`,
+  `     |       <a href="javascript:" onclick="this.href='https://drive.google.com/file/d/1DST6F0cwNp6Opa4FCHOKOQCByxSvLg_w/view?usp=sharing'" target="_blank"
+      >Microservices Development w/ Springboot</a>`,
+  `     |       <a href="javascript:" onclick="this.href='https://drive.google.com/file/d/1UPirgZ2G0DyKlbMZW-mvpuPoHtzz7W79/view?usp=sharing'" target="_blank"
+      >What Does GPT Really Mean for Digital Marketing?</a>`,
+  `     |       <a href="javascript:" onclick="this.href='https://drive.google.com/file/d/1LZ-XxsGqHgcU8CWUVPVPzd8hZUIbd7uU/view?usp=sharing'" target="_blank"
+      >Data that Delivers - Insights to Results</a>`,
+  `2024 | May.  <a href="javascript:" onclick="this.href='https://drive.google.com/file/d/1Sx7yM6y640HmxFB6wSt8WamkOsOZOUMo/view?usp=sharing'" target="_blank"
+        >Oracle Cloud Infrastructure 2023 Certified Foundations Associate</a>`,
+  `     |       <a href="javascript:" onclick="this.href='https://drive.google.com/file/d/14TBaHNkJR_YeTc5Xg3uDh32fdo29pJX5/view?usp=sharing'" target="_blank"
+        >Oracle Cloud Infrastructure 2023 AI Certified Foundations Associate</a>`,
+  `     |       <a href="javascript:" onclick="this.href='https://drive.google.com/file/d/1ec7Ec5wxF3kjM_Yh5eu00drQZkXiQCMk/view?usp=sharing'" target="_blank"
+      >Oracle Cloud Data Management 2023 Certified Foundations Associate</a>`,
+  `     |       <a href="javascript:" onclick="this.href='https://drive.google.com/file/d/1a4MUzBKqRzBc4vPEWa3Y9j8TCVSMytoF/view?usp=sharing'" target="_blank"
+      >Introduction to Data Science</a>`,
+  `     |       <a href="javascript:" onclick="this.href='https://drive.google.com/file/d/1KyOM-gNUMg-_uqUhvevz3zmocgPfDDfH/view?usp=sharing'" target="_blank"
+      >Data Analytics Essentials</a>`,
+  `     |       <a href="javascript:" onclick="this.href='https://drive.google.com/file/d/1DWpUjovMH0Wi50J36SwP89Dzts_IYjUR/view?usp=sharing'" target="_blank"
+      >Python (Basic)</a>`,
+  `     |       <a href="javascript:" onclick="this.href='https://drive.google.com/file/d/1x1O52u_9wQKLW2sV0t12ulxRTc00M_Ft/view?usp=sharing'" target="_blank"
+      >Problem Solving (Basic)</a>`,
+  `     |       <a href="javascript:" onclick="this.href='https://drive.google.com/file/d/1bxtzhnDrsFknBIa8rtHpMfl7RAv6Byod/view?usp=sharing'" target="_blank"
+      >Frontend Developer (React)</a>`,
+  `     |       <a href="javascript:" onclick="this.href='https://drive.google.com/file/d/12UK_btjIIq9TRA4ig4Ybc2u8yaiiyZ-n/view?usp=sharing'" target="_blank"
+      >SQL (Basic)</a>`,
+  `     |       <a href="javascript:" onclick="this.href='https://drive.google.com/file/d/1vyInMoT-k91z1sL8emrMqMwGHOsJfx4b/view?usp=sharing'" target="_blank"
+      >Software Engineer</a>`,
+  '<br>',
+]
+
 banner = [
   '<br>',
   '       .+#%%%%*:       	',
   '      +%@@@@%%%%-      	',
-  '     .@%##*++++%*      	░█▀▄▀█ █▀▀ █▀▀ ▀▀█▀▀     <span class="command">' +
-    OSName +
-    '</span> v2.3.79',
-  '      +***++****-      	░█░█░█ █▀▀ █▀▀ ──█──     © 2022 - ' +
-    date.getFullYear(),
+  '     .@%##*++++%*      	░█▀▄▀█ █▀▀ █▀▀ ▀▀█▀▀     <span class="command">Terminal</span> v2.3.79',
+  '      +***++****-      	░█░█░█ █▀▀ █▀▀ ──█──     © 2022 - ' + currentYear,
   '      +++=+++=++-      	░█──░█ ▀▀▀ ▀▀▀ ──▀──',
   '       -+++++++:       		',
   '        +*++**+.         <span class="command">░█▀▀█ █▀▀█ █──█ █──</span> ──█── █▀▀ █▀▀█ █── ─▀─',
@@ -113,6 +150,5 @@ banner = [
   'Welcome to my interactive web terminal! — Type <span class="command">\'help\'</span> for a list of commands.',
   'Or you can click <a href="../../web/">return</a> to go back to the main portfolio.',
   '<span class="command">Created by Daxxtropezz. All rights reserved.</span>',
-
   '<br>',
 ]

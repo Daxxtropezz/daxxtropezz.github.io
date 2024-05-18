@@ -10,7 +10,7 @@ let pwd = false
 var commands = []
 
 setTimeout(function () {
-  loopLines(banner, '', 80)
+  loopLines(certificates, '', 80)
   textarea.focus()
 }, 100)
 
@@ -50,7 +50,7 @@ function enterKey(e) {
       commands.push(command.innerHTML)
       git = commands.length
       addLine(
-        'guest@daxxtropezz.github.io:~$' + command.innerHTML,
+        'guest@daxxtropezz.github.io:~$ ' + command.innerHTML,
         'no-animation',
         0,
       )
@@ -84,6 +84,9 @@ function commander(cmd) {
       break
     case 'help':
       loopLines(help, 'color2 margin', 80)
+      break
+    case 'certificates':
+      loopLines(certificates, 'color2 margin', 80)
       break
     case 'return':
       addLine('returning to main profile...', 'color2', 80)
@@ -166,18 +169,19 @@ function commander(cmd) {
       if (cmd.includes('?')) {
         loopLines(question, 'error', 80)
       } else {
-        //prettier-ignore
         addLine(
-                    `<br>
-<span class="command">'${cmd.replace(/^\s+|\s+$/gm, '')}'</span> is not recognized as an internal or external command. For a list of commands, type <span class="command"> 'help'</span>.<br>
-<b>Note</b>: Press <span class="command"> '↳ Tab'</span> key or click <b class="cursor" id="cursor">█d</b> if you're unable to type.
-  <br>
-    `,
-                    'error',
-                    100,
-                )
+          `<br>
+        <span class="command">'${cmd.replace(
+          /^\s+|\s+$/gm,
+          '',
+        )}'</span> is not recognized as an internal or external command. For a list of commands, type <span class="command"> 'help'</span>.<br>
+        <b>Note</b>: Press <span class="command"> '↳ Tab'</span> key or click <b class="cursor" id="cursor">█d</b> if you're unable to type.
+          <br>
+            `,
+          'error',
+          100,
+        )
       }
-
       break
   }
 }
