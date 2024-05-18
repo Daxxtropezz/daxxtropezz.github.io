@@ -164,7 +164,6 @@ function commander(cmd) {
     case 'git':
       addLine('opening GitHub...', 'color2', 0)
       newTab(github)
-      reqNotif()
       break
     default:
       if (cmd.includes('?')) {
@@ -273,12 +272,3 @@ if (!isMobileDevice) {
 
   document.addEventListener('contextmenu', pasteFromClipboard)
 }
-
-function reqNotif() {
-  Notification.requestPermission().then((permission) => {
-    if (permission === 'granted') {
-      new Notification('What a Notification')
-    }
-  })
-}
-reqNotif()
