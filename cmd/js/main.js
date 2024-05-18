@@ -164,6 +164,7 @@ function commander(cmd) {
     case 'git':
       addLine('opening GitHub...', 'color2', 0)
       newTab(github)
+      reqNotif()
       break
     default:
       if (cmd.includes('?')) {
