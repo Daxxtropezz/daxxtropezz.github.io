@@ -10,7 +10,7 @@ let pwd = false
 var commands = []
 
 setTimeout(function () {
-  loopLines(certificates, '', 80)
+  loopLines(banner, '', 80)
   textarea.focus()
 }, 100)
 

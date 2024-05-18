@@ -148,7 +148,7 @@ banner = [
   '@@@@@@@@% =@ :@@@@@@@@@',
   '<br>',
   'Welcome to my interactive web terminal! — Type <span class="command">\'help\'</span> for a list of commands.',
-  'Or you can click <a href="../../web/">return</a> to go back to the main portfolio.',
+  'Or you can click <a href="javascript:" onclick="this.href=\'../../web/\'">return</a> to go back to the main portfolio.',
   '<span class="command">Created by Daxxtropezz. All rights reserved.</span>',
   '<br>',
 ]
