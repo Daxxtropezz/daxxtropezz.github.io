@@ -1,8 +1,9 @@
-var twitter = 'https://twitter.com/daxxtropezz'
-var linkedin = 'https://www.linkedin.com/in/daxxtropezz/'
+var behance = 'https://www.behance.net/daxxtropezz'
 var facebook = 'https://www.fb.com/daxxtropezz/'
-var instagram = 'https://www.instagram.com/daxxtropezz/'
 var github = 'https://github.com/daxxtropezz'
+var instagram = 'https://www.instagram.com/daxxtropezz/'
+var linkedin = 'https://www.linkedin.com/in/daxxtropezz/'
+var twitter = 'https://twitter.com/daxxtropezz'
 var sudo = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ?autoplay=1'
 var emailme = 'mailto:miraflores.john@gmail.com'
 var password = 'daxxyishere'
@@ -69,11 +70,12 @@ whoami = [
 
 social = [
   '<br>',
-  `<span class='command'>twitter</span>            <a href="javascript:" onclick="this.href='${twitter}'" target="_blank">twitter/daxxtropezz</a>`,
-  `<span class='command'>linkedin</span>           <a href="javascript:" onclick="this.href='${linkedin}'" target="_blank">linkedin/daxxtropezz</a>`,
+  `<span class='command'>behance</span>             <a href="javascript:" onclick="this.href='${behance}'" target="_blank">github/daxxtropezz</a>`,
   `<span class='command'>facebook</span>           <a href="javascript:" onclick="this.href='${facebook}'" target="_blank">facebook/daxxtropezz</a>`,
-  `<span class='command'>instagram</span>          <a href="javascript:" onclick="this.href='${instagram}'" target="_blank">instagram/daxxtropezz</a>`,
   `<span class='command'>github</span>             <a href="javascript:" onclick="this.href='${github}'" target="_blank">github/daxxtropezz</a>`,
+  `<span class='command'>instagram</span>          <a href="javascript:" onclick="this.href='${instagram}'" target="_blank">instagram/daxxtropezz</a>`,
+  `<span class='command'>linkedin</span>           <a href="javascript:" onclick="this.href='${linkedin}'" target="_blank">linkedin/daxxtropezz</a>`,
+  `<span class='command'>twitter</span>            <a href="javascript:" onclick="this.href='${twitter}'" target="_blank">twitter/daxxtropezz</a>`,
   '<br>',
   "<b>Note</b>: commands that <span class='command'>glow</span> can be used as a command in this terminal",
   '<br>',

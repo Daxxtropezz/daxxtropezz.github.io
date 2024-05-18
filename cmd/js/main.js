@@ -148,6 +148,10 @@ function commander(cmd) {
       addLine('opening Facebook...', 'color2', 0)
       newTab(facebook)
       break
+    case 'behance':
+      addLine('opening Behance...', 'color2', 0)
+      newTab(behance)
+      break
     case 'twitter':
       addLine('opening Twitter...', 'color2', 0)
       newTab(twitter)
