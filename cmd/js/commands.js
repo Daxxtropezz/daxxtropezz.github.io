@@ -22,7 +22,7 @@ question = [
 ]
 
 sec_pass = ['<br>', "   do you even know what you're doing ? ", '<br>']
-sec_sudo = ['<br>', "   oh no, you're not an admin... ", '<br>']
+sec_sudo = ['<br>', "   oh no, you're not an admin...", '<br>']
 
 help = [
   '<br>',
