@@ -83,7 +83,7 @@ social = [
 
 projects = [
   '<br>',
-  'Still curating... most projects are offline, on GitHub, or confidential.',
+  'The projects are still curating... most projects are offline, on GitHub, or confidential.',
   '<br>',
 ]
 
