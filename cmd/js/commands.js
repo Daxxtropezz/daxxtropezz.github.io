@@ -46,7 +46,7 @@ help = [
 secret = [
   '<br>',
   '<span class="command">sudo</span>           a secret code for ADMIN ONLY<br>',
-  '<span class="command">password</span>       don\'t try it. you already broke the code!!!',
+  '<span class="command">password</span>       don\'t try it. you already broke the code! T_T',
   '<br>',
 ]
 
