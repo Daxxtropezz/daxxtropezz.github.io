@@ -116,11 +116,11 @@ certificates = [
   `     |       <a href="javascript:" onclick="this.href='https://drive.google.com/file/d/1UPirgZ2G0DyKlbMZW-mvpuPoHtzz7W79/view?usp=sharing'" target="_blank"
       >What Does GPT Really Mean for Digital Marketing?</a>`,
   `     |       <a href="javascript:" onclick="this.href='https://drive.google.com/file/d/1KT9CLgxSWlbm4yHwHY_VGGM8iOnJ1Zrt/view?usp=sharing'" target="_blank"
-  >Data that Delivers - Insights to Results</a>`,
+      >Data that Delivers - Insights to Results</a>`,
   `2024 | May.  <a href="javascript:" onclick="this.href='https://drive.google.com/file/d/1Sx7yM6y640HmxFB6wSt8WamkOsOZOUMo/view?usp=sharing'" target="_blank"
-        >Oracle Cloud Infrastructure 2023 Certified Foundations Associate</a>`,
+      >Oracle Cloud Infrastructure 2023 Certified Foundations Associate</a>`,
   `     |       <a href="javascript:" onclick="this.href='https://drive.google.com/file/d/14TBaHNkJR_YeTc5Xg3uDh32fdo29pJX5/view?usp=sharing'" target="_blank"
-        >Oracle Cloud Infrastructure 2023 AI Certified Foundations Associate</a>`,
+      >Oracle Cloud Infrastructure 2023 AI Certified Foundations Associate</a>`,
   `     |       <a href="javascript:" onclick="this.href='https://drive.google.com/file/d/1ec7Ec5wxF3kjM_Yh5eu00drQZkXiQCMk/view?usp=sharing'" target="_blank"
       >Oracle Cloud Data Management 2023 Certified Foundations Associate</a>`,
   `     |       <a href="javascript:" onclick="this.href='https://drive.google.com/file/d/1a4MUzBKqRzBc4vPEWa3Y9j8TCVSMytoF/view?usp=sharing'" target="_blank"
