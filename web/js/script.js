@@ -98,114 +98,13 @@ window.addEventListener('load', function () {
 
 // SOUND END
 
-document.getElementById('fcvsuCertBtn1').addEventListener('click', () => {
-  showFullscreenModal(
-    './assets/images/certifications/f3f6cfea27d820e8eff34b91ad38b0b9.png',
-    './assets/images/wmrker.png',
-    'Microservices Development w/ Springboot',
-  )
-})
-document.getElementById('fcvsuCertBtn2').addEventListener('click', () => {
-  showFullscreenModal(
-    './assets/images/certifications/f4a7f1bd0e229c76aa1ce573969a00a4.png',
-    './assets/images/wmrker.png',
-    'Springboot Fundamental',
-  )
-})
-document.getElementById('fcvsuCertBtn3').addEventListener('click', () => {
-  showFullscreenModal(
-    './assets/images/certifications/f7eb05a624d11843d8f0edb97bea2169.png',
-    './assets/images/wmrker.png',
-    'API Fundamental',
-  )
-})
-document.getElementById('fcvsuCertBtn4').addEventListener('click', () => {
-  showFullscreenModal(
-    './assets/images/certifications/fb0ba786c371f70e9b6092e11971fb88.jpg',
-    './assets/images/wmrker.png',
-    'Data that Delivers - Insights to Results',
-  )
-})
-document.getElementById('fcvsuCertBtn5').addEventListener('click', () => {
-  showFullscreenModal(
-    './assets/images/certifications/fc71a76015c29a1aa3e83f6167ceb855.png',
-    './assets/images/wmrker.png',
-    'What Does GPT Really Mean for Digital Marketing?',
-  )
-})
-
-document.getElementById('seCertBtn1').addEventListener('click', () => {
-  showFullscreenModal(
-    './assets/images/certifications/2b14fb3228a3188d0896925bc5ac3220.png',
-    './assets/images/wmrker.png',
-    'Software Engineer',
-  )
-})
-document.getElementById('orcCertBtn1').addEventListener('click', () => {
-  showFullscreenModal(
-    './assets/images/certifications/1c77eec6f493bdef4aeafbf948afc0a8.jpg',
-    './assets/images/wmrker.png',
-    'Oracle Certificate',
-  )
-})
-document.getElementById('orcCertBtn2').addEventListener('click', () => {
-  showFullscreenModal(
-    './assets/images/certifications/1c9487aee34cf4a8f18d2ac36c2b79bf.jpg',
-    './assets/images/wmrker.png',
-    'Oracle Certificate',
-  )
-})
-document.getElementById('orcCertBtn3').addEventListener('click', () => {
-  showFullscreenModal(
-    './assets/images/certifications/950c4790da8075c470fa8f241c11888f.jpg',
-    './assets/images/wmrker.png',
-    'Oracle Certificate',
-  )
-})
-
-document.getElementById('daBtn1').addEventListener('click', () => {
-  showFullscreenModal(
-    './assets/images/certifications/db8a0582cbfabfbd1b1caa71f90aba88.jpg',
-    './assets/images/wmrker.png',
-    'Data Analytics Essentials',
-  )
-})
-document.getElementById('daBtn2').addEventListener('click', () => {
-  showFullscreenModal(
-    './assets/images/certifications/83cffe57f3598a164ebfd9f437f6a259.jpg',
-    './assets/images/wmrker.png',
-    'Introduction to Data Science',
-  )
-})
-
-document.getElementById('hrCertBtn1').addEventListener('click', () => {
-  showFullscreenModal(
-    './assets/images/certifications/b690160a432af4cf4c19e877199749d6.png',
-    './assets/images/wmrker.png',
-    'SQL (Basic)',
-  )
-})
-document.getElementById('hrCertBtn2').addEventListener('click', () => {
-  showFullscreenModal(
-    './assets/images/certifications/a3a47433d9da4b10243246c925b2b6bf.png',
-    './assets/images/wmrker.png',
-    'Frontend Developer (React)',
-  )
-})
-document.getElementById('hrCertBtn3').addEventListener('click', () => {
-  showFullscreenModal(
-    './assets/images/certifications/2522d3987a1f3492ed977900658bfb69.png',
-    './assets/images/wmrker.png',
-    'Python (Basic)',
-  )
-})
-document.getElementById('hrCertBtn4').addEventListener('click', () => {
-  showFullscreenModal(
-    './assets/images/certifications/5c047afbb4b0aac395be9124894eae73.png',
-    './assets/images/wmrker.png',
-    'Problem Solving (Basic)',
-  )
-})
+// document.getElementById('seCertBtn1').addEventListener('click', () => {
+//   showFullscreenModal(
+//     './assets/images/certifications/2b14fb3228a3188d0896925bc5ac3220.png',
+//     './assets/images/wmrker.png',
+//     'Software Engineer',
+//   )
+// })
 
 document.getElementById('artImgBtn5').addEventListener('click', () => {
   showFullscreenModal(
@@ -240,55 +139,6 @@ document.getElementById('artImgBtn1').addEventListener('click', () => {
     './assets/images/arts/b6d63bcde6761ae7777cbab09283fac2.png',
     null,
     'Draftings',
-  )
-})
-document.getElementById('certImgBtn1').addEventListener('click', () => {
-  showFullscreenModal(
-    './assets/images/certifications/d15f8c03838118ed6beb288e10b228d0.png',
-    './assets/images/wmrker.png',
-    'CS403: Introduction to Modern Database Systems',
-  )
-})
-document.getElementById('certImgBtn2').addEventListener('click', () => {
-  showFullscreenModal(
-    './assets/images/certifications/eceb485437e6c423dbb50faffb4b75e2.png',
-    './assets/images/wmrker.png',
-    'APIs & Web Services',
-  )
-})
-document.getElementById('certImgBtn3').addEventListener('click', () => {
-  showFullscreenModal(
-    './assets/images/certifications/7d17d9cccfc20aeb282b3113cc10f795.png',
-    './assets/images/wmrker.png',
-    'Current Trends & Issues in Computer & Information Technology',
-  )
-})
-document.getElementById('certImgBtn4').addEventListener('click', () => {
-  showFullscreenModal(
-    './assets/images/certifications/55d448864ab7ea2a37bfd90e7b6012f6.png',
-    './assets/images/wmrker.png',
-    'Computer Hardware Assembly & Disassembly',
-  )
-})
-document.getElementById('certImgBtn5').addEventListener('click', () => {
-  showFullscreenModal(
-    './assets/images/certifications/04ba2e5acb4970912f4c980a0c9095d8.jpg',
-    './assets/images/wmrker.png',
-    'Mission 1: A Disclosure on IT Profession',
-  )
-})
-document.getElementById('certImgBtn6').addEventListener('click', () => {
-  showFullscreenModal(
-    './assets/images/certifications/214837a83d0d9b08a2ee9dd8753525b2.png',
-    './assets/images/wmrker.png',
-    'PNPKI and Data Privacy Orientation',
-  )
-})
-document.getElementById('certImgBtn7').addEventListener('click', () => {
-  showFullscreenModal(
-    './assets/images/certifications/82c88dc884434b0a41fd3d5f60938a4b.jpg',
-    './assets/images/wmrker.png',
-    'Cybersecurity Awareness',
   )
 })
 document.getElementById('mobImgBtn1').addEventListener('click', () => {
@@ -429,6 +279,11 @@ const tooltips = [
   {
     selector: '#terminalbutton',
     content: 'Terminal Portfolio',
+  },
+  {
+    selector: '#certcommandbutton',
+    content:
+      "Want to see my certificates? Open terminal and type the command 'certificates' to see all.",
   },
 ]
 tooltips.forEach(({ selector, content }) => {
