@@ -99,8 +99,12 @@ certificates = [
       >Current Trends & Issues on Computer & Information Technology</a>`,
   `     |       <a href="javascript:" onclick="this.href='https://drive.google.com/file/d/1vvNMczFEnXXN7dbPisB29TRLsSlci5be/view?usp=sharing'" target="_blank"
       >Mission 1: A Discourse on IT Profession</a>`,
-  `     |       <a href="javascript:" onclick="this.href='https://drive.google.com/file/d/1QyqxAZNMBpOwLd0UhFLA_DqJpwvH3zeg/view?usp=sharing'" target="_blank"
+  `     |       <a href="javascript:" onclick="this.href='https://drive.google.com/file/d/1HYSZT3kp80weK6ZXJ46OPl-FRPbqUCSo/view?usp=sharing'" target="_blank"
       >PNPKI & Data Privacy Orientation</a>`,
+  `     |       <a href="javascript:" onclick="this.href='https://drive.google.com/file/d/1ZJ5PnfDGWhxgKf3w1V36F2RlHSBrkwHr/view?usp=sharing'" target="_blank"
+      >Cyber Talks: Cyberthreat Landscape (History)</a>`,
+  `     |       <a href="javascript:" onclick="this.href='https://drive.google.com/file/d/1KZepgMHZ-DoPYMdGt5ObYIjdLhvCi30T/view?usp=sharing'" target="_blank"
+      >Tech Trends: Data Analytics (Intermediate Session)</a>`,
   `     |       <a href="javascript:" onclick="this.href='https://drive.google.com/file/d/1n76HvCw8EX5cF-eWfu1437PWZtM5u2P6/view?usp=sharing'" target="_blank"
       >WebTech Conference 2022</a>`,
   `2023 | Feb.  <a href="javascript:" onclick="this.href='https://drive.google.com/file/d/1p73D9MuZVD2FeafxZNV2PVpXsu5lqn__/view?usp=sharing'" target="_blank"
