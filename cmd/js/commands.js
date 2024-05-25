@@ -89,7 +89,7 @@ projects = [
 
 certificates = [
   '<br>',
-  `2021 | Apr.  <a href="javascript:" onclick="this.href='https://drive.google.com/file/d/1BugIZZQTw7hOy1XEzdWSn06xFESokk0w/view?usp=sharing'" target="_blank"
+  `2021 | Apr.  <a href="javascript:" onclick="this.href='https://drive.google.com/file/d/1hFt-DSR2v3y8ClZLuR06Ha6oYwN2bDTp/view?usp=sharing'" target="_blank"
       >CS403: Introduction to Modern Database Systems</a>`,
   `     | Oct.  <a href="javascript:" onclick="this.href='https://drive.google.com/file/d/1nejt5LDAL7I3hA_xxMXQzjXkZnuIf_GK/view?usp=sharing'" target="_blank"
       >Cybersecurity Awareness</a>`,
