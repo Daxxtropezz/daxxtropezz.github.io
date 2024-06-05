@@ -1,12 +1,13 @@
-document.addEventListener('contextmenu', function (event) {
-  event.preventDefault()
-})
-document.addEventListener('keydown', function (event) {
-  if (event.key === 'F12') {
-    event.preventDefault()
-  }
-})
-
+// document.addEventListener('contextmenu', function (event) {
+//   event.preventDefault()
+// })
+// document.addEventListener('keydown', function (event) {
+//   if (event.key === 'F12') {
+//     // event.preventDefault()
+//     this.location.href = './extras/error.html'
+//     debugger
+//   }
+// })
 // ICON HOVER
 // const imageElement = document.querySelector('.main-character')
 // const buttonElement = document.querySelector('.terminal')
