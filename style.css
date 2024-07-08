@@ -311,6 +311,8 @@ span {
 	font-size: 6rem;
 	text-align: center;
 	margin: 4rem 0;
+	white-space: normal;
+	word-break: break-all;
 }
 
 .experiences {
