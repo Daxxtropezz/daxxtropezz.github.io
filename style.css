@@ -651,9 +651,8 @@ span {
 
 @media screen and (orientation: landscape) {
 	body {
-		width: 100vh;
+		width: 100%;
 		height: 100vw;
-		transform: rotate(90deg);
 		transform-origin: left top;
 	}
 }
