@@ -649,6 +649,15 @@ span {
 
 /* Section End */
 
+@media screen and (orientation: landscape) {
+	body {
+		width: 100vh;
+		height: 100vw;
+		transform: rotate(90deg);
+		transform-origin: left top;
+	}
+}
+
 @media (max-width: 1285px) {
 	html {
 		font-size: 55%;
