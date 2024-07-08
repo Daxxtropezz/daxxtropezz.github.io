@@ -1,3 +1,0 @@
-ErrorDocument 404 /daxxtropezz.github.io/web/extras/error.html
-ErrorDocument 404 ./web/extras/error.html
-ErrorDocument 403 ./web/assets/

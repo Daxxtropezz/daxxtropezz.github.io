@@ -1,12 +1,1 @@
-.vscode
-.prettierrc
-package.json
-package-lock.json
-js/obfuscate.js
-*/*/*/5f42f40866d5b076884670b5d660f051.*
-*/*/*/1bc1bcfdfb51941aecb444fa1e0516e3.*
-*/*/*/ba46f3bb7f36c3f2e56626372fa09739.*
-test
-og_loc
-0_old_files
-*/svg.*
+z_old
