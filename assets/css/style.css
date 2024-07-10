@@ -458,7 +458,7 @@ span {
 
 .skill-box {
 	background-color: var(--text-color);
-	/* height: 300px; */
+	height: 500px;
 	border-radius: 3rem;
 	border: 5px solid transparent;
 	cursor: pointer;
