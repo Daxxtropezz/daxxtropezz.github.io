@@ -30,51 +30,39 @@ menuIcon.onclick = () => {
 const tooltips = [
 	{
 		selector: '#backtotop',
-		content: 'Back to Top',
+		content1: 'Back to Top',
+		content2: '',
 	},
 	{
 		selector: '#ref_hs',
-		content: `Senior Manager Development
-		&#13
-		Contact: (+91) 9650808369`,
+		content1: `Senior Manager Development`,
+		content2: 'Contact: (+91) 9650808369',
 	},
 	{
 		selector: '#ref_dmc',
-		content: 'Director, Core Software Development\nContact: (+63) 9177700877',
+		content1: 'Director, Core Software Development',
+		content2: 'Contact: (+63) 9177700877',
 	},
 	{
 		selector: '#ref_at',
-		content: 'I.T. Instructor\nContact: (+63) 999-881-3036',
+		content1: 'I.T. Instructor',
+		content2: 'Contact: (+63) 999-881-3036',
 	},
 	{
 		selector: '#ref_sff',
-		content: 'UI/UX Designer\nContact: (+63) 993-330-2365',
-	},
-	{
-		selector: '#skillsncerts',
-		content: 'Skills & Certificates',
-	},
-	{
-		selector: '#websitesfin',
-		content: 'Websites & Arts',
-	},
-	{
-		selector: '#contactme',
-		content: 'Contact Me',
-	},
-	{
-		selector: '#terminalbutton',
-		content: 'Terminal Portfolio',
-	},
-	{
-		selector: '#certcommandbutton',
-		content:
-			"Want to see my certificates? Open terminal and type the command 'certificates' to see all.",
+		content1: 'UI/UX Designer',
+		content2: 'Contact: (+63) 993-330-2365',
 	},
 ];
-tooltips.forEach(({ selector, content }) => {
+tooltips.forEach(({ selector, content1, content2 }) => {
 	tippy(selector, {
-		content: content,
+		content:
+			'<center><strong>' +
+			content1 +
+			'<br><span style="color: gold;">' +
+			content2 +
+			'</span></strong></center>',
 		followCursor: true,
+		allowHTML: true,
 	});
 });
