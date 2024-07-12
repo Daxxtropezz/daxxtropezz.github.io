@@ -458,7 +458,8 @@ span {
 
 .skill-box {
 	background-color: var(--text-color);
-	height: 500px;
+	min-height: 500px;
+	max-height: fit-content;
 	border-radius: 3rem;
 	border: 5px solid transparent;
 	cursor: pointer;
