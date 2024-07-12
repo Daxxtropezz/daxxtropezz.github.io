@@ -29,11 +29,6 @@ menuIcon.onclick = () => {
 // tooltip
 const tooltips = [
 	{
-		selector: '#backtotop',
-		content1: 'Back to Top',
-		content2: '',
-	},
-	{
 		selector: '#ref_hs',
 		content1: `Senior Manager Development`,
 		content2: 'Contact: (+91) 965-080-8369',
