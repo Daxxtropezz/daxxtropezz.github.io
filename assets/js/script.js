@@ -36,12 +36,12 @@ const tooltips = [
 	{
 		selector: '#ref_hs',
 		content1: `Senior Manager Development`,
-		content2: 'Contact: (+91) 9650808369',
+		content2: 'Contact: (+91) 965-080-8369',
 	},
 	{
 		selector: '#ref_dmc',
 		content1: 'Director, Core Software Development',
-		content2: 'Contact: (+63) 9177700877',
+		content2: 'Contact: (+63) 917-770-0877',
 	},
 	{
 		selector: '#ref_at',
