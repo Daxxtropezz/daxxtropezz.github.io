@@ -13,3 +13,5 @@ og_loc
 cmd
 assets/images/logos/logo_dswd.png
 assets/images/logos/logo_zqr.png
+test
+.env
