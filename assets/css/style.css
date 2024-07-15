@@ -182,7 +182,9 @@ span {
 }
 
 .btn {
-	display: inline-block;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
 	padding: 1rem 2.8rem;
 	background: var(--main-color);
 	box-shadow: 0 0 25px var(--main-color);
@@ -194,6 +196,10 @@ span {
 	font-weight: 600;
 	transition: 0.3s ease-in-out;
 	cursor: pointer;
+}
+
+.btn i {
+	margin-left: 0.3rem;
 }
 
 .btn:hover {
