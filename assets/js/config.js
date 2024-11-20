@@ -1,5 +1,7 @@
 const CONFIG = {
 	//COMPANY LOGOS
+	RICTMS_LOGO: './assets/images/logos/logo_dswd_rictms.png',
+	DSWD_LOGO: './assets/images/logos/logo_dswd.png',
 	ASC_LOGO: './assets/images/logos/logo_asc.png',
 	PFH_LOGO: './assets/images/logos/logo_prefabhomes.png',
 	AD_LOGO: './assets/images/logos/logo_azuriadigital.png',
