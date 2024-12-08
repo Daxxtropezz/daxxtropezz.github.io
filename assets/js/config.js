@@ -14,5 +14,5 @@ const CONFIG = {
 	REF_SF: './assets/images/references/references_sff.jpg',
 
 	//MAIN
-	MAIN_IMG: './assets/images/fbf88b00e9eec9e03c05b10640d74daxxy.jpg',
+	MAIN_IMG: './assets/images/fbf88b00e9eec9e03c05b10640d74jp.png',
 };
