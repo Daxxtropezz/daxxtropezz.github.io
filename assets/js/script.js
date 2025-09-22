@@ -290,6 +290,10 @@
 		if (!alignGrid) {
 			initAbsolutePositions();
 		} else {
+			// Reset saved absolute positions when returning to grid layout
+			try {
+				localStorage.removeItem('icon-pos');
+			} catch {}
 			clearAbsoluteStyles();
 			if (autoArrange) autoArrangeIcons();
 		}
@@ -304,12 +308,15 @@
 	let grabDY = 0;
 	let rafId = 0;
 	let pending = null;
-	let proxy = null; // floating visual element for grid drag
+	let proxy = null; // floating visual element for grid drag (unused after change)
 	// New: drag threshold handling
 	let isDragging = false;
 	const DRAG_THRESHOLD = 6; // px
 	let startClientX = 0,
 		startClientY = 0;
+	// Base page coords for grid drag using fixed positioning
+	let baseLeft = 0,
+		baseTop = 0;
 
 	function cancelRAF() {
 		if (rafId) cancelAnimationFrame(rafId);
@@ -339,6 +346,10 @@
 		el.style.pointerEvents = 'none';
 		el.style.zIndex = '10000';
 		el.classList.add('dragging');
+		// Ensure visibility: bypass base opacity/animation on icons
+		el.classList.add('drag-proxy');
+		el.style.opacity = '1';
+		el.style.animation = 'none';
 		// Reduce layout cost while animating
 		el.style.willChange = 'transform';
 		document.body.appendChild(el);
@@ -380,16 +391,32 @@
 	}
 
 	function startDragGrid(e, icon) {
+		// Use the real element in fixed positioning so it stays visible
 		dragEl = icon;
 		startIndex = indexOfIcon(icon);
-		icon.style.visibility = 'hidden';
+		const r = icon.getBoundingClientRect();
+		baseLeft = r.left;
+		baseTop = r.top;
+		grabDX = e.clientX - r.left;
+		grabDY = e.clientY - r.top;
+
+		// Insert a sized placeholder to preserve grid flow during drag
 		placeholder = document.createElement('div');
 		placeholder.className = 'icon';
 		placeholder.style.visibility = 'hidden';
+		placeholder.style.width = r.width + 'px';
+		placeholder.style.height = r.height + 'px';
 		desktop.insertBefore(placeholder, icon.nextSibling);
-		proxy = makeProxy(icon);
-		grabDX = e.clientX - proxy.baseLeft;
-		grabDY = e.clientY - proxy.baseTop;
+
+		// Lift the real icon
+		icon.classList.add('dragging');
+		icon.style.position = 'fixed';
+		icon.style.left = r.left + 'px';
+		icon.style.top = r.top + 'px';
+		icon.style.width = r.width + 'px';
+		icon.style.height = r.height + 'px';
+		icon.style.zIndex = '10000';
+		icon.style.pointerEvents = 'none';
 		try {
 			icon.setPointerCapture(e.pointerId);
 		} catch {}
@@ -440,10 +467,13 @@
 			return;
 		}
 
-		// grid mode with proxy
-		const dx = e.clientX - proxy.baseLeft - grabDX;
-		const dy = e.clientY - proxy.baseTop - grabDY;
-		moveProxy(dx, dy);
+		// grid mode: move the fixed-positioned real element
+		schedule(() => {
+			const x = e.clientX - grabDX;
+			const y = e.clientY - grabDY;
+			dragEl.style.left = x + 'px';
+			dragEl.style.top = y + 'px';
+		});
 
 		// use elementFromPoint to reorder
 		const elUnder = document.elementFromPoint(e.clientX, e.clientY);
@@ -491,10 +521,18 @@
 			return;
 		}
 
-		// grid finalize: place real element where placeholder is and animate proxy back
+		// grid finalize: place real element where placeholder is and restore styles
 		const finalBefore = placeholder.nextSibling;
 		desktop.insertBefore(dragEl, finalBefore);
-		dragEl.style.visibility = '';
+		// restore element styles
+		dragEl.classList.remove('dragging');
+		dragEl.style.position = '';
+		dragEl.style.left = '';
+		dragEl.style.top = '';
+		dragEl.style.width = '';
+		dragEl.style.height = '';
+		dragEl.style.zIndex = '';
+		dragEl.style.pointerEvents = '';
 		placeholder?.remove();
 		placeholder = null;
 		saveOrder();

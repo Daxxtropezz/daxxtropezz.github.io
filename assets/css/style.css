@@ -108,6 +108,12 @@ body {
     box-shadow: 0 14px 36px rgba(0, 0, 0, .5), inset 0 0 0 2px rgba(99, 102, 241, .35);
 }
 
+/* Ensure drag proxy remains visible and unaffected by initial icon animation */
+.desktop-app .icon.drag-proxy {
+    opacity: 1 !important;
+    animation: none !important;
+}
+
 /* The “square card” for each app icon */
 .desktop-app .tile {
     --size: 72px;
@@ -186,8 +192,8 @@ body {
 
 .desktop-app {
     --dx-bg1: #000000;
-    --dx-bg2: #6d28d9;
-    --dx-bg3: #191970;
+    --dx-bg2: #0032d6;
+    --dx-bg3: #000000;
     --dx-bg4: #c0c0c0;
     --dx-taskbar-bg: rgba(15, 23, 42, 0.65);
     --dx-taskbar-border: rgba(255, 255, 255, 0.08);
@@ -195,7 +201,7 @@ body {
     --dx-tile-bg: rgba(255, 255, 255, 0.06);
     --dx-tile-br: rgba(255, 255, 255, 0.08);
     --dx-tile-shadow: 0 8px 24px rgba(0, 0, 0, .28), inset 0 1px 0 rgba(255, 255, 255, .08);
-    --dx-accent: #6366f1;
+    --dx-accent: #000291;
     --dx-selection: rgba(99, 102, 241, 0.35);
     color: #fff;
     font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, 'Apple Color Emoji', 'Segoe UI Emoji';
