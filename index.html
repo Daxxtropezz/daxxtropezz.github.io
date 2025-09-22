@@ -1,384 +1,271 @@
 <!DOCTYPE html>
 <html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0"
+		/>
+		<title>DaxxyOS • Portfolio</title>
+		<meta
+			name="description"
+			content="A modern, OS-style desktop with double‑click icons to open links."
+		/>
+		<link
+			rel="stylesheet"
+			href="./assets/css/style.css"
+		/>
+		<!-- Digital/futuristic fonts for the clock -->
+		<link
+			rel="preconnect"
+			href="https://fonts.googleapis.com"
+		/>
+		<link
+			rel="preconnect"
+			href="https://fonts.gstatic.com"
+			crossorigin
+		/>
+		<link
+			href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Share+Tech+Mono&display=swap"
+			rel="stylesheet"
+		/>
+	</head>
+	<body class="desktop-app">
+		<main
+			class="desktop"
+			aria-label="Desktop"
+			tabindex="-1"
+		>
+			<!-- Icons: double‑click to open in a new tab. Single click selects. -->
+			<div
+				class="icon"
+				tabindex="0"
+				role="button"
+				aria-label="LinkedIn"
+				data-id="linkedin"
+				data-url="https://www.linkedin.com/in/daxxtropezz"
+			>
+				<div
+					class="tile linkedin"
+					aria-hidden="true"
+				>
+					<!-- LinkedIn glyph -->
+					<svg
+						viewBox="0 0 24 24"
+						width="28"
+						height="28"
+						fill="#fff"
+						aria-hidden="true"
+					>
+						<path
+							d="M20.45 20.45h-3.55v-5.4c0-1.29-.03-2.94-1.79-2.94-1.8 0-2.07 1.4-2.07 2.85v5.49H9.48V9h3.4v1.56h.05c.47-.9 1.61-1.85 3.31-1.85 3.54 0 4.19 2.33 4.19 5.35v6.39zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"
+						/>
+					</svg>
+				</div>
+				<span class="label">LinkedIn</span>
+			</div>
 
-<head>
-    <meta name="p:domain_verify" content="f37ee780b5ba95f9073c464885e38554" />
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta property="og:title" content="Daxxtropezz's Portfolio" />
-    <meta property="og:site_name" content="&copy; 2022">
-    <meta property="og:url" content="https://daxxtropezz.github.io/" />
-    <meta property="og:description" content="Get to know me better by checking my website." />
-    <meta property="og:type" content="website" />
-    <meta property="og:image:url" content="https://daxxtropezz.github.io/assets/images/fbf88b00e9eec9e03c05b10640d74beb.JPG" />
-    <link rel="website icon" href="./favicon.ico" type="image/x-icon">
-    <title>Daxxtropezz's Portfolio</title>
-    <link rel="stylesheet" href="./assets/css/style.css">
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <!-- boxicons.com -->
-</head>
+			<div
+				class="icon"
+				tabindex="0"
+				role="button"
+				aria-label="Portfolio"
+				data-id="portfolio"
+				data-url="https://daxxtropezz.vercel.app"
+			>
+				<div
+					class="tile vercel"
+					aria-hidden="true"
+				>
+					<!-- Vercel triangle -->
+					<svg
+						viewBox="0 0 24 24"
+						fill="#fff"
+						aria-hidden="true"
+						focusable="false"
+					>
+						<path d="M12 3l9 16H3z" />
+					</svg>
+				</div>
+				<span class="label">Portfolio</span>
+			</div>
 
-<body oncontextmenu="return false" unselectable="on" onselectstart="return true;" onmousedown="return true;" ondragstart="return false">
+			<div
+				class="icon"
+				tabindex="0"
+				role="button"
+				aria-label="GitHub"
+				data-id="github"
+				data-url="https://github.com/daxxtropezz"
+			>
+				<div
+					class="tile github"
+					aria-hidden="true"
+				>
+					<!-- GitHub mark -->
+					<svg
+						viewBox="0 0 24 24"
+						width="26"
+						height="26"
+						fill="#fff"
+						aria-hidden="true"
+					>
+						<path
+							d="M12 .5a11.5 11.5 0 0 0-3.64 22.42c.58.11.79-.25.79-.56v-2.02c-3.19.7-3.86-1.37-3.86-1.37-.53-1.35-1.29-1.71-1.29-1.71-1.06-.73.08-.72.08-.72 1.17.08 1.79 1.2 1.79 1.2 1.04 1.78 2.73 1.26 3.39.96.1-.77.41-1.26.75-1.55-2.55-.29-5.24-1.27-5.24-5.66 0-1.25.45-2.27 1.19-3.07-.12-.29-.52-1.46.11-3.05 0 0 .98-.31 3.21 1.17a11.17 11.17 0 0 1 5.84 0c2.23-1.48 3.21-1.17 3.21-1.17.63 1.59.23 2.76.11 3.05.74.8 1.19 1.83 1.19 3.07 0 4.4-2.69 5.36-5.25 5.65.42.36.8 1.08.8 2.18v3.23c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5z"
+						/>
+					</svg>
+				</div>
+				<span class="label">GitHub</span>
+			</div>
 
-    <header class="header">
-        <a href="#home" class="logo">John Paul
-            <span>Miraflores</span>
-        </a>
+			<div
+				class="icon"
+				tabindex="0"
+				role="button"
+				aria-label="Credly"
+				data-id="credly"
+				data-url="https://www.credly.com/users/daxxtropezz/badges"
+			>
+				<div
+					class="tile credly"
+					aria-hidden="true"
+				>
+					<!-- Credly C -->
+					<svg
+						viewBox="0 0 24 24"
+						width="24"
+						height="24"
+						fill="#fff"
+						aria-hidden="true"
+					>
+						<path
+							d="M12 3a9 9 0 1 0 6.36 15.36l-1.64-1.64A6.5 6.5 0 1 1 12 5.5c1.6 0 3.06.6 4.17 1.58l1.66-1.66A9 9 0 0 0 12 3z"
+						/>
+					</svg>
+				</div>
+				<span class="label">Credly</span>
+			</div>
 
-        <i class='bx bx-menu' id="menu-icon"></i>
+			<div
+				class="icon"
+				tabindex="0"
+				role="button"
+				aria-label="Behance"
+				data-id="behance"
+				data-url="https://www.behance.net/daxxtropezz"
+			>
+				<div
+					class="tile behance"
+					aria-hidden="true"
+				>
+					<!-- Behance Be -->
+					<svg
+						viewBox="0 0 24 24"
+						width="28"
+						height="28"
+						fill="#fff"
+						aria-hidden="true"
+					>
+						<path
+							d="M4 7h5.5a3.25 3.25 0 0 1 0 6.5H4V7zm3 2v2.5h2.5a1.25 1.25 0 0 0 0-2.5H7zM4 14h5.9A3.1 3.1 0 1 1 9 20H4v-6zm3 2v2h2a1 1 0 1 0 0-2H7zM15.5 8h4v1h-4V8zm-.5 2h3.2A3.8 3.8 0 1 1 18 20a3.7 3.7 0 0 1-3.47-2l1.79-.84c.27.62.86 1.04 1.68 1.04 1.14 0 1.9-.83 1.9-2.2h-4.9V10zm1.9 1.8h2.9c-.1-1-1-1.8-1.45-1.8-.88 0-1.31.62-1.45 1.8z"
+						/>
+					</svg>
+				</div>
+				<span class="label">Behance</span>
+			</div>
 
-        <nav class="navbar">
-            <a href="#home" class="active">Home</a>
-            <a href="#experiences">Experiences</a>
-            <a href="#skills">Skills</a>
-            <a href="#references">References</a>
-            <a href="mailto:miraflores.john@gmail.com" target="_blank" class="btn">Send Email <i class='bx bxs-envelope'></i></a>
-        </nav>
-    </header>
+			<!-- Removed README Widget icon -->
+		</main>
 
-    <section class="home" id="home">
-        <div class="home-content">
-            <h1 class="name-text-animation">Hey there, It's <span>Daxxy</span></h1>
-            <h3 class="text-animation">I'm a <span></span></h3>
-            <p style="text-align: justify; text-justify: inter-word;">My name is John Paul Miraflores. I am an experienced Full-Stack Developer skilled in ReactJS, Flutter, PHP, NodeJS, Firebase, and MySQL. I have a proven track record of improving workflow and user experience through personalized recommendations
-                and efficient systems. In my recent roles, I developed recommendation features, supported mobile development, conducted UA testing, managed hardware, and designed event materials. Additionally, I have experience troubleshooting hardware
-                issues, assisting with electronic voting machines, and freelancing in software engineering. I am passionate about continuous learning and professional growth, and I look forward to bringing my skills to new challenges and furthering my
-                expertise in the IT field.</p>
+		<footer
+			class="taskbar pos-top"
+			role="contentinfo"
+			aria-label="Taskbar"
+		>
+			<div class="brand">DaxxyOS</div>
+			<div class="spacer"></div>
+			<div
+				class="clock"
+				id="clock"
+				aria-live="polite"
+			>
+				--:--:--
+			</div>
+		</footer>
 
-            <div class="social-icons">
-                <a href="https://www.linkedin.com/in/daxxtropezz/" target="_blank"><i class='bx bxl-linkedin'></i></a>
-                <a href="https://www.github.com/daxxtropezz/" target="_blank"><i class='bx bxl-github'></i></a>
-                <a href="https://www.behance.com/daxxtropezz/" target="_blank"><i class='bx bxl-behance'></i></a>
-                <a href="https://web.facebook.com/Daxxtropezz/" target="_blank"><i class='bx bxl-facebook'></i></a>
-            </div>
+		<!-- Removed README widget modal -->
 
-            <div class="btn-group">
-                <a href="https://bit.ly/my-resume-on-pdf" target="_blank" class="btn">View Resume <i class='bx bx-window-open'></i></a>
-            </div>
-        </div>
+		<!-- Removed readme-widget-snippet template -->
 
-        <div class="home-img">
-            <img id="main_img" src="" alt="">
-        </div>
-    </section>
+		<div
+			class="context-menu"
+			id="iconContextMenu"
+			role="menu"
+			aria-hidden="true"
+		>
+			<button
+				class="ctx-item"
+				id="ctxOpen"
+				role="menuitem"
+			>
+				Open app link
+			</button>
+			<button
+				class="ctx-item"
+				id="ctxCopy"
+				role="menuitem"
+			>
+				Copy app link
+			</button>
+			<!-- Desktop layout options -->
+			<button
+				class="ctx-item"
+				id="ctxAlign"
+				role="menuitemcheckbox"
+				aria-checked="true"
+			>
+				Align icons to grid
+			</button>
+			<button
+				class="ctx-item"
+				id="ctxAutoArrange"
+				role="menuitemcheckbox"
+				aria-checked="false"
+			>
+				Auto arrange icons
+			</button>
+			<!-- Taskbar position controls (shown on background/taskbar right-click) -->
+			<button
+				class="ctx-item"
+				id="ctxPosTop"
+				role="menuitem"
+			>
+				Move taskbar to top
+			</button>
+			<button
+				class="ctx-item"
+				id="ctxPosBottom"
+				role="menuitem"
+			>
+				Move taskbar to bottom
+			</button>
+			<button
+				class="ctx-item"
+				id="ctxRefresh"
+				role="menuitem"
+			>
+				Refresh
+			</button>
+			<button
+				class="ctx-item"
+				id="ctxShutdown"
+				role="menuitem"
+			>
+				Shutdown
+			</button>
+		</div>
 
-    <section class="experiences" id="experiences">
-        <h2 class="heading">Experiences</h2>
-
-        <div class="timeline-items">
-
-            <div class="timeline-item">
-                <div class="timeline-dot"><img id="rictms_logo" src="" alt=""></div>
-                <div class="timeline-date">November, 2024 - Present</div>
-                <div class="timeline-content">
-                    <h3>Department of Social Welfare and Development - Regional ICT Management Section</h3>
-                    <ul style="text-align: justify; text-justify: inter-word; list-style-type: none;">
-                        <p style="color: #003bea;">Computer Programmer III (Full Stack Developer) (SG 18)</p>
-                        <br>
-                        <li>
-                            <p class="hover-text">Ongoing...</p>
-                        </li>
-                    </ul>
-                    <p>
-
-                    </p>
-                </div>
-            </div>
-
-            <div class="timeline-item">
-                <div class="timeline-dot"><img id="dswd_logo" src="" alt=""></div>
-                <div class="timeline-date">August, 2024 - November, 2024</div>
-                <div class="timeline-content">
-                    <h3>Department of Social Welfare and Development</h3>
-                    <ul style="text-align: justify; text-justify: inter-word; list-style-type: none;">
-                        <p style="color: #003bea;">Computer Maintenance Technologist I (Desktop Engineer) (SG 11)</p>
-                        <br>
-                        <li>
-                            <p class="hover-text">I am an IT professional with a solid foundation in both software development and IT infrastructure. Currently employed at DSWD Field Office IV-A as a Desktop Engineer (Computer Maintenance Technologist I), 
-                                I have honed my skills in managing network security, troubleshooting ICT equipment, configuring network devices, and administering Active Directory systems. My experience in the field has helped me build a flexible and 
-                                results-oriented work ethic, with a focus on achieving team goals. With a blend of technical proficiency and problem-solving capabilities, I am committed to contributing to impactful projects that streamline operations 
-                                and empower teams to succeed.</p>
-                        </li>
-                    </ul>
-                    <p>
-
-                    </p>
-                </div>
-            </div>
-
-            <div class="timeline-item">
-                <div class="timeline-dot"><img id="asc_logo" src=""></div>
-                <div class="timeline-date">June, 2023 - May, 2024</div>
-                <div class="timeline-content">
-                    <h3>Ad Standards Council</h3>
-                    <ul style="text-align: justify; text-justify: inter-word; list-style-type: none;">
-                        <p style="color: #003bea;">I.T. Developer & Specialist (SG 13)</p>
-                        <br>
-                        <li>
-                            <p class="hover-text">During my tenure, I created a spreadsheet integrated with the database to streamline the monitoring of applications, improving the efficiency of the company's operations. Additionally, I provided support for mobile development
-                                and user acceptance (UA) testing, managed hardware, and contributed to mobile and website programming projects. I also designed PowerPoint presentations, posters, and other materials for company events, ensuring a professional
-                                and cohesive visual presentation and built systems called 'Araw Values Awards' and 'ASCo: Online Tracking System'. Through these experiences, I gained extensive skills in hardware management, programming for both websites
-                                and mobile applications, and designing event-related materials. I developed strong problem-solving abilities and enhanced my technical skill set through hands-on projects and collaboration with the team.</p>
-                        </li>
-                    </ul>
-                    <p>
-
-                    </p>
-                </div>
-            </div>
-
-            <div class="timeline-item">
-                <div class="timeline-dot"><img id="pfh_logo" src="" alt=""></div>
-                <div class="timeline-date">March, 2023 - June, 2023</div>
-                <div class="timeline-content">
-                    <h3>PrefabHomes Philippines</h3>
-                    <ul style="text-align: justify; text-justify: inter-word; list-style-type: none;">
-                        <p style="color: #003bea;">Wordpress Developer & Technical Specialist</p>
-                        <br>
-                        <li>
-                            <p class="hover-text">During my internship at PrefabHomes Philippines, I completed a total of 486 hours, contributing to various projects and tasks that enhanced my technical and creative skills. My responsibilities included conducting site visits
-                                in Pampanga and Batangas to capture photos and videos for client presentations, and performing technical maintenance on company devices, such as diagnosing issues, upgrading hardware components like SSDs and RAM, and installing
-                                operating systems. Additionally, I designed the company's profile, employee IDs, and certificates, ensuring a consistent and professional brand image. I also maintained and updated the company's WordPress websites, identifying
-                                and fixing bugs to ensure optimal performance.</p>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="timeline-item">
-                <div class="timeline-dot"><img id="ad_logo" src="" alt=""></div>
-                <div class="timeline-date">March, 2023</div>
-                <div class="timeline-content">
-                    <h3>Azuria Digital</h3>
-                    <ul style="text-align: justify; text-justify: inter-word; list-style-type: none;">
-                        <p style="color: #003bea;">Web Developer</p>
-                        <br>
-                        <li>
-                            <p class="hover-text">As an intern at Azuria Digital, I worked as a web developer for two weeks. During this time, I participated in weekly meetings where we presented our mockups and discussed our progress and learnings. Despite the brief duration,
-                                I gained valuable experience in web development and collaboration with Wordpress and PHP. Unfortunately, my time at Azuria Digital was not credited towards my internship hours, as it was not approved by the head of our
-                                IT Department. I subsequently transferred to another company to continue my internship, where I assisted my classmates during our On-the-Job Training (OJT) period.</p>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="timeline-item">
-                <div class="timeline-dot"><img id="com_logo" src="" alt=""></div>
-                <div class="timeline-date">May, 2022</div>
-                <div class="timeline-content">
-                    <h3>Commission on Elections</h3>
-                    <ul style="text-align: justify; text-justify: inter-word; list-style-type: none;">
-                        <p style="color: #003bea;">D.E.S.O. Technical Support Staff</p>
-                        <br>
-                        <li>
-                            <p class="hover-text">In the day of election 2022, I assisted EB Chairpersons in troubleshooting electronic voting machines to ensure smooth operation during elections. Additionally, I conducted hardware troubleshooting and provided on-site technical
-                                support to resolve issues promptly.</p>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="timeline-item">
-                <div class="timeline-dot">
-                </div>
-                <div class="timeline-date">2020 - 2023</div>
-                <div class="timeline-content">
-                    <h3>Freelancing</h3>
-                    <ul style="text-align: justify; text-justify: inter-word; list-style-type: none;">
-                        <p style="color: #003bea;">Full-Stack Developer</p>
-                        <br>
-                        <li>
-                            <p class="hover-text">Back in college, I developed custom software applications based on client specifications, delivering tailored solutions to meet their needs. Additionally, I provided programming assistance and technical support, addressing
-                                client issues and debugging software systems while offering guidance on maintaining and improving their projects.</p>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-    <section class="skills" id="skills">
-        <h2 class="heading">Skills</h2>
-        <div class="skills-container">
-
-            <div class="skill-box">
-                <div class="skill-info">
-                    <h4>Android Developer</h4>
-                    <div class="rating">
-                        <i class='bx bxs-star' id="star"></i>
-                        <i class='bx bxs-star' id="star"></i>
-                        <i class='bx bxs-star' id="star"></i>
-                        <i class='bx bxs-star' id="star"></i>
-                        <i class='bx bx-star' id="star-us"></i>
-                    </div><br>
-                    <p style="text-align: justify; text-justify: inter-word;">As an Android Developer proficient in Android Studio with Java, Firebase Realtime Database, and Flutter with Dart, I specialize in creating robust mobile applications. Using Android Studio and Java, I develop native Android apps, leveraging
-                        the Android SDK to implement features that enhance user interaction and functionality. With Firebase Realtime Database, I integrate real-time data syncing and backend services, ensuring efficient data management and synchronization
-                        across devices. Additionally, my proficiency in Flutter and Dart allows me to build cross-platform applications with a single codebase, delivering consistent user experiences across Android and iOS platforms. My expertise spans
-                        from designing responsive UIs to optimizing app performance and integrating secure and scalable solutions to meet client needs effectively.</p>
-                </div>
-            </div>
-
-            <div class="skill-box">
-                <div class="skill-info">
-                    <h4>UI/UX Designer</h4>
-                    <div class="rating">
-                        <i class='bx bxs-star' id="star"></i>
-                        <i class='bx bxs-star' id="star"></i>
-                        <i class='bx bxs-star' id="star"></i>
-                        <i class='bx bxs-star' id="star"></i>
-                        <i class='bx bx-star' id="star-us"></i>
-                    </div><br>
-                    <p style="text-align: justify; text-justify: inter-word;">As a UI/UX Designer, I utilize Canva and Figma to create intuitive and aesthetically pleasing user interfaces. My design process involves understanding user needs, developing wireframes, and creating interactive prototypes to ensure
-                        a seamless user experience. In Canva, I design visually appealing graphics and layouts, while in Figma, I collaborate with team members to refine and perfect the design through iterative feedback. My goal is to deliver user-centered
-                        designs that enhance usability and satisfaction, making digital interactions smooth and enjoyable.</p>
-                </div>
-            </div>
-
-            <div class="skill-box">
-                <div class="skill-info">
-                    <h4>Desktop Developer</h4>
-                    <div class="rating">
-                        <i class='bx bxs-star' id="star"></i>
-                        <i class='bx bxs-star' id="star"></i>
-                        <i class='bx bxs-star' id="star"></i>
-                        <i class='bx bxs-star' id="star"></i>
-                        <i class='bx bx-star' id="star-us"></i>
-                    </div><br>
-                    <p style="text-align: justify; text-justify: inter-word;">Creating desktop applications using Java, and C# has been a significant part of my experience. In Java, I designed intuitive user interfaces with Swing and JavaFX, developing tools for inventory management and CRM. In C#, I leveraged
-                        the .NET Framework and .NET Core to create versatile, high-performance applications using modern design patterns like MVVM. These projects ranged from simple utilities to complex enterprise solutions, emphasizing security, scalability,
-                        and user-friendly interfaces.</p>
-                </div>
-            </div>
-
-            <div class="skill-box">
-                <div class="skill-info">
-                    <h4>Photo/Video Editing</h4>
-                    <div class="rating">
-                        <i class='bx bxs-star' id="star"></i>
-                        <i class='bx bxs-star' id="star"></i>
-                        <i class='bx bxs-star' id="star"></i>
-                        <i class='bx bxs-star' id="star"></i>
-                        <i class='bx bxs-star' id="star"></i>
-                    </div><br>
-                    <p style="text-align: justify; text-justify: inter-word;">Photo and video editing using tools like Capcut, Movavi, Photoshop, Canva, and Adobe Illustrator has been a key part of my skill set. I specialize in creating visually appealing content by editing photos and videos, designing logos,
-                        and removing unwanted objects from images. My expertise includes producing engaging videos for YouTube content, ensuring high-quality visual presentation. These skills enable me to deliver polished and professional media tailored
-                        to specific project requirements, enhancing the overall impact and effectiveness of the content.</p>
-                </div>
-            </div>
-
-            <div class="skill-box">
-                <div class="skill-info">
-                    <h4>Web Developer</h4>
-                    <div class="rating">
-                        <i class='bx bxs-star' id="star"></i>
-                        <i class='bx bxs-star' id="star"></i>
-                        <i class='bx bxs-star' id="star"></i>
-                        <i class='bx bx-star' id="star-us"></i>
-                        <i class='bx bx-star' id="star-us"></i>
-                    </div><br>
-                    <p style="text-align: justify; text-justify: inter-word;">As a Web Developer skilled in ReactJS, Bootstrap, BoxIcons, MaterialUI, HTML, JavaScript, CSS, Node.js, and Express.js, I specialize in creating dynamic and responsive web applications. Using ReactJS, I develop interactive user interfaces,
-                        leveraging components for efficient code reuse and state management. Bootstrap and MaterialUI enable me to design visually appealing and mobile-friendly layouts, ensuring a seamless user experience across devices. I integrate BoxIcons
-                        for scalable vector icons and utilize HTML, JavaScript, and CSS to structure, style, and add functionality to web pages. With Node.js and Express.js, I build robust server-side applications, handling backend logic and API integrations
-                        to support scalable and secure web solutions. My skills encompass the full development cycle, from designing UI/UX to implementing backend functionality, ensuring high-performance web applications that meet client specifications
-                        and user expectations.</p>
-                </div>
-            </div>
-
-            <div class="skill-box">
-                <div class="skill-info">
-                    <h4>User-Acceptance Testing</h4>
-                    <div class="rating">
-                        <i class='bx bxs-star' id="star"></i>
-                        <i class='bx bxs-star' id="star"></i>
-                        <i class='bx bxs-star' id="star"></i>
-                        <i class='bx bx-star' id="star-us"></i>
-                        <i class='bx bx-star' id="star-us"></i>
-                    </div><br>
-                    <p style="text-align: justify; text-justify: inter-word;">User-Acceptance Testing (UAT) involves validating that a software application meets the needs and requirements of its end users. In this process, I collaborate closely with stakeholders to develop and execute test cases that reflect
-                        real-world scenarios and use cases. My role includes identifying any issues or discrepancies from expected outcomes, documenting these findings, and ensuring that they are addressed before the software goes live. By facilitating
-                        thorough and effective UAT, I help ensure that the final product is reliable, user-friendly, and aligned with business objectives, ultimately enhancing user satisfaction and operational efficiency.</p>
-                </div>
-            </div>
-
-            <div class="skill-box">
-                <div class="skill-info">
-                    <h4>Troubleshooting</h4>
-                    <div class="rating">
-                        <i class='bx bxs-star' id="star"></i>
-                        <i class='bx bxs-star' id="star"></i>
-                        <i class='bx bxs-star' id="star"></i>
-                        <i class='bx bx-star' id="star-us"></i>
-                        <i class='bx bx-star' id="star-us"></i>
-                    </div><br>
-                    <p style="text-align: justify; text-justify: inter-word;">Troubleshooting involves systematically identifying, analyzing, and resolving issues that arise in various systems, software, or processes. It requires a methodical approach, starting with gathering information about the problem, analyzing
-                        potential causes, and applying logical steps to diagnose and fix the issue. Effective troubleshooting often involves leveraging technical knowledge, diagnostic tools, and experience to resolve problems efficiently and minimize
-                        downtime. Communication skills are also crucial for understanding user reports and providing workarounds or clear solutions.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="references" id="references">
-        <div class="references-box">
-            <h2 class="heading">References</h2>
-            <div class="wrapper">
-                <div class="reference-item" id="ref_hs">
-                    <img id="ref_hs_img" src="" alt="">
-                    <h2>Harpreet<br>Singh</h2>
-                </div>
-
-                <div class="reference-item" id="ref_dmc">
-                    <img id="ref_dmc_img" src="" alt="">
-                    <h2>Donald Michael<br>Corsa</h2>
-                </div>
-
-                <div class="reference-item" id="ref_at">
-                    <img id="ref_at_img" src="" alt="">
-                    <h2>Armando<br>Tampos</h2>
-                </div>
-
-                <div class="reference-item" id="ref_sff">
-                    <img id="ref_sf_img" src="" alt="">
-                    <h2>Sherilyn<br>Fajutagana</h2>
-                </div>
-            </div>
-        </div>
-
-    </section>
-
-    <footer class="footer">
-        <div class="main-footer">
-            <div class="footer-left">
-                <p class="copyright"> © Daxxtropezz | All Rights Reserved.</p>
-            </div>
-            <div class="footer-right">
-                <a href="#" class="btn">Back To Top <span><i class='bx bx-up-arrow-alt'></i></span></a>
-            </div>
-        </div>
-    </footer>
-    
-    <script src="./assets/js/config.js"></script>
-    <script>
-        
-        document.getElementById('main_img').src = CONFIG.MAIN_IMG;
-
-        document.getElementById('rictms_logo').src = CONFIG.RICTMS_LOGO;
-        document.getElementById('dswd_logo').src = CONFIG.DSWD_LOGO;
-        document.getElementById('asc_logo').src = CONFIG.ASC_LOGO;
-        document.getElementById('pfh_logo').src = CONFIG.PFH_LOGO;
-        document.getElementById('ad_logo').src = CONFIG.AD_LOGO;
-        document.getElementById('com_logo').src = CONFIG.COM_LOGO;
-        
-        document.getElementById('ref_hs_img').src = CONFIG.REF_HS;
-        document.getElementById('ref_sf_img').src = CONFIG.REF_SF;
-        document.getElementById('ref_dmc_img').src = CONFIG.REF_DMC;
-        document.getElementById('ref_at_img').src = CONFIG.REF_AT;
-    </script>
-
-    <script src="https://unpkg.com/@popperjs/core@2"></script>
-    <script src="https://unpkg.com/tippy.js@6"></script>
-    <script src="./assets/js/script.js"></script>
-</body>
-
+		<!-- External script -->
+		<script src="./assets/js/script.js"></script>
+	</body>
 </html>

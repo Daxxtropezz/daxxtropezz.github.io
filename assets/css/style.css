@@ -1,774 +1,360 @@
+/* Base reset */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    text-decoration: none;
-    border: none;
-    outline: none;
-    scroll-behavior: smooth;
-    font-family: 'Times New Roman', Times, serif;
 }
 
-:root {
-    --bg-color: #0e0e0e;
-    --second-bg-color: #181818;
-    --text-color: #c2c2c2;
-    --main-color: #0537ec;
-    --new-black-color: #0c0c0c;
-    --new-white-color: #f3f3f3;
-    --gold-color: gold;
-    --head-foot-color: #0000004d;
-    --navbar-color-media: #000000cc;
-    --reference-item-bg: #000000b3;
-    --ref-item-border: #ededed33;
-    /* --purple-color: #6e04ca; */
-}
-
-html {
-    font-size: 60%;
-    overflow-x: hidden;
-}
-
+html,
 body {
-    background: var(--bg-color);
-    color: var(--text-color);
+    height: 100%;
+    overflow: hidden;
 }
 
-.header {
+/* ==========================
+   DaxxyOS Desktop (scoped)
+   ========================== */
+.desktop-app {
+    --dx-bg-start: #0f172a;
+    --dx-bg-end: #1f2937;
+    --dx-taskbar-bg: rgba(15, 23, 42, 0.65);
+    --dx-taskbar-border: rgba(255, 255, 255, 0.08);
+    --dx-label: rgba(255, 255, 255, 0.92);
+    --dx-tile-bg: rgba(255, 255, 255, 0.06);
+    --dx-tile-br: rgba(255, 255, 255, 0.08);
+    --dx-tile-shadow: 0 8px 24px rgba(0, 0, 0, .28), inset 0 1px 0 rgba(255, 255, 255, .08);
+    --dx-accent: #6366f1;
+    --dx-selection: rgba(99, 102, 241, 0.35);
+    color: #fff;
+    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, 'Apple Color Emoji', 'Segoe UI Emoji';
+    background: radial-gradient(1200px 800px at 10% 10%, #243b55 0%, transparent 40%),
+        radial-gradient(900px 700px at 90% 30%, #141e30 0%, transparent 40%),
+        linear-gradient(160deg, var(--dx-bg-start), var(--dx-bg-end));
+    overflow: hidden;
+    position: relative;
+    background-size: 160% 160%, 180% 180%, 220% 220%;
+    animation: dx-bg-pan 60s ease-in-out infinite;
+}
+
+.desktop-app::before {
+    content: "";
+    position: absolute;
+    inset: -20%;
+    z-index: 0;
+    pointer-events: none;
+    background: conic-gradient(from 0deg at 50% 50%, rgba(99, 102, 241, .25), rgba(34, 197, 94, .18), rgba(6, 182, 212, .18), rgba(244, 63, 94, .18), rgba(99, 102, 241, .25));
+    filter: blur(80px) saturate(120%);
+    animation: dx-orbit 42s linear infinite;
+}
+
+/* Ensure desktop content sits above animated overlay */
+.desktop-app .desktop,
+.desktop-app .taskbar,
+.desktop-app .context-menu {
+    z-index: 1;
+    position: relative;
+}
+
+/* Desktop surface */
+.desktop-app .desktop {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    padding: 3rem 12% 3rem;
-    background: var(--head-foot-color);
-    backdrop-filter: blur(10px);
-    display: flex;
-    justify-content: space-between;
+    inset: 0;
+    padding: 90px 28px 70px;
+    /* space for menubar when top/bottom */
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    align-content: start;
+    gap: 18px;
+    user-select: none;
+    animation: dx-fade-in 420ms ease-out both;
+}
+
+/* Free layout (align to grid OFF) */
+.desktop-app .desktop.free-layout {
+    display: block;
+}
+
+.desktop-app .desktop.free-layout .icon {
+    position: absolute;
+}
+
+/* Icons */
+.desktop-app .icon {
+    display: inline-flex;
+    flex-direction: column;
     align-items: center;
-    z-index: 5;
+    gap: 8px;
+    cursor: default;
+    outline: none;
+    opacity: 0;
+    transform: translateY(6px) scale(.98);
+    animation: dx-rise-in 520ms cubic-bezier(.22, .87, .32, 1) both;
 }
 
-.logo {
-    font-size: 3rem;
-    color: var(--text-color);
+/* When user repositions an icon into a new grid slot */
+.desktop-app .icon.free {
+    position: static;
+}
+
+.desktop-app .icon:focus-visible .tile {
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.65), var(--dx-tile-shadow);
+}
+
+.desktop-app .icon.selected .tile {
+    outline: 2px solid rgba(255, 255, 255, 0.55);
+    outline-offset: -2px;
+}
+
+.desktop-app .tile {
+    --size: 72px;
+    --radius: 18px;
+    width: var(--size);
+    height: var(--size);
+    border-radius: var(--radius);
+    display: grid;
+    place-items: center;
+    box-shadow: var(--dx-tile-shadow);
+    transition: transform 160ms ease, box-shadow 160ms ease, background 200ms ease;
+    background: var(--dx-tile-bg);
+    border: 1px solid var(--dx-tile-br);
+    backdrop-filter: blur(6px);
+}
+
+.desktop-app .icon:hover .tile {
+    transform: translateY(-2px) scale(1.02);
+}
+
+.desktop-app .label {
+    font-size: 12px;
+    line-height: 1.2;
+    text-align: center;
+    color: var(--dx-label);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, .5);
+    max-width: 110px;
+    word-wrap: break-word;
+}
+
+/* Brand tiles */
+.desktop-app .linkedin {
+    background: #0a66c2;
+    border-color: rgba(255, 255, 255, .16);
+}
+
+.desktop-app .github {
+    background: #0b0b0b;
+    border-color: rgba(255, 255, 255, .16);
+}
+
+.desktop-app .credly {
+    background: #ff6f00;
+    border-color: rgba(255, 255, 255, .16);
+}
+
+.desktop-app .behance {
+    background: #1769ff;
+    border-color: rgba(255, 255, 255, .16);
+}
+
+.desktop-app .mail {
+    background: #e94235;
+    border-color: rgba(255, 255, 255, .16);
+}
+
+.desktop-app .vercel {
+    background: #000;
+    border-color: rgba(255, 255, 255, .2);
+}
+
+.desktop-app .vercel svg {
+    display: block;
+    width: 28px;
+    height: 28px;
+}
+
+/* Top/Bottom Menubar (repositionable) */
+.desktop-app .taskbar {
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    min-width: 220px;
+    height: auto;
+    top: 10px;
+    /* default top */
+    padding: 10px 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    background: var(--dx-taskbar-bg);
+    border: 1px solid var(--dx-taskbar-border);
+    border-radius: 14px;
+    backdrop-filter: blur(12px) saturate(120%);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, .35), inset 0 1px 0 rgba(255, 255, 255, .06);
+    z-index: 20;
+    cursor: grab;
+}
+
+/* Digital watch styling for clock */
+.desktop-app .taskbar .clock {
+    font-family: 'Share Tech Mono', 'Orbitron', ui-monospace, monospace;
+    font-size: 22px;
+    letter-spacing: .5px;
+}
+
+@media (max-width: 640px) {
+    .desktop-app .taskbar .clock {
+        font-size: 20px;
+    }
+}
+
+.desktop-app .taskbar.pos-top {
+    top: 10px;
+    bottom: auto;
+    transform: translateX(-50%);
+}
+
+.desktop-app .taskbar.pos-bottom {
+    top: auto;
+    bottom: 10px;
+    transform: translateX(-50%);
+}
+
+.desktop-app .taskbar .brand {
     font-weight: 800;
-    cursor: pointer;
-    transition: 0.3s ease;
+    font-size: 14px;
+    opacity: .95;
+    letter-spacing: .4px;
 }
 
-.logo:hover {
-    transform: scale(1.1);
+.desktop-app .taskbar .clock {
+    font-variant-numeric: tabular-nums;
+    font-weight: 800;
+    font-size: 18px;
+    opacity: .95;
 }
 
-.logo span {
-    text-shadow: 0 0 25px var(--main-color);
+/* Order flip: at top, clock above brand; at bottom, brand above clock */
+.desktop-app .taskbar.pos-top .clock {
+    order: 0;
 }
 
-.navbar a {
-    font-size: 1.8rem;
-    color: var(--text-color);
-    margin-left: 4rem;
-    font-weight: 500;
-    transition: 0.3s ease;
-    border-bottom: 3px solid transparent;
+.desktop-app .taskbar.pos-top .brand {
+    order: 1;
 }
 
-.navbar .btn:hover {
-    color: var(--new-white-color);
+.desktop-app .taskbar.pos-bottom .brand {
+    order: 0;
 }
 
-.navbar a:hover,
-.navbar a.active {
-    color: var(--main-color);
-    border-bottom: 3px solid var(--main-color);
+.desktop-app .taskbar.pos-bottom .clock {
+    order: 1;
 }
 
-#menu-icon {
-    font-size: 3.6rem;
-    color: var(--main-color);
+/* Custom context menu */
+.desktop-app .context-menu {
+    position: fixed;
+    min-width: 200px;
+    background: rgba(17, 24, 39, 0.96);
+    border: 1px solid rgba(255, 255, 255, .08);
+    border-radius: 10px;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, .35);
+    padding: 6px;
     display: none;
+    z-index: 1000;
 }
 
-
-/* Main Section */
-
-section {
-    min-height: 100vh;
-    padding: 10rem 12% 10rem;
+.desktop-app .context-menu.show {
+    display: block;
 }
 
-.home {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 15rem;
-}
-
-.home-content {
-    display: flex;
-    flex-direction: column;
-    align-items: baseline;
+.desktop-app .context-menu .ctx-item {
+    width: 100%;
     text-align: left;
-    justify-content: center;
-    margin: 3rem;
-}
-
-span {
-    color: var(--main-color);
-}
-
-.logo span {
-    color: var(--main-color);
-}
-
-.home-content h3 {
-    margin-bottom: 2rem;
-    margin-top: 1rem;
-    font-size: 3.5rem;
-}
-
-.home-content h1 {
-    font-size: 7rem;
-    font-weight: 700;
-    margin-top: 1.5rem;
-    line-height: 1;
-}
-
-.home-img {
-    border-radius: 50%;
-}
-
-.home-img img {
-    position: relative;
-    top: 3rem;
-    width: 21vw;
-    border-radius: 50%;
-    box-shadow: 0 0 25px var(--main-color);
-    cursor: pointer;
-    transition: 0.4s ease-in-out;
-}
-
-.home-img img:hover {
-    box-shadow: 0 0 25px var(--main-color), 0 0 50px var(--main-color), 0 0 100px var(--main-color);
-}
-
-.home-content p {
-    font-size: 1.5rem;
-    font-weight: 500;
-    line-height: 1.8;
-    max-width: 1000px;
-}
-
-.social-icons a {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    width: 4.5rem;
-    height: 4.5rem;
+    padding: 9px 11px;
+    border-radius: 8px;
+    border: none;
     background: transparent;
-    border: 2px solid var(--main-color);
-    font-size: 2.5rem;
-    border-radius: 50%;
-    color: var(--main-color);
-    margin: 3rem 1.5rem 3rem 0;
-    transition: 0.3s ease-in-out;
-}
-
-.social-icons a:hover {
-    color: var(--text-color);
-    transform: scale(1.3) translateY(-5px);
-    box-shadow: 0 0 25px var(--main-color);
-    background-color: var(--main-color);
-}
-
-.btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 1rem 2.8rem;
-    background: var(--main-color);
-    box-shadow: 0 0 25px var(--main-color);
-    border-radius: 0.5rem;
-    font-size: 1.6rem;
-    color: var(--new-black-color);
-    border: 2px solid transparent;
-    letter-spacing: 0.1rem;
+    color: #e5e7eb;
     font-weight: 600;
-    transition: 0.3s ease-in-out;
+    font-size: 12px;
     cursor: pointer;
 }
 
-.btn i {
-    margin-left: 0.3rem;
+.desktop-app .context-menu .ctx-item:hover {
+    background: rgba(99, 102, 241, .18);
 }
 
-.btn:hover {
-    color: var(--new-white-color);
-    transform: scale(1.05);
-    box-shadow: 0 0 50px var(--main-color);
+/* Responsive tweaks */
+@media (max-width: 640px) {
+    .desktop-app .desktop {
+        grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+        padding: 88px 12px 70px;
+    }
+
+    .desktop-app .label {
+        font-size: 11px;
+        max-width: 92px;
+    }
+
+    .desktop-app .taskbar {
+        min-width: 180px;
+        padding: 10px 12px;
+    }
+
+    .desktop-app .taskbar .clock {
+        font-size: 16px;
+    }
 }
 
-.btn-group {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-}
+/* Animations */
+@keyframes dx-fade-in {
+    from {
+        opacity: 0;
+    }
 
-.btn-group a:nth-of-type(2) {
-    background-color: var(--new-black-color);
-    color: var(--main-color);
-    border: 2px solid var(--main-color);
-    box-shadow: 0 0 25px transparent;
-}
-
-.btn-group a:nth-of-type(2):hover {
-    box-shadow: 0 0 25px var(--main-color);
-    background-color: var(--main-color);
-    color: var(--new-black-color);
-}
-
-.text-animation {
-    font-size: 34px;
-    font-weight: 600;
-    min-width: 280px;
-}
-
-.text-animation span {
-    position: relative;
-}
-
-.text-animation span::before {
-    content: 'Software Engineer';
-    color: var(--main-color);
-    animation: words 20s infinite;
-}
-
-.text-animation span::after {
-    content: '';
-    background-color: var(--bg-color);
-    position: absolute;
-    width: calc(100% + 8px);
-    height: 100%;
-    border-left: 3px solid var(--bg-color);
-    right: -8px;
-    animation: cursor 0.6s infinite, typing 20s steps(14) infinite;
-}
-
-@keyframes cursor {
     to {
-        border-left: 2px solid var(--main-color);
+        opacity: 1;
     }
 }
 
-@keyframes words {
-    0%,
-    20% {
-        content: 'Software Engineer';
+@keyframes dx-rise-in {
+    from {
+        opacity: 0;
+        transform: translateY(6px) scale(.98);
     }
-    21%,
-    40% {
-        content: 'Web/App Tester';
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
     }
-    41%,
-    60% {
-        content: 'Java/Mobile Developer';
+}
+
+@keyframes dx-bg-pan {
+    0% {
+        background-position: 0% 0%, 100% 0%, 50% 0%;
     }
-    61%,
-    80% {
-        content: 'UI/UX Designer';
+
+    50% {
+        background-position: 100% 100%, 0% 50%, 50% 100%;
     }
-    81%,
+
     100% {
-        content: 'Full-Stack Developer';
+        background-position: 0% 0%, 100% 0%, 50% 0%;
     }
 }
 
-@keyframes typing {
-    10%,
-    15%,
-    30%,
-    35%,
-    50%,
-    55%,
-    70%,
-    75%,
-    90%,
-    95% {
-        width: 0;
+@keyframes dx-orbit {
+    0% {
+        transform: rotate(0deg) scale(1);
     }
-    5%,
-    20%,
-    25%,
-    40%,
-    45%,
-    60%,
-    65%,
-    80%,
-    85% {
-        width: calc(100% + 8px);
+
+    50% {
+        transform: rotate(180deg) scale(1.05);
+    }
+
+    100% {
+        transform: rotate(360deg) scale(1);
     }
 }
 
-
-/* Section Start */
-
-
-/* Experiences Start */
-
-.heading {
-    font-size: 6rem;
-    text-align: center;
-    margin: 4rem 0;
-    white-space: normal;
-    word-break: break-all;
-}
-
-.experiences {
-    padding: 100px 15px;
-    background: var(--second-bg-color);
-}
-
-.experiences h2 {
-    margin-bottom: 3rem;
-}
-
-.timeline-items {
-    max-width: 1200px;
-    margin: auto;
-    display: flex;
-    flex-wrap: wrap;
-    position: relative;
-}
-
-.timeline-items::before {
-    content: '';
-    position: absolute;
-    width: 4px;
-    height: 100%;
-    background-color: var(--main-color);
-    left: calc(50% - 1px);
-}
-
-.timeline-item {
-    margin-bottom: 40px;
-    width: 100%;
-    position: relative;
-}
-
-.timeline-item:last-child {
-    margin-bottom: 0;
-}
-
-.timeline-item:nth-child(odd) {
-    padding-right: calc(50% + 30px);
-    text-align: right;
-}
-
-.timeline-item:nth-child(even) {
-    padding-left: calc(50% + 30px);
-}
-
-.timeline-dot img,
-.timeline-dot {
-    height: 50px;
-    width: 50px;
-    background-color: var(--main-color);
-    /* box-shadow: 0 0 0px var(--main-color), 0 0 23px var(--main-color); */
-    position: absolute;
-    left: calc(50% - 25px);
-    bottom: calc(100% - 48px);
-    /* left: calc(50% - 8px); */
-    border: 2px solid var(--main-color);
-    border-radius: 50%;
-    /* top: 10px; */
-}
-
-.timeline-date {
-    font-size: 20px;
-    font-weight: 800;
-    color: var(--new-white-color);
-    margin: 6px 23px 15px;
-}
-
-.timeline-content {
-    background-color: var(--bg-color);
-    /* border: 3px solid var(--main-color); */
-    padding: 30px 50px;
-    border-radius: 1rem;
-    border-bottom: 3px solid red;
-    /* box-shadow: 0 0 10px var(--main-color); */
-    cursor: pointer;
-    margin: 0 33px 0;
-    transition: 0.3s ease-in-out;
-}
-
-.timeline-content:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 25px var(--main-color);
-}
-
-
-/* .timeline-content .hover-text {
-	opacity: 0;
-	display: none;
-}
-
-.timeline-content:hover .hover-text {
-	opacity: 1;
-	display: block;
-} */
-
-.timeline-content h3 {
-    font-size: 20px;
-    color: var(--new-white-color);
-    margin: 0 0 10px;
-    font-weight: 500;
-}
-
-.timeline-content p {
-    color: var(--new-white-color);
-    font-size: 16px;
-    font-weight: 300;
-    line-height: 22px;
-}
-
-::-webkit-scrollbar {
-    width: 3px;
-}
-
-::-webkit-scrollbar-thumb {
-    background-color: var(--main-color);
-}
-
-::-webkit-scrollbar-track {
-    background-color: var(--bg-color);
-}
-
-
-/* Experiences End */
-
-
-/* skills Section */
-
-.skills {
-    background: var(--bg-color);
-    color: var(--new-black-color);
-}
-
-.skills h2 {
-    margin-bottom: 5rem;
-    color: var(--new-white-color);
-}
-
-.skills-container {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    align-items: center;
-    gap: 2.5rem;
-}
-
-.skill-box {
-    background-color: var(--text-color);
-    min-height: 500px;
-    max-height: fit-content;
-    border-radius: 3rem;
-    border: 5px solid transparent;
-    cursor: pointer;
-    transition: 0.4s ease-in-out;
-}
-
-.skill-box:hover {
-    background: var(--new-white-color);
-    color: var(--new-black-color);
-    border: 5px solid var(--main-color);
-    transform: scale(1.03);
-}
-
-.skill-box .skill-info {
-    display: flex;
-    flex-direction: column;
-    text-align: left;
-    /* max-height: 200px; */
-    justify-content: left;
-    align-items: baseline;
-    padding: 5rem 5rem;
-}
-
-.skill-info h4 {
-    font-size: 3rem;
-    font-weight: 800;
-    line-height: 2;
-}
-
-.skill-info p {
-    font-size: 1.6rem;
-    font-weight: 600;
-    max-height: 1000px;
-    line-height: 1.7;
-    margin: auto;
-}
-
-
-/* references Start */
-
-.references {
-    background: var(--second-bg-color);
-}
-
-.references-box {
-    background-size: cover;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-}
-
-.references-box img {
-    width: 10rem;
-    border-radius: 50%;
-    border: 3px solid var(--main-color);
-    box-shadow: 0 0 25px var(--main-color);
-}
-
-.wrapper {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 3rem;
-}
-
-.reference-item {
-    min-height: 250px;
-    max-width: 250px;
-    background: var(--reference-item-bg);
-    border: 3px solid var(--reference-item-border);
-    border-radius: 2rem;
-    margin: 0 2rem;
-    padding: 30px 30px;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    gap: 1.5rem;
-    color: var(--new-white-color);
-    transition: 0.4s ease-in-out;
-}
-
-.reference-item:hover {
-    border: 3px solid var(--main-color);
-    transform: translateY(-10px) scale(1.03);
-    box-shadow: 0 0 50px var(--main-color);
-}
-
-.reference-item h2 {
-    font-size: 2.3rem;
-}
-
-.reference-item p {
-    font-size: 1.3rem;
-}
-
-#star {
-    color: var(--gold-color);
-    font-size: 1.5rem;
-}
-
-#star-us {
-    color: var(--new-black-color);
-    font-size: 1.5rem;
-}
-
-
-/* Contact Start */
-
-
-/* .contact {
-	background-color: var(--bg-color);
-}
-
-.contact h2 {
-	margin-bottom: 3rem;
-	color: var(--new-white-color);
-}
-
-.contact form {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	gap: 3rem;
-	margin: 5rem auto;
-	text-align: center;
-}
-
-.contact form .input-box {
-	display: flex;
-	justify-content: center;
-	flex-wrap: wrap;
-}
-
-.contact form .input-box input,
-.contact form textarea {
-	width: 100%;
-	padding: 2.5rem;
-	font-size: 1.8rem;
-	color: var(--text-color);
-	background: var(--second-bg-color);
-	border-radius: 2rem;
-	border: 2px solid var(--main-color);
-	margin: 1.5rem 0;
-	resize: none;
-}
-
-.contact form .btn {
-	margin-top: 2rem;
-} */
-
-.footer {
-    position: sticky;
-    bottom: 0;
-    width: 100%;
-    padding: 15px 0;
-    background: var(--head-foot-color);
-    backdrop-filter: blur(10px);
-}
-
-.main-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-}
-
-.footer-left .copyright {
-    margin: 0;
-    font-size: 14px;
-}
-
-.footer-right .btn {
-    color: var(--new-white-color);
-    text-decoration: none;
-    font-size: 14px;
-    display: flex;
-    align-items: center;
-}
-
-.footer-right .btn span {
-    margin-left: 5px;
-}
-
-.footer-right .btn i {
-    color: var(--new-white-color);
-    font-size: 16px;
-}
-
-
-/* Section End */
-
-@media screen and (orientation: landscape) {
-    body {
-        width: 100%;
-        height: 100vw;
-        transform-origin: left top;
-    }
-}
-
-@media (max-width: 1285px) {
-    html {
-        font-size: 55%;
-    }
-    .skills-container {
-        padding-bottom: 7rem;
-        grid-template-columns: repeat(2, 1fr);
-        margin: 0 5rem;
-    }
-}
-
-@media (max-width: 991px) {
-    .header {
-        padding: 2rem 3%;
-    }
-    section {
-        padding: 10rem 3% 2rem;
-    }
-    .timeline-items::before {
-        left: 7px;
-    }
-    .timeline-item:nth-child(odd) {
-        padding-right: 0;
-        text-align: start;
-    }
-    .timeline-item:nth-child(odd),
-    .timeline-item:nth-child(even) {
-        padding-left: 37px;
-    }
-    .timeline-dot {
-        left: 0;
-    }
-    .skills {
-        padding-bottom: 7rem;
-    }
-    .references .wrapper {
-        grid-template-columns: repeat(1, 1fr);
-    }
-    .contact form {
-        flex-direction: column;
-    }
-    .footer {
-        padding: 2rem 3%;
-    }
-}
-
-@media (max-width: 895px) {
-    #menu-icon {
-        display: block;
-    }
-    .navbar {
-        position: absolute;
-        top: 100%;
-        right: 0;
-        width: 50%;
-        padding: 1rem 3%;
-        background: var(--navbar-color-media);
-        backdrop-filter: blur(20px);
-        border-bottom-left-radius: 2rem;
-        border-left: 2px solid var(--main-color);
-        border-bottom: 2px solid var(--main-color);
-        display: none;
-    }
-    .navbar.active {
-        display: block;
-    }
-    .navbar a {
-        display: block;
-        font-size: 2rem;
-        margin: 3rem 0;
-        color: var(--new-white-color);
-    }
-    .home {
-        flex-direction: column-reverse;
-        margin: 5rem 4rem;
-    }
-    .home-content h3 {
-        font-size: 2.6rem;
-    }
-    .home-content h1 {
-        font-size: 8rem;
-        margin-top: 3rem;
-    }
-    .home-content p {
-        max-width: 600px;
-        margin: 0 auto;
-    }
-    .home-img img {
-        width: 56vw;
-    }
-    .skills h2 {
-        margin-bottom: 3rem;
-    }
-    .skills-container {
-        grid-template-columns: repeat(1, 1fr);
-    }
-}
+/* Removed unused modal and button styles */
