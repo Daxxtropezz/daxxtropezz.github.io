@@ -81,7 +81,7 @@ body {
     flex-direction: column;
     align-items: center;
     gap: 8px;
-    cursor: grab;
+    cursor: pointer;
     outline: none;
     opacity: 0;
     transform: translateY(6px) scale(.98);
@@ -153,7 +153,7 @@ body {
     backdrop-filter: blur(12px) saturate(120%);
     box-shadow: 0 10px 30px rgba(0, 0, 0, .35), inset 0 1px 0 rgba(255, 255, 255, .06);
     z-index: 20;
-    cursor: grab;
+    cursor: pointer;
 }
 
 .desktop-app .taskbar.pos-top {
@@ -274,7 +274,7 @@ body {
     flex-direction: column;
     align-items: center;
     gap: 8px;
-    cursor: grab;
+    cursor: pointer;
     outline: none;
     opacity: 0;
     transform: translateY(6px) scale(.98);
@@ -449,7 +449,7 @@ body {
     backdrop-filter: blur(12px) saturate(120%);
     box-shadow: 0 10px 30px rgba(0, 0, 0, .35), inset 0 1px 0 rgba(255, 255, 255, .06);
     z-index: 20;
-    cursor: grab;
+    cursor: pointer;
 }
 
 /* Digital watch styling for clock */
@@ -612,6 +612,7 @@ body {
     font-weight: 600;
     font-size: 12px;
     cursor: pointer;
+    /*OG pointer*/
 }
 
 .desktop-app .context-menu .ctx-item:hover {
