@@ -31,6 +31,7 @@
 		/>
 	</head>
 	<body class="desktop-app">
+		<!-- Desktop surface with app icons -->
 		<main
 			class="desktop"
 			aria-label="Desktop"
@@ -234,10 +235,21 @@
 				<span class="label">Instagram</span>
 			</div>
 
+			<!-- Center clock inside donut -->
+
+			<div class="brand">DaxxyOS</div>
+			<div
+				class="clock-center"
+				id="clockCenter"
+				aria-live="polite"
+			>
+				--:--:--
+			</div>
+
 			<!-- Removed README Widget icon -->
 		</main>
 
-		<footer
+		<!-- <footer
 			class="taskbar pos-top"
 			role="contentinfo"
 			aria-label="Taskbar"
@@ -251,11 +263,7 @@
 			>
 				--:--:--
 			</div>
-		</footer>
-
-		<!-- Removed README widget modal -->
-
-		<!-- Removed readme-widget-snippet template -->
+		</footer> -->
 
 		<div
 			class="context-menu"
@@ -293,21 +301,6 @@
 				aria-checked="false"
 			>
 				Auto arrange icons
-			</button>
-			<!-- Taskbar position controls (shown on background/taskbar right-click) -->
-			<button
-				class="ctx-item"
-				id="ctxPosTop"
-				role="menuitem"
-			>
-				Move taskbar to top
-			</button>
-			<button
-				class="ctx-item"
-				id="ctxPosBottom"
-				role="menuitem"
-			>
-				Move taskbar to bottom
 			</button>
 			<button
 				class="ctx-item"

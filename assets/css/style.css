@@ -23,6 +23,168 @@ body {
     user-select: none;
 }
 
+/* Desktop surface; grid layout and padding leaves room for top/bottom taskbar */
+.desktop-app .desktop {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: clamp(300px, 90vmin, 820px);
+    aspect-ratio: 1 / 1;
+    padding: 24px;
+    border-radius: 20px;
+    background: rgba(15, 23, 42, 0.78);
+    border: 1px solid var(--dx-taskbar-border);
+    backdrop-filter: blur(14px) saturate(120%);
+    -webkit-backdrop-filter: blur(14px) saturate(120%);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, .45), inset 0 1px 0 rgba(255, 255, 255, .06);
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    align-content: start;
+    justify-content: center;
+    gap: 18px;
+    overflow: auto;
+    touch-action: none;
+    user-select: none;
+    animation: dx-fade-in 420ms ease-out both;
+}
+
+/* Donut ring in the center of the desktop card */
+.desktop-app .desktop::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: clamp(180px, 42vmin, 360px);
+    height: clamp(180px, 42vmin, 360px);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+    /* Ring with subtle glow; center appears as a hole visually */
+    background:
+        radial-gradient(circle closest-side,
+            transparent calc(50% - 14px),
+            rgba(255, 255, 255, 0.16) calc(50% - 14px) 50%,
+            transparent 52%);
+    box-shadow: inset 0 2px 10px rgba(0, 0, 0, .35);
+}
+
+/* Free layout (align to grid OFF) */
+.desktop-app .desktop.free-layout {
+    display: block;
+}
+
+.desktop-app .desktop.free-layout .icon {
+    position: absolute;
+}
+
+/* Icon and tile visual (square tile card you can size/center) */
+.desktop-app .icon {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    cursor: grab;
+    outline: none;
+    opacity: 0;
+    transform: translateY(6px) scale(.98);
+    animation: dx-rise-in 520ms cubic-bezier(.22, .87, .32, 1) both;
+    -webkit-user-drag: none;
+    touch-action: none;
+}
+
+.desktop-app .icon:active {
+    cursor: grabbing;
+}
+
+.desktop-app .icon.dragging {
+    z-index: 9999;
+    will-change: transform;
+}
+
+.desktop-app .icon.dragging .tile {
+    transform: translateY(-2px) scale(1.06);
+    background: rgba(255, 255, 255, 0.14);
+    border-color: rgba(255, 255, 255, 0.28);
+    box-shadow: 0 14px 36px rgba(0, 0, 0, .5), inset 0 0 0 2px rgba(99, 102, 241, .35);
+}
+
+/* The “square card” for each app icon */
+.desktop-app .tile {
+    --size: 72px;
+    /* square size */
+    --radius: 18px;
+    /* corner radius */
+    width: var(--size);
+    height: var(--size);
+    border-radius: var(--radius);
+    display: grid;
+    place-items: center;
+    box-shadow: var(--dx-tile-shadow);
+    transition: transform 160ms ease, box-shadow 160ms ease, background 200ms ease;
+    background: var(--dx-tile-bg);
+    border: 1px solid var(--dx-tile-br);
+    backdrop-filter: blur(6px);
+    position: relative;
+    overflow: hidden;
+    -webkit-user-drag: none;
+    touch-action: none;
+}
+
+/* Taskbar (the top widget). It’s centered and has high z-index. */
+.desktop-app .taskbar {
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    min-width: 220px;
+    height: auto;
+    top: 10px;
+    /* default top */
+    padding: 10px 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    background: rgba(15, 23, 42, 1);
+    border: 1px solid var(--dx-taskbar-border);
+    border-radius: 14px;
+    backdrop-filter: blur(12px) saturate(120%);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, .35), inset 0 1px 0 rgba(255, 255, 255, .06);
+    z-index: 20;
+    /* if this blocks icons, this and desktop padding are key */
+    cursor: grab;
+}
+
+.desktop-app .taskbar.pos-top {
+    top: 10px;
+    bottom: auto;
+    transform: translateX(-50%);
+}
+
+.desktop-app .taskbar.pos-bottom {
+    top: auto;
+    bottom: 10px;
+    transform: translateX(-50%);
+}
+
+/* Context menu styling (shown on right-click) */
+.desktop-app .context-menu {
+    position: fixed;
+    min-width: 200px;
+    background: rgba(17, 24, 39, 0.96);
+    border: 1px solid rgba(255, 255, 255, .08);
+    border-radius: 10px;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, .35);
+    padding: 6px;
+    display: none;
+    z-index: 1000;
+}
+
+.desktop-app .context-menu.show {
+    display: block;
+}
+
 /* Avoid visible selection highlight inside the app */
 .desktop-app ::selection {
     background: transparent;
@@ -79,14 +241,26 @@ body {
 
 /* Desktop surface */
 .desktop-app .desktop {
-    position: fixed;
-    inset: 0;
-    padding: 90px 28px 70px;
-    /* space for menubar when top/bottom */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: clamp(300px, 90vmin, 820px);
+    aspect-ratio: 1 / 1;
+    padding: 24px;
+    border-radius: 20px;
+    background: rgba(15, 23, 42, 0.78);
+    border: 1px solid var(--dx-taskbar-border);
+    backdrop-filter: blur(14px) saturate(120%);
+    -webkit-backdrop-filter: blur(14px) saturate(120%);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, .45), inset 0 1px 0 rgba(255, 255, 255, .06);
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
     align-content: start;
+    justify-content: center;
     gap: 18px;
+    overflow: auto;
+    touch-action: none;
     user-select: none;
     animation: dx-fade-in 420ms ease-out both;
 }
@@ -111,6 +285,8 @@ body {
     opacity: 0;
     transform: translateY(6px) scale(.98);
     animation: dx-rise-in 520ms cubic-bezier(.22, .87, .32, 1) both;
+    -webkit-user-drag: none;
+    touch-action: none;
 }
 
 .desktop-app .icon:active {
@@ -119,6 +295,7 @@ body {
 
 .desktop-app .icon.dragging {
     z-index: 9999;
+    will-change: transform;
 }
 
 .desktop-app .icon.dragging .tile {
@@ -157,6 +334,8 @@ body {
     backdrop-filter: blur(6px);
     position: relative;
     overflow: hidden;
+    -webkit-user-drag: none;
+    touch-action: none;
 }
 
 .desktop-app .tile::before {
@@ -301,6 +480,37 @@ body {
     -webkit-tap-highlight-color: transparent;
 }
 
+/* Center clock placed over the donut hole */
+.desktop-app .clock-center {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    font-family: 'Orbitron', 'Share Tech Mono', ui-monospace, monospace;
+    font-size: clamp(28px, 6vmin, 48px);
+    letter-spacing: 1px;
+    font-weight: 800;
+    line-height: 1;
+    color: #fff;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, .45);
+    padding: 10px 14px;
+    border-radius: 12px;
+    background: rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    backdrop-filter: blur(6px) saturate(120%);
+    -webkit-backdrop-filter: blur(6px) saturate(120%);
+    pointer-events: none;
+    /* let dragging pass through on touch */
+}
+
+@media (max-width: 640px) {
+    .desktop-app .clock-center {
+        font-size: clamp(22px, 7vmin, 34px);
+        padding: 8px 12px;
+    }
+}
+
 @media (max-width: 640px) {
     .desktop-app .taskbar .clock {
         font-size: 26px;
@@ -384,8 +594,9 @@ body {
 /* Responsive tweaks */
 @media (max-width: 640px) {
     .desktop-app .desktop {
-        grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
-        padding: 88px 12px 70px;
+        width: clamp(260px, 92vmin, 560px);
+        padding: 18px;
+        gap: 14px;
     }
 
     .desktop-app .label {
@@ -405,6 +616,12 @@ body {
 }
 
 @media (max-width: 380px) {
+    .desktop-app .desktop {
+        width: clamp(220px, 94vmin, 480px);
+        padding: 14px;
+        gap: 12px;
+    }
+
     .desktop-app .tile {
         --size: 56px;
         --radius: 14px;

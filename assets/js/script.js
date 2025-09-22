@@ -5,13 +5,15 @@
 
 	const desktop = $('.desktop');
 	const icons = () => $$('.icon', desktop);
+	// Helper to get current index of an icon in the grid list (restored for grid drag)
+	function indexOfIcon(el) {
+		return icons().indexOf(el);
+	}
 
 	// Disable default browser context menu and show custom menu everywhere on the app
 	const ctxMenu = $('#iconContextMenu');
 	const ctxOpen = $('#ctxOpen');
 	const ctxCopy = $('#ctxCopy');
-	const ctxPosTop = $('#ctxPosTop');
-	const ctxPosBottom = $('#ctxPosBottom');
 	const ctxRefresh = $('#ctxRefresh');
 	const ctxShutdown = $('#ctxShutdown');
 	const ctxAlign = $('#ctxAlign');
@@ -53,9 +55,7 @@
 		if (ctxCopy) ctxCopy.style.display = isIcon ? 'block' : 'none';
 		if (ctxAlign) ctxAlign.style.display = isIcon ? 'none' : 'block';
 		if (ctxAuto) ctxAuto.style.display = isIcon ? 'none' : 'block';
-		// taskbar position, refresh and shutdown only for background/taskbar
-		if (ctxPosTop) ctxPosTop.style.display = isIcon ? 'none' : 'block';
-		if (ctxPosBottom) ctxPosBottom.style.display = isIcon ? 'none' : 'block';
+		// Removed taskbar position toggles from context menu
 		if (ctxRefresh) ctxRefresh.style.display = isIcon ? 'none' : 'block';
 		if (ctxShutdown) ctxShutdown.style.display = isIcon ? 'none' : 'block';
 		refreshCtxCheckboxes();
@@ -119,30 +119,7 @@
 		hideCtx();
 	});
 
-	// Taskbar position controls
-	const taskbar = $('.taskbar');
-	function applyTaskbarPos(pos) {
-		taskbar.classList.remove('pos-top', 'pos-bottom');
-		taskbar.classList.add(pos);
-	}
-	function saveTaskbarPos(pos) {
-		localStorage.setItem('taskbar-pos', pos);
-	}
-	function loadTaskbarPos() {
-		return localStorage.getItem('taskbar-pos') || 'pos-top';
-	}
-	if (taskbar) applyTaskbarPos(loadTaskbarPos());
-
-	ctxPosTop?.addEventListener('click', () => {
-		applyTaskbarPos('pos-top');
-		saveTaskbarPos('pos-top');
-		hideCtx();
-	});
-	ctxPosBottom?.addEventListener('click', () => {
-		applyTaskbarPos('pos-bottom');
-		saveTaskbarPos('pos-bottom');
-		hideCtx();
-	});
+	// Removed taskbar position controls and persistence
 
 	// New: Desktop layout toggles
 	ctxAlign?.addEventListener('click', () => {
@@ -166,17 +143,19 @@
 		hideCtx();
 	});
 
-	// Clock with seconds (digital)
+	// Clock with seconds (digital) — update both taskbar and center clock
 	const clock = $('#clock');
+	const clockCenter = $('#clockCenter');
 	function fmt(n) {
 		return n.toString().padStart(2, '0');
 	}
 	function tick() {
 		const d = new Date();
-		if (clock)
-			clock.textContent = `${fmt(d.getHours())}:${fmt(d.getMinutes())}:${fmt(
-				d.getSeconds()
-			)}`;
+		const t = `${fmt(d.getHours())}:${fmt(d.getMinutes())}:${fmt(
+			d.getSeconds()
+		)}`;
+		if (clock) clock.textContent = t;
+		if (clockCenter) clockCenter.textContent = t;
 	}
 	tick();
 	setInterval(tick, 1000);
@@ -317,13 +296,67 @@
 	}
 	applyLayoutState();
 
+	// Smooth pointer dragging with rAF and transform proxy
 	let dragEl = null;
 	let placeholder = null;
 	let startIndex = -1;
 	let grabDX = 0;
 	let grabDY = 0;
-	function indexOfIcon(el) {
-		return icons().indexOf(el);
+	let rafId = 0;
+	let pending = null;
+	let proxy = null; // floating visual element for grid drag
+
+	function cancelRAF() {
+		if (rafId) cancelAnimationFrame(rafId);
+		rafId = 0;
+	}
+
+	function schedule(fn) {
+		pending = fn;
+		if (!rafId)
+			rafId = requestAnimationFrame(() => {
+				rafId = 0;
+				const p = pending;
+				pending = null;
+				p && p();
+			});
+	}
+
+	function makeProxy(fromEl) {
+		const r = fromEl.getBoundingClientRect();
+		const d = desktop.getBoundingClientRect();
+		const el = fromEl.cloneNode(true);
+		el.style.position = 'fixed';
+		el.style.left = r.left + 'px';
+		el.style.top = r.top + 'px';
+		el.style.width = r.width + 'px';
+		el.style.height = r.height + 'px';
+		el.style.pointerEvents = 'none';
+		el.style.zIndex = '10000';
+		el.classList.add('dragging');
+		// Reduce layout cost while animating
+		el.style.willChange = 'transform';
+		document.body.appendChild(el);
+		return {
+			el,
+			offsetX: 0,
+			offsetY: 0,
+			baseLeft: r.left,
+			baseTop: r.top,
+			drect: d,
+		};
+	}
+
+	function moveProxy(px, py) {
+		if (!proxy) return;
+		schedule(() => {
+			proxy.el.style.transform = `translate(${px}px, ${py}px)`;
+		});
+	}
+
+	function endProxy() {
+		proxy?.el?.remove();
+		proxy = null;
 	}
 
 	desktop.addEventListener('pointerdown', (e) => {
@@ -331,29 +364,34 @@
 		if (!icon) return;
 		if (e.button === 2) return; // ignore right click
 
+		// prevent scroll during drag on touch
+		document.body.style.overscrollBehavior = 'contain';
+		document.body.style.touchAction = 'none';
+
 		if (!alignGrid) {
 			dragEl = icon;
 			const r = icon.getBoundingClientRect();
 			grabDX = e.clientX - r.left;
 			grabDY = e.clientY - r.top;
 			icon.classList.add('dragging');
-			icon.style.opacity = '0.8';
+			icon.style.opacity = '0.85';
 			try {
 				icon.setPointerCapture(e.pointerId);
 			} catch {}
 			return;
 		}
 
-		// allow manual reorder even when autoArrange is enabled
+		// grid mode: use floating proxy for smoother drag
 		dragEl = icon;
 		startIndex = indexOfIcon(icon);
-		icon.classList.add('dragging');
-		icon.style.opacity = '0.6';
-		icon.style.pointerEvents = 'none'; // allow elementFromPoint to detect icons underneath while dragging
+		icon.style.visibility = 'hidden';
 		placeholder = document.createElement('div');
 		placeholder.className = 'icon';
 		placeholder.style.visibility = 'hidden';
 		desktop.insertBefore(placeholder, icon.nextSibling);
+		proxy = makeProxy(icon);
+		grabDX = e.clientX - proxy.baseLeft;
+		grabDY = e.clientY - proxy.baseTop;
 		try {
 			icon.setPointerCapture(e.pointerId);
 		} catch {}
@@ -369,24 +407,35 @@
 			const elRect = dragEl.getBoundingClientRect();
 			x = Math.max(0, Math.min(x, drect.width - elRect.width));
 			y = Math.max(0, Math.min(y, drect.height - elRect.height));
-			dragEl.style.left = x + 'px';
-			dragEl.style.top = y + 'px';
+			schedule(() => {
+				dragEl.style.left = x + 'px';
+				dragEl.style.top = y + 'px';
+			});
 			return;
 		}
 
-		// grid mode: find the icon under the pointer using elementFromPoint
+		// grid mode with proxy
+		const dx = e.clientX - proxy.baseLeft - grabDX;
+		const dy = e.clientY - proxy.baseTop - grabDY;
+		moveProxy(dx, dy);
+
+		// use elementFromPoint to reorder
 		const elUnder = document.elementFromPoint(e.clientX, e.clientY);
 		const target = elUnder?.closest?.('.icon');
-		if (!target || target === dragEl) return;
+		if (!target || target === dragEl || target === placeholder) return;
 		const list = icons();
-		const dragIdx = list.indexOf(dragEl);
 		const tgtIdx = list.indexOf(target);
-		if (tgtIdx > dragIdx) desktop.insertBefore(dragEl, target.nextSibling);
-		else desktop.insertBefore(dragEl, target);
+		if (tgtIdx > startIndex)
+			desktop.insertBefore(placeholder, target.nextSibling);
+		else desktop.insertBefore(placeholder, target);
 	});
 
 	window.addEventListener('pointerup', (e) => {
 		if (!dragEl) return;
+
+		// restore touch behavior
+		document.body.style.overscrollBehavior = '';
+		document.body.style.touchAction = '';
 
 		if (!alignGrid) {
 			const map = getPosMap();
@@ -402,20 +451,23 @@
 				dragEl.releasePointerCapture(e.pointerId);
 			} catch {}
 			dragEl = null;
+			cancelRAF();
 			return;
 		}
 
-		// grid mode finalize
-		dragEl.classList.remove('dragging');
-		dragEl.style.opacity = '';
-		dragEl.style.pointerEvents = '';
+		// grid finalize: place real element where placeholder is and animate proxy back
+		const finalBefore = placeholder.nextSibling;
+		desktop.insertBefore(dragEl, finalBefore);
+		dragEl.style.visibility = '';
 		placeholder?.remove();
 		placeholder = null;
 		saveOrder();
 		try {
 			dragEl.releasePointerCapture(e.pointerId);
 		} catch {}
+		endProxy();
 		dragEl = null;
 		startIndex = -1;
+		cancelRAF();
 	});
 })();
