@@ -574,6 +574,16 @@ body {
     text-shadow: 0 2px 8px rgba(0, 0, 0, .45);
 }
 
+.desktop-app .brand.top-counter {
+    top: calc(50% + 28px);
+}
+
+@media (max-width: 640px) {
+    .desktop-app .brand.top-counter {
+        top: calc(50% + 23px);
+    }
+}
+
 /* Custom context menu */
 .desktop-app .context-menu {
     position: fixed;
