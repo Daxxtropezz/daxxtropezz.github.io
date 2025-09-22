@@ -220,6 +220,9 @@
 	function saveOrder() {
 		const order = icons().map((i) => i.dataset.id);
 		localStorage.setItem('icon-order', JSON.stringify(order));
+		// Also persist the current on-screen positions so free-layout restores correctly
+		const posMap = normalizePosMap(snapshotPositionsFromCurrentLayout());
+		savePosMap(posMap);
 	}
 	function loadOrder() {
 		try {
@@ -250,22 +253,70 @@
 	function savePosMap(m) {
 		localStorage.setItem('icon-pos', JSON.stringify(m));
 	}
-	function initAbsolutePositions() {
-		const map = getPosMap();
+	// Ensure positions are within desktop bounds and rounded before saving
+	function normalizePosMap(map) {
+		if (!map) return {};
 		const dRect = desktop.getBoundingClientRect();
 		icons().forEach((el) => {
 			const id = el.dataset.id;
-			let p = map[id];
-			if (!p) {
-				const r = el.getBoundingClientRect();
-				p = { left: r.left - dRect.left, top: r.top - dRect.top };
-				map[id] = p;
-			}
-			el.style.position = 'absolute';
-			el.style.left = p.left + 'px';
-			el.style.top = p.top + 'px';
+			const p = map[id];
+			if (!p) return;
+			const w = el.offsetWidth || 0;
+			const h = el.offsetHeight || 0;
+			let left = Math.round(p.left || 0);
+			let top = Math.round(p.top || 0);
+			left = Math.max(
+				0,
+				Math.min(left, Math.max(0, Math.round(dRect.width - w)))
+			);
+			top = Math.max(
+				0,
+				Math.min(top, Math.max(0, Math.round(dRect.height - h)))
+			);
+			map[id] = { left, top };
 		});
-		savePosMap(map);
+		return map;
+	}
+	// Snapshot current on-screen positions (relative to desktop) in current layout
+	function snapshotPositionsFromCurrentLayout() {
+		const dRect = desktop.getBoundingClientRect();
+		const map = {};
+		icons().forEach((el) => {
+			const r = el.getBoundingClientRect();
+			const left = Math.round(r.left - dRect.left);
+			const top = Math.round(r.top - dRect.top);
+			map[el.dataset.id] = { left, top };
+		});
+		return map;
+	}
+	function applyAbsolutePositions(map) {
+		const dRect = desktop.getBoundingClientRect();
+		icons().forEach((el) => {
+			const id = el.dataset.id;
+			const p = map[id];
+			let left, top;
+			if (p) {
+				left = Math.round(p.left || 0);
+				top = Math.round(p.top || 0);
+			} else {
+				const r = el.getBoundingClientRect();
+				left = Math.round(r.left - dRect.left);
+				top = Math.round(r.top - dRect.top);
+			}
+			const w = el.offsetWidth || 0;
+			const h = el.offsetHeight || 0;
+			left = Math.max(
+				0,
+				Math.min(left, Math.max(0, Math.round(dRect.width - w)))
+			);
+			top = Math.max(
+				0,
+				Math.min(top, Math.max(0, Math.round(dRect.height - h)))
+			);
+			el.style.position = 'absolute';
+			el.style.left = left + 'px';
+			el.style.top = top + 'px';
+		});
 	}
 	function clearAbsoluteStyles() {
 		icons().forEach((el) => {
@@ -285,18 +336,35 @@
 		list.forEach((el) => desktop.appendChild(el));
 		saveOrder();
 	}
+	function isEmpty(obj) {
+		return !obj || Object.keys(obj).length === 0;
+	}
 	function applyLayoutState() {
-		desktop.classList.toggle('free-layout', !alignGrid);
 		if (!alignGrid) {
-			initAbsolutePositions();
-		} else {
-			// Reset saved absolute positions when returning to grid layout
-			try {
-				localStorage.removeItem('icon-pos');
-			} catch {}
-			clearAbsoluteStyles();
-			if (autoArrange) autoArrangeIcons();
+			// Switching to free layout. Capture current (grid) positions first if needed
+			const hadFree = desktop.classList.contains('free-layout');
+			let map = getPosMap();
+			if (!hadFree && isEmpty(map)) {
+				map = snapshotPositionsFromCurrentLayout();
+				savePosMap(map);
+			}
+			if (isEmpty(map)) {
+				// Fallback snapshot
+				map = snapshotPositionsFromCurrentLayout();
+				savePosMap(map);
+			}
+			// Apply absolute positions before toggling class to avoid default offsets
+			applyAbsolutePositions(map);
+			desktop.classList.add('free-layout');
+			return;
 		}
+		// Back to grid: clear abs positioning and optional auto-arrange
+		desktop.classList.remove('free-layout');
+		try {
+			localStorage.removeItem('icon-pos');
+		} catch {}
+		clearAbsoluteStyles();
+		if (autoArrange) autoArrangeIcons();
 	}
 	applyLayoutState();
 
@@ -375,11 +443,22 @@
 		proxy = null;
 	}
 
+	// Ensure an element becomes absolutely positioned at its current on-screen spot
+	function absolutizeAtCurrentPosition(el) {
+		const drect = desktop.getBoundingClientRect();
+		const r = el.getBoundingClientRect();
+		el.style.position = 'absolute';
+		el.style.left = Math.round(r.left - drect.left) + 'px';
+		el.style.top = Math.round(r.top - drect.top) + 'px';
+	}
+
 	function startDragFree(e, icon) {
 		dragEl = icon;
 		const r = icon.getBoundingClientRect();
 		grabDX = e.clientX - r.left;
 		grabDY = e.clientY - r.top;
+		// Convert to absolute at current position to avoid defaulting to 24,24
+		absolutizeAtCurrentPosition(icon);
 		icon.classList.add('dragging');
 		icon.style.opacity = '0.85';
 		try {
@@ -507,8 +586,8 @@
 			const map = getPosMap();
 			const id = dragEl.dataset.id;
 			map[id] = {
-				left: parseFloat(dragEl.style.left || '0'),
-				top: parseFloat(dragEl.style.top || '0'),
+				left: Math.round(parseFloat(dragEl.style.left || '0')),
+				top: Math.round(parseFloat(dragEl.style.top || '0')),
 			};
 			savePosMap(map);
 			dragEl.classList.remove('dragging');
