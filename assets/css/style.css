@@ -23,33 +23,31 @@ body {
     user-select: none;
 }
 
-/* Desktop surface; grid layout and padding leaves room for top/bottom taskbar */
+/* Desktop fills viewport, grid starts at top-left (remove centered card look) */
 .desktop-app .desktop {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: clamp(300px, 90vmin, 820px);
-    aspect-ratio: 1 / 1;
+    position: fixed;
+    inset: 0;
+    transform: none;
+    width: 100vw;
+    height: 100vh;
     padding: 24px;
-    border-radius: 20px;
-    background: rgba(15, 23, 42, 0.78);
-    border: 1px solid var(--dx-taskbar-border);
-    backdrop-filter: blur(14px) saturate(120%);
-    -webkit-backdrop-filter: blur(14px) saturate(120%);
-    box-shadow: 0 20px 60px rgba(0, 0, 0, .45), inset 0 1px 0 rgba(255, 255, 255, .06);
+    border: none;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(110px, max-content));
+    justify-content: start;
     align-content: start;
-    justify-content: center;
     gap: 18px;
     overflow: auto;
-    touch-action: none;
     user-select: none;
     animation: dx-fade-in 420ms ease-out both;
 }
 
-/* Donut ring in the center of the desktop card */
+/* Donut ring remains centered but behind icons */
 .desktop-app .desktop::after {
     content: "";
     position: absolute;
@@ -61,9 +59,7 @@ body {
     border-radius: 50%;
     pointer-events: none;
     z-index: 0;
-    /* Ring with subtle glow; center appears as a hole visually */
-    background:
-        radial-gradient(circle closest-side,
+    background: radial-gradient(circle closest-side,
             transparent calc(50% - 14px),
             rgba(255, 255, 255, 0.16) calc(50% - 14px) 50%,
             transparent 52%);
@@ -92,6 +88,8 @@ body {
     animation: dx-rise-in 520ms cubic-bezier(.22, .87, .32, 1) both;
     -webkit-user-drag: none;
     touch-action: none;
+    position: relative;
+    z-index: 1;
 }
 
 .desktop-app .icon:active {
@@ -113,9 +111,7 @@ body {
 /* The “square card” for each app icon */
 .desktop-app .tile {
     --size: 72px;
-    /* square size */
     --radius: 18px;
-    /* corner radius */
     width: var(--size);
     height: var(--size);
     border-radius: var(--radius);
@@ -140,7 +136,6 @@ body {
     min-width: 220px;
     height: auto;
     top: 10px;
-    /* default top */
     padding: 10px 14px;
     display: flex;
     flex-direction: column;
@@ -152,7 +147,6 @@ body {
     backdrop-filter: blur(12px) saturate(120%);
     box-shadow: 0 10px 30px rgba(0, 0, 0, .35), inset 0 1px 0 rgba(255, 255, 255, .06);
     z-index: 20;
-    /* if this blocks icons, this and desktop padding are key */
     cursor: grab;
 }
 
@@ -192,13 +186,9 @@ body {
 
 .desktop-app {
     --dx-bg1: #000000;
-    /* black */
     --dx-bg2: #6d28d9;
-    /* purple */
     --dx-bg3: #191970;
-    /* midnight blue */
     --dx-bg4: #c0c0c0;
-    /* silver */
     --dx-taskbar-bg: rgba(15, 23, 42, 0.65);
     --dx-taskbar-border: rgba(255, 255, 255, 0.08);
     --dx-label: rgba(255, 255, 255, 0.92);
@@ -241,26 +231,24 @@ body {
 
 /* Desktop surface */
 .desktop-app .desktop {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: clamp(300px, 90vmin, 820px);
-    aspect-ratio: 1 / 1;
+    position: fixed;
+    inset: 0;
+    transform: none;
+    width: 100vw;
+    height: 100vh;
     padding: 24px;
-    border-radius: 20px;
-    background: rgba(15, 23, 42, 0.78);
-    border: 1px solid var(--dx-taskbar-border);
-    backdrop-filter: blur(14px) saturate(120%);
-    -webkit-backdrop-filter: blur(14px) saturate(120%);
-    box-shadow: 0 20px 60px rgba(0, 0, 0, .45), inset 0 1px 0 rgba(255, 255, 255, .06);
+    border: none;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(110px, max-content));
+    justify-content: start;
     align-content: start;
-    justify-content: center;
     gap: 18px;
     overflow: auto;
-    touch-action: none;
     user-select: none;
     animation: dx-fade-in 420ms ease-out both;
 }
@@ -287,6 +275,8 @@ body {
     animation: dx-rise-in 520ms cubic-bezier(.22, .87, .32, 1) both;
     -webkit-user-drag: none;
     touch-action: none;
+    position: relative;
+    z-index: 1;
 }
 
 .desktop-app .icon:active {
@@ -399,15 +389,10 @@ body {
 .desktop-app .instagram {
     background: radial-gradient(circle at 30% 107%,
             #fdf497 0%,
-            /* yellow */
             #fdf497 5%,
             #fd5949 45%,
-            /* orange/red */
             #d6249f 60%,
-            /* pink */
-            #285AEB 90%
-            /* purple/blue */
-        );
+            #285AEB 90%);
     border-color: rgba(255, 255, 255, .16);
 }
 
@@ -435,7 +420,6 @@ body {
     min-width: 220px;
     height: auto;
     top: 10px;
-    /* default top */
     padding: 10px 14px;
     display: flex;
     flex-direction: column;
@@ -465,7 +449,6 @@ body {
     -ms-user-select: none;
     -webkit-touch-callout: none;
     pointer-events: none;
-    /* Glass card styling */
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -486,7 +469,8 @@ body {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    z-index: 1;
+    z-index: 0;
+    pointer-events: none;
     font-family: 'Orbitron', 'Share Tech Mono', ui-monospace, monospace;
     font-size: clamp(28px, 6vmin, 48px);
     letter-spacing: 1px;
@@ -501,7 +485,6 @@ body {
     backdrop-filter: blur(6px) saturate(120%);
     -webkit-backdrop-filter: blur(6px) saturate(120%);
     pointer-events: none;
-    /* let dragging pass through on touch */
 }
 
 @media (max-width: 640px) {
@@ -557,6 +540,22 @@ body {
     order: 1;
 }
 
+/* Background clock and brand behind icons */
+.desktop-app .brand {
+    position: absolute;
+    left: 50%;
+    top: calc(50% + 56px);
+    transform: translateX(-50%);
+    z-index: 0;
+    pointer-events: none;
+    font-weight: 800;
+    font-size: clamp(12px, 2.2vmin, 16px);
+    opacity: .95;
+    letter-spacing: .4px;
+    color: #fff;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, .45);
+}
+
 /* Custom context menu */
 .desktop-app .context-menu {
     position: fixed;
@@ -594,7 +593,6 @@ body {
 /* Responsive tweaks */
 @media (max-width: 640px) {
     .desktop-app .desktop {
-        width: clamp(260px, 92vmin, 560px);
         padding: 18px;
         gap: 14px;
     }
@@ -613,11 +611,19 @@ body {
         --size: 64px;
         --radius: 16px;
     }
+
+    .desktop-app .clock-center {
+        font-size: clamp(22px, 7vmin, 34px);
+        padding: 8px 12px;
+    }
+
+    .desktop-app .brand {
+        top: calc(50% + 46px);
+    }
 }
 
 @media (max-width: 380px) {
     .desktop-app .desktop {
-        width: clamp(220px, 94vmin, 480px);
         padding: 14px;
         gap: 12px;
     }
@@ -625,12 +631,6 @@ body {
     .desktop-app .tile {
         --size: 56px;
         --radius: 14px;
-    }
-
-    .desktop-app .desktop {
-        grid-template-columns: repeat(auto-fill, minmax(78px, 1fr));
-        padding: 80px 10px 64px;
-        gap: 14px;
     }
 }
 

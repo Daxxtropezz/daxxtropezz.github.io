@@ -305,6 +305,11 @@
 	let rafId = 0;
 	let pending = null;
 	let proxy = null; // floating visual element for grid drag
+	// New: drag threshold handling
+	let isDragging = false;
+	const DRAG_THRESHOLD = 6; // px
+	let startClientX = 0,
+		startClientY = 0;
 
 	function cancelRAF() {
 		if (rafId) cancelAnimationFrame(rafId);
@@ -359,29 +364,22 @@
 		proxy = null;
 	}
 
-	desktop.addEventListener('pointerdown', (e) => {
-		const icon = e.target.closest('.icon');
-		if (!icon) return;
-		if (e.button === 2) return; // ignore right click
-
+	function startDragFree(e, icon) {
+		dragEl = icon;
+		const r = icon.getBoundingClientRect();
+		grabDX = e.clientX - r.left;
+		grabDY = e.clientY - r.top;
+		icon.classList.add('dragging');
+		icon.style.opacity = '0.85';
+		try {
+			icon.setPointerCapture(e.pointerId);
+		} catch {}
 		// prevent scroll during drag on touch
 		document.body.style.overscrollBehavior = 'contain';
 		document.body.style.touchAction = 'none';
+	}
 
-		if (!alignGrid) {
-			dragEl = icon;
-			const r = icon.getBoundingClientRect();
-			grabDX = e.clientX - r.left;
-			grabDY = e.clientY - r.top;
-			icon.classList.add('dragging');
-			icon.style.opacity = '0.85';
-			try {
-				icon.setPointerCapture(e.pointerId);
-			} catch {}
-			return;
-		}
-
-		// grid mode: use floating proxy for smoother drag
+	function startDragGrid(e, icon) {
 		dragEl = icon;
 		startIndex = indexOfIcon(icon);
 		icon.style.visibility = 'hidden';
@@ -395,10 +393,38 @@
 		try {
 			icon.setPointerCapture(e.pointerId);
 		} catch {}
+		// prevent scroll during drag on touch
+		document.body.style.overscrollBehavior = 'contain';
+		document.body.style.touchAction = 'none';
+	}
+
+	// Pointer events with threshold
+
+	desktop.addEventListener('pointerdown', (e) => {
+		const icon = e.target.closest('.icon');
+		if (!icon || e.button === 2) return; // ignore right click
+
+		// Record starting point; do not start drag yet
+		isDragging = false;
+		dragEl = icon;
+		startClientX = e.clientX;
+		startClientY = e.clientY;
+		// Do not modify DOM until threshold exceeded
 	});
 
 	desktop.addEventListener('pointermove', (e) => {
 		if (!dragEl) return;
+
+		// If not yet dragging, check threshold
+		if (!isDragging) {
+			const dx = e.clientX - startClientX;
+			const dy = e.clientY - startClientY;
+			if (Math.hypot(dx, dy) < DRAG_THRESHOLD) return;
+			// Start drag now
+			isDragging = true;
+			if (!alignGrid) startDragFree(e, dragEl);
+			else startDragGrid(e, dragEl);
+		}
 
 		if (!alignGrid) {
 			const drect = desktop.getBoundingClientRect();
@@ -437,6 +463,16 @@
 		document.body.style.overscrollBehavior = '';
 		document.body.style.touchAction = '';
 
+		// If drag never started, just cleanup and let click/dblclick proceed
+		if (!isDragging) {
+			try {
+				dragEl.releasePointerCapture?.(e.pointerId);
+			} catch {}
+			dragEl = null;
+			cancelRAF();
+			return;
+		}
+
 		if (!alignGrid) {
 			const map = getPosMap();
 			const id = dragEl.dataset.id;
@@ -468,6 +504,7 @@
 		endProxy();
 		dragEl = null;
 		startIndex = -1;
+		isDragging = false;
 		cancelRAF();
 	});
 })();
