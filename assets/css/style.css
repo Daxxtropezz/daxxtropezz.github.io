@@ -402,6 +402,18 @@ body {
     border-color: rgba(255, 255, 255, .16);
 }
 
+.desktop-app .leetcode,
+.desktop-app .tryhackme {
+    background: #FFFFFF;
+    border-color: rgba(255, 255, 255, .16);
+}
+
+.desktop-app .hackerrank,
+.desktop-app .hackthebox {
+    background: #111927;
+    border-color: rgba(255, 255, 255, .16);
+}
+
 .desktop-app .mail {
     background: #e94235;
     border-color: rgba(255, 255, 255, .16);
