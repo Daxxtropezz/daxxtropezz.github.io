@@ -211,8 +211,24 @@ body {
     border-color: rgba(255, 255, 255, .16);
 }
 
-.desktop-app .behance {
+.desktop-app .behance,
+.desktop-app .facebook {
     background: #1769ff;
+    border-color: rgba(255, 255, 255, .16);
+}
+
+.desktop-app .instagram {
+    background: radial-gradient(circle at 30% 107%,
+            #fdf497 0%,
+            /* yellow */
+            #fdf497 5%,
+            #fd5949 45%,
+            /* orange/red */
+            #d6249f 60%,
+            /* pink */
+            #285AEB 90%
+            /* purple/blue */
+        );
     border-color: rgba(255, 255, 255, .16);
 }
 
