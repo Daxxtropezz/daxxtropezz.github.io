@@ -228,6 +228,15 @@
 		if (e.key === 'ArrowUp' && idx - cols >= 0) list[idx - cols].focus();
 	});
 
+	// Block Ctrl/Cmd+A text selection across the app (allow in inputs if any)
+	document.addEventListener('keydown', (e) => {
+		if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'a') {
+			const tag =
+				(document.activeElement && document.activeElement.tagName) || '';
+			if (!/INPUT|TEXTAREA/.test(tag)) e.preventDefault();
+		}
+	});
+
 	// Grid-based drag and drop reordering with persistence
 	function saveOrder() {
 		const order = icons().map((i) => i.dataset.id);
@@ -327,6 +336,7 @@
 			const r = icon.getBoundingClientRect();
 			grabDX = e.clientX - r.left;
 			grabDY = e.clientY - r.top;
+			icon.classList.add('dragging');
 			icon.style.opacity = '0.8';
 			try {
 				icon.setPointerCapture(e.pointerId);
@@ -334,11 +344,12 @@
 			return;
 		}
 
-		if (autoArrange) return; // disable manual reorder under auto-arrange
-
+		// allow manual reorder even when autoArrange is enabled
 		dragEl = icon;
 		startIndex = indexOfIcon(icon);
+		icon.classList.add('dragging');
 		icon.style.opacity = '0.6';
+		icon.style.pointerEvents = 'none'; // allow elementFromPoint to detect icons underneath while dragging
 		placeholder = document.createElement('div');
 		placeholder.className = 'icon';
 		placeholder.style.visibility = 'hidden';
@@ -363,10 +374,9 @@
 			return;
 		}
 
-		if (autoArrange) return;
-
-		// Find target icon under pointer and reposition in DOM to simulate grid auto-arrange
-		const target = e.target.closest('.icon');
+		// grid mode: find the icon under the pointer using elementFromPoint
+		const elUnder = document.elementFromPoint(e.clientX, e.clientY);
+		const target = elUnder?.closest?.('.icon');
 		if (!target || target === dragEl) return;
 		const list = icons();
 		const dragIdx = list.indexOf(dragEl);
@@ -386,6 +396,7 @@
 				top: parseFloat(dragEl.style.top || '0'),
 			};
 			savePosMap(map);
+			dragEl.classList.remove('dragging');
 			dragEl.style.opacity = '';
 			try {
 				dragEl.releasePointerCapture(e.pointerId);
@@ -394,12 +405,10 @@
 			return;
 		}
 
-		if (autoArrange) {
-			dragEl = null;
-			return;
-		}
-
+		// grid mode finalize
+		dragEl.classList.remove('dragging');
 		dragEl.style.opacity = '';
+		dragEl.style.pointerEvents = '';
 		placeholder?.remove();
 		placeholder = null;
 		saveOrder();

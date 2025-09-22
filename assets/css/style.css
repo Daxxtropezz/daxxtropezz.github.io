@@ -14,9 +14,29 @@ body {
 /* ==========================
    DaxxyOS Desktop (scoped)
    ========================== */
+/* New: global no-text-selection (Ctrl/Cmd+A also blocked in JS) */
+.desktop-app,
+.desktop-app * {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Avoid visible selection highlight inside the app */
+.desktop-app ::selection {
+    background: transparent;
+}
+
 .desktop-app {
-    --dx-bg-start: #0f172a;
-    --dx-bg-end: #1f2937;
+    --dx-bg1: #000000;
+    /* black */
+    --dx-bg2: #6d28d9;
+    /* purple */
+    --dx-bg3: #191970;
+    /* midnight blue */
+    --dx-bg4: #c0c0c0;
+    /* silver */
     --dx-taskbar-bg: rgba(15, 23, 42, 0.65);
     --dx-taskbar-border: rgba(255, 255, 255, 0.08);
     --dx-label: rgba(255, 255, 255, 0.92);
@@ -27,13 +47,15 @@ body {
     --dx-selection: rgba(99, 102, 241, 0.35);
     color: #fff;
     font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, 'Apple Color Emoji', 'Segoe UI Emoji';
-    background: radial-gradient(1200px 800px at 10% 10%, #243b55 0%, transparent 40%),
-        radial-gradient(900px 700px at 90% 30%, #141e30 0%, transparent 40%),
-        linear-gradient(160deg, var(--dx-bg-start), var(--dx-bg-end));
+    background: linear-gradient(135deg,
+            var(--dx-bg1) 0%,
+            var(--dx-bg2) 35%,
+            var(--dx-bg3) 70%,
+            var(--dx-bg4) 100%);
+    background-size: 200% 200%;
+    animation: dx-bg-pan-1 30s ease-in-out infinite;
     overflow: hidden;
     position: relative;
-    background-size: 160% 160%, 180% 180%, 220% 220%;
-    animation: dx-bg-pan 60s ease-in-out infinite;
 }
 
 .desktop-app::before {
@@ -84,11 +106,26 @@ body {
     flex-direction: column;
     align-items: center;
     gap: 8px;
-    cursor: default;
+    cursor: grab;
     outline: none;
     opacity: 0;
     transform: translateY(6px) scale(.98);
     animation: dx-rise-in 520ms cubic-bezier(.22, .87, .32, 1) both;
+}
+
+.desktop-app .icon:active {
+    cursor: grabbing;
+}
+
+.desktop-app .icon.dragging {
+    z-index: 9999;
+}
+
+.desktop-app .icon.dragging .tile {
+    transform: translateY(-2px) scale(1.06);
+    background: rgba(255, 255, 255, 0.14);
+    border-color: rgba(255, 255, 255, 0.28);
+    box-shadow: 0 14px 36px rgba(0, 0, 0, .5), inset 0 0 0 2px rgba(99, 102, 241, .35);
 }
 
 /* When user repositions an icon into a new grid slot */
@@ -118,10 +155,34 @@ body {
     background: var(--dx-tile-bg);
     border: 1px solid var(--dx-tile-br);
     backdrop-filter: blur(6px);
+    position: relative;
+    overflow: hidden;
+}
+
+.desktop-app .tile::before {
+    content: "";
+    position: absolute;
+    top: -150%;
+    bottom: -150%;
+    left: -60%;
+    right: -60%;
+    background: linear-gradient(120deg, transparent 35%, rgba(255, 255, 255, 0.42) 50%, transparent 65%);
+    transform: translateX(-120%) rotate(20deg);
+    transition: transform 600ms ease;
+    pointer-events: none;
+}
+
+.desktop-app .icon:hover .tile::before {
+    transform: translateX(120%) rotate(20deg);
 }
 
 .desktop-app .icon:hover .tile {
-    transform: translateY(-2px) scale(1.02);
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, .45), inset 0 1px 0 rgba(255, 255, 255, .12);
+    backdrop-filter: blur(10px) saturate(160%);
+    -webkit-backdrop-filter: blur(10px) saturate(160%);
+    transform: translateY(-3px) scale(1.05);
 }
 
 .desktop-app .label {
@@ -185,7 +246,7 @@ body {
     flex-direction: column;
     align-items: center;
     gap: 2px;
-    background: var(--dx-taskbar-bg);
+    background: rgba(15, 23, 42, 1);
     border: 1px solid var(--dx-taskbar-border);
     border-radius: 14px;
     backdrop-filter: blur(12px) saturate(120%);
@@ -196,14 +257,38 @@ body {
 
 /* Digital watch styling for clock */
 .desktop-app .taskbar .clock {
-    font-family: 'Share Tech Mono', 'Orbitron', ui-monospace, monospace;
-    font-size: 22px;
-    letter-spacing: .5px;
+    font-family: 'Orbitron', 'Share Tech Mono', ui-monospace, monospace;
+    font-size: 36px;
+    letter-spacing: 1px;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+    font-weight: 800;
+    opacity: .95;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-touch-callout: none;
+    pointer-events: none;
+    /* Glass card styling */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 12px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, .28), inset 0 1px 0 rgba(255, 255, 255, .06);
+    backdrop-filter: blur(10px) saturate(140%);
+    -webkit-backdrop-filter: blur(10px) saturate(140%);
+    white-space: nowrap;
+    -webkit-tap-highlight-color: transparent;
 }
 
 @media (max-width: 640px) {
     .desktop-app .taskbar .clock {
-        font-size: 20px;
+        font-size: 26px;
+        padding: 6px 10px;
     }
 }
 
@@ -224,13 +309,9 @@ body {
     font-size: 14px;
     opacity: .95;
     letter-spacing: .4px;
-}
-
-.desktop-app .taskbar .clock {
-    font-variant-numeric: tabular-nums;
-    font-weight: 800;
-    font-size: 18px;
-    opacity: .95;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
 }
 
 /* Order flip: at top, clock above brand; at bottom, brand above clock */
@@ -301,8 +382,22 @@ body {
         padding: 10px 12px;
     }
 
-    .desktop-app .taskbar .clock {
-        font-size: 16px;
+    .desktop-app .tile {
+        --size: 64px;
+        --radius: 16px;
+    }
+}
+
+@media (max-width: 380px) {
+    .desktop-app .tile {
+        --size: 56px;
+        --radius: 14px;
+    }
+
+    .desktop-app .desktop {
+        grid-template-columns: repeat(auto-fill, minmax(78px, 1fr));
+        padding: 80px 10px 64px;
+        gap: 14px;
     }
 }
 
@@ -340,6 +435,20 @@ body {
 
     100% {
         background-position: 0% 0%, 100% 0%, 50% 0%;
+    }
+}
+
+@keyframes dx-bg-pan-1 {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
     }
 }
 
