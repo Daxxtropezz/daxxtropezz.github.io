@@ -729,3 +729,49 @@ body {
 }
 
 /* Removed unused modal and button styles */
+
+.power-overlay {
+    position: fixed;
+    inset: 0;
+    background: #000;
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.5s cubic-bezier(.4, 0, .2, 1);
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.power-overlay[aria-hidden="true"] {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.power-btn {
+    background: none;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 32px 8px #b50003, 0 0 0 0 #ff2222;
+    border-radius: 50%;
+    animation: glow-pulse 1.2s infinite alternate;
+    transition: box-shadow 0.3s;
+}
+
+.power-btn svg {
+    display: block;
+}
+
+@keyframes glow-pulse {
+    0% {
+        box-shadow: 0 0 32px 8px #b50003, 0 0 0 0 #ff2222;
+    }
+
+    100% {
+        box-shadow: 0 0 48px 16px #ff2222, 0 0 0 0 #b50003;
+    }
+}

@@ -112,10 +112,7 @@
 		hideCtx();
 	});
 	ctxShutdown?.addEventListener('click', () => {
-		try {
-			window.close();
-		} catch (e) {}
-		location.href = 'about:blank';
+		showPowerOverlay();
 		hideCtx();
 	});
 
@@ -623,5 +620,36 @@
 		startIndex = -1;
 		isDragging = false;
 		cancelRAF();
+	});
+
+	// Power overlay logic
+	const powerOverlay = document.getElementById('powerOverlay');
+	const powerBtn = document.getElementById('powerBtn');
+	function setPowerState(on) {
+		localStorage.setItem('power-on', on ? '1' : '0');
+		if (on) {
+			powerOverlay.setAttribute('aria-hidden', 'true');
+		} else {
+			powerOverlay.setAttribute('aria-hidden', 'false');
+		}
+	}
+	function getPowerState() {
+		return localStorage.getItem('power-on') === '1';
+	}
+	function showPowerOverlay() {
+		setPowerState(false);
+	}
+	function hidePowerOverlay() {
+		setPowerState(true);
+	}
+	powerBtn?.addEventListener('click', () => {
+		hidePowerOverlay();
+	});
+	window.addEventListener('DOMContentLoaded', () => {
+		if (!getPowerState()) {
+			powerOverlay.setAttribute('aria-hidden', 'false');
+		} else {
+			powerOverlay.setAttribute('aria-hidden', 'true');
+		}
 	});
 })();
