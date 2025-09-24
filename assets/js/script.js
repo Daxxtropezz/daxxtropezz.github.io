@@ -344,10 +344,13 @@
 	const terminalModal = document.getElementById('terminalModal');
 	const terminalOutput = document.getElementById('terminalOutput');
 	const closeTerminal = document.getElementById('closeTerminal');
-	const secretMessage = "Bin's secret VGhlIHBhc3N3b3JkIHRvIHRoZSByZWN5Y2xlIGJpbiBpcyBEYXh4eU9Te3RoaXNfaXNfbXlfYmlufQ==";
+	const secretMessage = "Bin's secret VGhlIHBhc3N3b3JkIHRvIHRoZSByZWN5Y2xlIGJpbiBpcyBSR0Y0ZUhsUFUzdDBhR2x6WDJselgyMTVYMkpwYm4wPQ==";
 	let terminalUser = 'daxxyOS';
 	let terminalPrompt = () => `${terminalUser}@daxxyOS:~$ `;
 	let terminalInputValue = '';
+
+	// Make terminalModal focusable
+	if (terminalModal) terminalModal.tabIndex = 0;
 
 	function renderTerminalPrompt() {
 		const promptDiv = document.createElement('div');
@@ -356,7 +359,7 @@
 		terminalOutput.appendChild(promptDiv);
 		terminalOutput.scrollTop = terminalOutput.scrollHeight;
 
-		// Focus for key events - FIXED: Focus the modal itself
+		// Focus the modal for key events
 		terminalModal.focus();
 	}
 
@@ -368,8 +371,8 @@
 			div.style.cursor = 'pointer';
 			div.title = 'Click to copy password';
 			div.addEventListener('click', function () {
-				navigator.clipboard.writeText('RGF4eHlPU3t0aGlzX2lzX215X2Jpbn0=').then(() => {
-					div.textContent = 'RGF4eHlPU3t0aGlzX2lzX215X2Jpbn0= (Copied!)';
+				navigator.clipboard.writeText('VGhlIHBhc3N3b3JkIHRvIHRoZSByZWN5Y2xlIGJpbiBpcyBSR0Y0ZUhsUFUzdDBhR2x6WDJselgyMTVYMkpwYm4wPQ==').then(() => {
+					div.textContent = 'Copied to clipboard!';
 					setTimeout(() => { div.textContent = text; }, 1200);
 				});
 			});
@@ -380,6 +383,11 @@
 
 	function handleTerminalCmd(cmd) {
 		const trimmed = cmd.trim();
+		// Remove the last prompt line and replace it with the entered command
+		const lastPromptLine = terminalOutput.querySelector('.terminal-prompt-line:last-child');
+		if (lastPromptLine) {
+			lastPromptLine.innerHTML = `<span style='font-weight:bold;'>${terminalPrompt()}</span>${trimmed}`;
+		}
 		if (!trimmed) {
 			renderTerminalPrompt();
 			return;
@@ -388,7 +396,7 @@
 		if (terminalUser === 'daxxyOS') {
 			if (trimmed === 'ls') {
 				// No output
-			} else if (trimmed === 'root') {
+			} else if (trimmed === 'sudo -l' || trimmed === 'sudo su' || trimmed === 'sudo su -') {
 				terminalUser = 'root';
 				printTerminal('Switched to root user.');
 			} else if (trimmed === 'whoami') {
