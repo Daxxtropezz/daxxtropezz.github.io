@@ -240,6 +240,7 @@
 	const recycleBinPasswordInput = document.getElementById('recycleBinPasswordInput');
 	const recycleBinPasswordBtn = document.getElementById('recycleBinPasswordBtn');
 	const RECYCLE_BIN_PASSWORD = 'DaxxyOS{this_is_my_bin}';
+	const PASS_FOR_ROOT = 'root';
 	let recycleBinUnlocked = false;
 	let incorrectPasswordCount = 0;
 
@@ -391,7 +392,7 @@
 			lastPromptLine.innerHTML = `<span style='font-weight:bold;'>${terminalPrompt()}</span>${trimmed}`;
 		}
 		if (waitingForRootPassword) {
-			if (trimmed === 'root') {
+			if (trimmed === PASS_FOR_ROOT) {
 				terminalUser = 'root';
 				printTerminal('Switched to root user.');
 			} else {
