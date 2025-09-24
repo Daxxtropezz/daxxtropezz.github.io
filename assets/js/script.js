@@ -348,6 +348,9 @@
 	let terminalUser = 'daxxyOS';
 	let terminalPrompt = () => `${terminalUser}@daxxyOS:~$ `;
 	let terminalInputValue = '';
+	let waitingForRootPassword = false;
+	let terminalHistory = [];
+	let terminalHistoryIndex = -1;
 
 	// Make terminalModal focusable
 	if (terminalModal) terminalModal.tabIndex = 0;
@@ -383,22 +386,45 @@
 
 	function handleTerminalCmd(cmd) {
 		const trimmed = cmd.trim();
-		// Remove the last prompt line and replace it with the entered command
 		const lastPromptLine = terminalOutput.querySelector('.terminal-prompt-line:last-child');
 		if (lastPromptLine) {
 			lastPromptLine.innerHTML = `<span style='font-weight:bold;'>${terminalPrompt()}</span>${trimmed}`;
+		}
+		if (waitingForRootPassword) {
+			if (trimmed === 'root') {
+				terminalUser = 'root';
+				printTerminal('Switched to root user.');
+			} else {
+				printTerminal('Wrong password, try again.');
+			}
+			waitingForRootPassword = false;
+			renderTerminalPrompt();
+			return;
 		}
 		if (!trimmed) {
 			renderTerminalPrompt();
 			return;
 		}
 		printTerminal(terminalPrompt() + trimmed, true);
+		if (trimmed === 'man' || trimmed === 'help') {
+			printTerminal('Available commands:');
+			printTerminal('ls                - List files');
+			printTerminal('whoami            - Show current user');
+			printTerminal('root              - Switch to root user (requires password)');
+			printTerminal('sudo su           - Switch to root user (requires password)');
+			printTerminal('sudo -l           - Switch to root user (requires password)');
+			printTerminal('clear             - Clear terminal');
+			printTerminal('exit/logout       - Close or logout terminal');
+			renderTerminalPrompt();
+			return;
+		}
 		if (terminalUser === 'daxxyOS') {
 			if (trimmed === 'ls') {
 				// No output
-			} else if (trimmed === 'sudo -l' || trimmed === 'sudo su' || trimmed === 'sudo su -') {
-				terminalUser = 'root';
-				printTerminal('Switched to root user.');
+			} else if (trimmed === 'sudo -l' || trimmed === 'sudo su' || trimmed === 'sudo su -' || trimmed === 'root') {
+				printTerminal('Password for root:');
+				waitingForRootPassword = true;
+				return renderTerminalPrompt();
 			} else if (trimmed === 'whoami') {
 				printTerminal('daxxyOS');
 			} else if (trimmed === 'exit' || trimmed === 'logout') {
@@ -442,10 +468,27 @@
 		if (!inputSpan) return;
 
 		if (e.key === 'Enter') {
+			if (terminalInputValue.trim()) {
+				terminalHistory.push(terminalInputValue);
+			}
+			terminalHistoryIndex = terminalHistory.length;
 			handleTerminalCmd(terminalInputValue);
 			terminalInputValue = '';
 		} else if (e.key === 'Backspace') {
 			terminalInputValue = terminalInputValue.slice(0, -1);
+		} else if (e.key === 'ArrowUp') {
+			if (terminalHistory.length && terminalHistoryIndex > 0) {
+				terminalHistoryIndex--;
+				terminalInputValue = terminalHistory[terminalHistoryIndex] || '';
+			}
+		} else if (e.key === 'ArrowDown') {
+			if (terminalHistory.length && terminalHistoryIndex < terminalHistory.length - 1) {
+				terminalHistoryIndex++;
+				terminalInputValue = terminalHistory[terminalHistoryIndex] || '';
+			} else if (terminalHistoryIndex === terminalHistory.length - 1) {
+				terminalHistoryIndex++;
+				terminalInputValue = '';
+			}
 		} else if (e.key.length === 1 && !e.ctrlKey && !e.altKey && !e.metaKey) {
 			terminalInputValue += e.key;
 		}
@@ -459,8 +502,8 @@
 		terminalOutput.innerHTML = '';
 		terminalUser = 'daxxyOS';
 		terminalInputValue = '';
-		printTerminal('Welcome to DaxxyOS CTF Terminal! Type "help" for available commands.');
-		printTerminal('Try "root" to switch to root user and explore further.');
+		printTerminal('Welcome to DaxxyOS CTF Terminal! Type "man" for available commands.');
+		printTerminal('Try to switch to root user and explore further.');
 		renderTerminalPrompt();
 	});
 	terminalIcon?.addEventListener('click', (e) => {
@@ -470,8 +513,8 @@
 		terminalOutput.innerHTML = '';
 		terminalUser = 'daxxyOS';
 		terminalInputValue = '';
-		printTerminal('Welcome to DaxxyOS CTF Terminal! Type "help" for available commands.');
-		printTerminal('Try "root" to switch to root user and explore further.');
+		printTerminal('Welcome to DaxxyOS CTF Terminal! Type "man" for available commands.');
+		printTerminal('Tryto switch to root user and explore further.');
 		renderTerminalPrompt();
 	});
 	closeTerminal?.addEventListener('click', () => {
