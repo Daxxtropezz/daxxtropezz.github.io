@@ -350,6 +350,8 @@
 	let terminalPrompt = () => `${terminalUser}@daxxyOS:~$ `;
 	let terminalInputValue = '';
 	let waitingForRootPassword = false;
+	let passwordInputValue = '';
+	let passwordInputActive = false;
 	let terminalHistory = [];
 	let terminalHistoryIndex = -1;
 
@@ -359,12 +361,76 @@
 	function renderTerminalPrompt() {
 		const promptDiv = document.createElement('div');
 		promptDiv.className = 'terminal-prompt-line';
-		promptDiv.innerHTML = `<span style="font-weight:bold;">${terminalPrompt()}</span><span id="terminalInputSpan"></span><span class="terminal-cursor" style="font-weight:bold;border-left:3px solid #00ea65;animation:blink-cursor 1s steps(1) infinite;">&nbsp;</span>`;
+		if (waitingForRootPassword) {
+			promptDiv.innerHTML = `<span style="font-weight:bold;">Password for root:</span><span id="terminalInputSpan"></span><span class="terminal-cursor" style="font-weight:bold;border-left:3px solid #00ea65;animation:blink-cursor 1s steps(1) infinite;">&nbsp;</span>`;
+			passwordInputActive = true;
+		} else {
+			promptDiv.innerHTML = `<span style="font-weight:bold;">${terminalPrompt()}</span><span id="terminalInputSpan"></span><span class="terminal-cursor" style="font-weight:bold;border-left:3px solid #00ea65;animation:blink-cursor 1s steps(1) infinite;">&nbsp;</span>`;
+			passwordInputActive = false;
+		}
 		terminalOutput.appendChild(promptDiv);
 		terminalOutput.scrollTop = terminalOutput.scrollHeight;
 
-		// Focus the modal for key events
-		terminalModal.focus();
+		// Mobile: show input field for typing
+		if (window.innerWidth <= 640) {
+			let input = document.getElementById('terminalRealInput');
+			if (!input) {
+				input = document.createElement('input');
+				input.type = passwordInputActive ? 'password' : 'text';
+				input.id = 'terminalRealInput';
+				input.className = 'terminal-input';
+				input.autocomplete = 'off';
+				input.style.marginTop = '8px';
+				input.style.width = '100%';
+				input.style.fontFamily = 'Share Tech Mono, monospace';
+				input.style.fontSize = '15px';
+				input.style.background = '#222';
+				input.style.color = '#00ea65';
+				input.style.borderRadius = '6px';
+				input.style.border = '1px solid #333';
+				input.addEventListener('keydown', function (e) {
+					if (e.key === 'Enter') {
+						if (input.value.trim()) terminalHistory.push(input.value);
+						terminalHistoryIndex = terminalHistory.length;
+						handleTerminalCmd(input.value);
+						input.value = '';
+					}
+					if (e.key === 'ArrowUp') {
+						if (terminalHistory.length && terminalHistoryIndex > 0) {
+							terminalHistoryIndex--;
+							input.value = terminalHistory[terminalHistoryIndex] || '';
+						}
+					}
+					if (e.key === 'ArrowDown') {
+						if (terminalHistory.length && terminalHistoryIndex < terminalHistory.length - 1) {
+							terminalHistoryIndex++;
+							input.value = terminalHistory[terminalHistoryIndex] || '';
+						} else if (terminalHistoryIndex === terminalHistory.length - 1) {
+							terminalHistoryIndex++;
+							input.value = '';
+						}
+						if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'v') {
+							// Allow paste
+							return;
+						}
+						if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'c') {
+							input.value = '';
+							handleTerminalCmd('clear');
+							return;
+						}
+					}
+				});
+				input.addEventListener('paste', function (e) {
+					// Allow paste
+				});
+				terminalModal.appendChild(input);
+			}
+			input.type = passwordInputActive ? 'password' : 'text';
+			input.focus();
+		} else {
+			// Desktop: focus modal for inline typing
+			terminalModal.focus();
+		}
 	}
 
 	function printTerminal(text, isCmd = false) {
@@ -406,6 +472,18 @@
 			renderTerminalPrompt();
 			return;
 		}
+		// Support echo "..." | base64 -d
+		const echoMatch = trimmed.match(/^echo\s+"([A-Za-z0-9+/=]+)"\s*\|\s*base64\s*-d$/);
+		if (echoMatch) {
+			try {
+				const decoded = atob(echoMatch[1]);
+				printTerminal(decoded);
+			} catch {
+				printTerminal('Invalid base64 string.');
+			}
+			renderTerminalPrompt();
+			return;
+		}
 		printTerminal(terminalPrompt() + trimmed, true);
 		if (trimmed === 'man' || trimmed === 'help') {
 			printTerminal('Available commands:');
@@ -414,6 +492,7 @@
 			printTerminal('root              - Switch to root user (requires password)');
 			printTerminal('sudo su           - Switch to root user (requires password)');
 			printTerminal('sudo -l           - Switch to root user (requires password)');
+			printTerminal('echo "..." | base64 -d   - Decode base64 string');
 			printTerminal('clear             - Clear terminal');
 			printTerminal('exit/logout       - Close or logout terminal');
 			renderTerminalPrompt();
@@ -468,6 +547,32 @@
 		const inputSpan = terminalOutput.querySelector('.terminal-prompt-line:last-child #terminalInputSpan');
 		if (!inputSpan) return;
 
+		if (waitingForRootPassword) {
+			if (e.key === 'Enter') {
+				if (terminalInputValue.trim()) terminalHistory.push(terminalInputValue);
+				terminalHistoryIndex = terminalHistory.length;
+				handleTerminalCmd(terminalInputValue);
+				terminalInputValue = '';
+				passwordInputValue = '';
+			} else if (e.key === 'Backspace') {
+				passwordInputValue = passwordInputValue.slice(0, -1);
+				terminalInputValue = passwordInputValue;
+			} else if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'v') {
+				// Allow paste
+				return;
+			} else if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'c') {
+				terminalInputValue = '';
+				passwordInputValue = '';
+				handleTerminalCmd('clear');
+				return;
+			} else if (e.key.length === 1 && !e.ctrlKey && !e.altKey && !e.metaKey) {
+				passwordInputValue += e.key;
+				terminalInputValue = passwordInputValue;
+			}
+			inputSpan.textContent = ''.repeat(passwordInputValue.length);
+			return;
+		}
+
 		if (e.key === 'Enter') {
 			if (terminalInputValue.trim()) {
 				terminalHistory.push(terminalInputValue);
@@ -490,10 +595,37 @@
 				terminalHistoryIndex++;
 				terminalInputValue = '';
 			}
+		} else if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'v') {
+			// Allow paste
+			return;
+		} else if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'c') {
+			terminalInputValue = '';
+			handleTerminalCmd('clear');
+			return;
 		} else if (e.key.length === 1 && !e.ctrlKey && !e.altKey && !e.metaKey) {
 			terminalInputValue += e.key;
 		}
 		inputSpan.textContent = terminalInputValue;
+	});
+
+	// Enable right-click paste in terminal
+	terminalModal.addEventListener('contextmenu', async function (e) {
+		e.preventDefault();
+		let pasteText = '';
+		try {
+			pasteText = await navigator.clipboard.readText();
+		} catch { }
+		if (!pasteText) return;
+		const inputSpan = terminalOutput.querySelector('.terminal-prompt-line:last-child #terminalInputSpan');
+		if (!inputSpan) return;
+		if (waitingForRootPassword) {
+			passwordInputValue += pasteText;
+			terminalInputValue = passwordInputValue;
+			inputSpan.textContent = ''.repeat(passwordInputValue.length);
+		} else {
+			terminalInputValue += pasteText;
+			inputSpan.textContent = terminalInputValue;
+		}
 	});
 
 	terminalIcon?.addEventListener('dblclick', (e) => {
