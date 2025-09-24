@@ -472,11 +472,12 @@
 			renderTerminalPrompt();
 			return;
 		}
-		// Support echo "..." | base64 -d
-		const echoMatch = trimmed.match(/^echo\s+"([A-Za-z0-9+/=]+)"\s*\|\s*base64\s*-d$/);
-		if (echoMatch) {
+		printTerminal(terminalPrompt() + trimmed, true);
+		// Support echo "..." | base64 -d (decode)
+		const echoDecodeMatch = trimmed.match(/^echo\s+"([^"]+)"\s*\|\s*base64\s*-d$/);
+		if (echoDecodeMatch) {
 			try {
-				const decoded = atob(echoMatch[1]);
+				const decoded = atob(echoDecodeMatch[1]);
 				printTerminal(decoded);
 			} catch {
 				printTerminal('Invalid base64 string.');
@@ -484,7 +485,18 @@
 			renderTerminalPrompt();
 			return;
 		}
-		printTerminal(terminalPrompt() + trimmed, true);
+		// Support echo "..." | base64 -e (encode)
+		const echoEncodeMatch = trimmed.match(/^echo\s+"([^"]+)"\s*\|\s*base64\s*-e$/);
+		if (echoEncodeMatch) {
+			try {
+				const encoded = btoa(echoEncodeMatch[1]);
+				printTerminal(encoded);
+			} catch {
+				printTerminal('Unable to encode string.');
+			}
+			renderTerminalPrompt();
+			return;
+		}
 		if (trimmed === 'man' || trimmed === 'help') {
 			printTerminal('Available commands:');
 			printTerminal('ls                - List files');
@@ -493,6 +505,7 @@
 			printTerminal('sudo su           - Switch to root user (requires password)');
 			printTerminal('sudo -l           - Switch to root user (requires password)');
 			printTerminal('echo "..." | base64 -d   - Decode base64 string');
+			printTerminal('echo "..." | base64 -e   - Encode string to base64');
 			printTerminal('clear             - Clear terminal');
 			printTerminal('exit/logout       - Close or logout terminal');
 			renderTerminalPrompt();
@@ -536,7 +549,7 @@
 	}
 
 	// Inline terminal input logic - FIXED
-	terminalModal.addEventListener('keydown', function (e) {
+	terminalModal.addEventListener('keydown', async function (e) {
 		if (terminalModal.getAttribute('aria-hidden') === 'true') return;
 
 		// Prevent default for all keys except when typing in input fields
@@ -558,7 +571,16 @@
 				passwordInputValue = passwordInputValue.slice(0, -1);
 				terminalInputValue = passwordInputValue;
 			} else if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'v') {
-				// Allow paste
+				// Paste from clipboard
+				let pasteText = '';
+				try {
+					pasteText = await navigator.clipboard.readText();
+				} catch { }
+				if (pasteText) {
+					passwordInputValue += pasteText;
+					terminalInputValue = passwordInputValue;
+					inputSpan.textContent = ''.repeat(passwordInputValue.length);
+				}
 				return;
 			} else if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'c') {
 				terminalInputValue = '';
@@ -596,7 +618,15 @@
 				terminalInputValue = '';
 			}
 		} else if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'v') {
-			// Allow paste
+			// Paste from clipboard
+			let pasteText = '';
+			try {
+				pasteText = await navigator.clipboard.readText();
+			} catch { }
+			if (pasteText) {
+				terminalInputValue += pasteText;
+				inputSpan.textContent = terminalInputValue;
+			}
 			return;
 		} else if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'c') {
 			terminalInputValue = '';
