@@ -748,6 +748,11 @@ body {
     pointer-events: none;
 }
 
+/* Hide desktop when powerOverlay is visible */
+.power-overlay[aria-hidden="false"] ~ .desktop {
+    display: none !important;
+}
+
 .power-btn {
     background: none;
     border: none;

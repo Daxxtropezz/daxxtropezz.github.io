@@ -18,6 +18,8 @@
 	const ctxShutdown = $('#ctxShutdown');
 	const ctxAlign = $('#ctxAlign');
 	const ctxAuto = $('#ctxAutoArrange');
+	const ctxRename = $('#ctxRename');
+	const ctxDelete = $('#ctxDelete');
 	let ctxTarget = null; // null => background
 
 	function hideCtx() {
@@ -55,9 +57,10 @@
 		if (ctxCopy) ctxCopy.style.display = isIcon ? 'block' : 'none';
 		if (ctxAlign) ctxAlign.style.display = isIcon ? 'none' : 'block';
 		if (ctxAuto) ctxAuto.style.display = isIcon ? 'none' : 'block';
-		// Removed taskbar position toggles from context menu
 		if (ctxRefresh) ctxRefresh.style.display = isIcon ? 'none' : 'block';
 		if (ctxShutdown) ctxShutdown.style.display = isIcon ? 'none' : 'block';
+		if (ctxRename) ctxRename.style.display = isIcon ? 'block' : 'none';
+		if (ctxDelete) ctxDelete.style.display = isIcon ? 'block' : 'none';
 		refreshCtxCheckboxes();
 		ctxMenu.classList.add('show');
 		ctxMenu.setAttribute('aria-hidden', 'false');
@@ -137,6 +140,75 @@
 		}
 		saveBool('auto-arrange', autoArrange);
 		applyLayoutState();
+		hideCtx();
+	});
+
+	// Rename label logic
+	function getLabelMap() {
+		try {
+			return JSON.parse(localStorage.getItem('icon-labels') || '{}');
+		} catch {
+			return {};
+		}
+	}
+	function saveLabelMap(map) {
+		localStorage.setItem('icon-labels', JSON.stringify(map));
+	}
+	function applyLabels() {
+		const map = getLabelMap();
+		icons().forEach((icon) => {
+			const id = icon.dataset.id;
+			const label = map[id];
+			if (label) {
+				const labelSpan = icon.querySelector('.label');
+				if (labelSpan) labelSpan.textContent = label;
+			}
+		});
+	}
+	applyLabels();
+	ctxRename?.addEventListener('click', () => {
+		if (!ctxTarget) return hideCtx();
+		const labelSpan = ctxTarget.querySelector('.label');
+		if (!labelSpan) return hideCtx();
+		const current = labelSpan.textContent;
+		const newLabel = prompt('Rename app label:', current);
+		if (newLabel && newLabel.trim() && newLabel !== current) {
+			labelSpan.textContent = newLabel.trim();
+			const map = getLabelMap();
+			map[ctxTarget.dataset.id] = newLabel.trim();
+			saveLabelMap(map);
+		}
+		hideCtx();
+	});
+
+	// Delete icon logic
+	function getDeletedSet() {
+		try {
+			return new Set(JSON.parse(localStorage.getItem('icon-deleted') || '[]'));
+		} catch {
+			return new Set();
+		}
+	}
+	function saveDeletedSet(set) {
+		localStorage.setItem('icon-deleted', JSON.stringify(Array.from(set)));
+	}
+	function applyDeletedIcons() {
+		const deleted = getDeletedSet();
+		icons().forEach((icon) => {
+			if (deleted.has(icon.dataset.id)) {
+				icon.remove();
+			}
+		});
+	}
+	applyDeletedIcons();
+	ctxDelete?.addEventListener('click', () => {
+		if (!ctxTarget) return hideCtx();
+		const id = ctxTarget.dataset.id;
+		if (!id) return hideCtx();
+		ctxTarget.remove();
+		const deleted = getDeletedSet();
+		deleted.add(id);
+		saveDeletedSet(deleted);
 		hideCtx();
 	});
 
@@ -623,6 +695,16 @@
 	});
 
 	// Power overlay logic
+	function updateDesktopVisibility() {
+		const desktopEl = document.querySelector('.desktop');
+		const overlay = document.getElementById('powerOverlay');
+		if (!desktopEl || !overlay) return;
+		if (overlay.getAttribute('aria-hidden') === 'false') {
+			desktopEl.style.display = 'none';
+		} else {
+			desktopEl.style.display = '';
+		}
+	}
 	const powerOverlay = document.getElementById('powerOverlay');
 	const powerBtn = document.getElementById('powerBtn');
 	function setPowerState(on) {
@@ -632,6 +714,7 @@
 		} else {
 			powerOverlay.setAttribute('aria-hidden', 'false');
 		}
+		updateDesktopVisibility();
 	}
 	function getPowerState() {
 		return localStorage.getItem('power-on') === '1';
@@ -651,5 +734,8 @@
 		} else {
 			powerOverlay.setAttribute('aria-hidden', 'true');
 		}
+		updateDesktopVisibility();
 	});
+	const observer = new MutationObserver(updateDesktopVisibility);
+	observer.observe(powerOverlay, { attributes: true });
 })();
