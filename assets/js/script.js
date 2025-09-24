@@ -241,6 +241,7 @@
 	const recycleBinPasswordBtn = document.getElementById('recycleBinPasswordBtn');
 	const RECYCLE_BIN_PASSWORD = 'DaxxyOS{this_is_my_bin}';
 	let recycleBinUnlocked = false;
+	let incorrectPasswordCount = 0;
 
 	function updateRecycleBinList() {
 		if (!recycleBinUnlocked) {
@@ -283,6 +284,7 @@
 	recycleBinIcon?.addEventListener('dblclick', (e) => {
 		e.preventDefault();
 		recycleBinModal.setAttribute('aria-hidden', 'false');
+		recycleBinModal.style.display = 'block';
 		recycleBinUnlocked = false;
 		updateRecycleBinList();
 	});
@@ -290,11 +292,13 @@
 		// Only open modal if not double-click (handled above)
 		if (e.detail === 2) return;
 		recycleBinModal.setAttribute('aria-hidden', 'false');
+		recycleBinModal.style.display = 'block';
 		recycleBinUnlocked = false;
 		updateRecycleBinList();
 	});
 	closeRecycleBin?.addEventListener('click', () => {
 		recycleBinModal.setAttribute('aria-hidden', 'true');
+		recycleBinModal.style.display = 'none';
 		recycleBinUnlocked = false;
 		if (recycleBinPasswordInput) recycleBinPasswordInput.value = '';
 	});
@@ -302,9 +306,28 @@
 		recycleBinPasswordBtn.addEventListener('click', () => {
 			if (recycleBinPasswordInput.value === RECYCLE_BIN_PASSWORD) {
 				recycleBinUnlocked = true;
+				incorrectPasswordCount = 0;
 				updateRecycleBinList();
 			} else {
-				alert('Incorrect password.');
+				incorrectPasswordCount++;
+				let err = document.getElementById('recycleBinErrorMsg');
+				if (!err) {
+					err = document.createElement('div');
+					err.id = 'recycleBinErrorMsg';
+					err.style.color = '#f87171';
+					err.style.fontSize = '13px';
+					err.style.marginTop = '2px';
+					recycleBinPasswordWrap.appendChild(err);
+				}
+				err.textContent = 'Incorrect password.';
+				if (incorrectPasswordCount >= 3) {
+					err.textContent += ' Hint: The hint must be found hidden in the terminal.';
+				}
+				recycleBinPasswordInput.style.borderColor = '#f87171';
+				setTimeout(() => {
+					err.textContent = '';
+					recycleBinPasswordInput.style.borderColor = '#333';
+				}, 3000);
 			}
 		});
 	}
@@ -316,24 +339,37 @@
 		});
 	}
 
-	// Terminal logic
+	// Terminal logic - FIXED
 	const terminalIcon = document.querySelector('[data-id="terminal"]');
 	const terminalModal = document.getElementById('terminalModal');
 	const terminalOutput = document.getElementById('terminalOutput');
-	const terminalInput = document.getElementById('terminalInput');
 	const closeTerminal = document.getElementById('closeTerminal');
-	const secretMessage = 'Bin\'s secret VGhlIHBhc3N3b3JkIHRvIHRoZSByZWN5Y2xlIGJpbiBpcyBEYXh4eU9Te3RoaXNfaXNfbXlfYmlufQ==';
+	const secretMessage = "Bin's secret VGhlIHBhc3N3b3JkIHRvIHRoZSByZWN5Y2xlIGJpbiBpcyBEYXh4eU9Te3RoaXNfaXNfbXlfYmlufQ==";
+	let terminalUser = 'daxxyOS';
+	let terminalPrompt = () => `${terminalUser}@daxxyOS:~$ `;
+	let terminalInputValue = '';
+
+	function renderTerminalPrompt() {
+		const promptDiv = document.createElement('div');
+		promptDiv.className = 'terminal-prompt-line';
+		promptDiv.innerHTML = `<span style="font-weight:bold;">${terminalPrompt()}</span><span id="terminalInputSpan"></span><span class="terminal-cursor" style="font-weight:bold;border-left:3px solid #00ea65;animation:blink-cursor 1s steps(1) infinite;">&nbsp;</span>`;
+		terminalOutput.appendChild(promptDiv);
+		terminalOutput.scrollTop = terminalOutput.scrollHeight;
+
+		// Focus for key events - FIXED: Focus the modal itself
+		terminalModal.focus();
+	}
+
 	function printTerminal(text, isCmd = false) {
 		const div = document.createElement('div');
 		div.textContent = text;
 		if (isCmd) div.style.color = '#00ea65';
-		// If printing the secret message, make it clickable to copy password
 		if (text === secretMessage) {
 			div.style.cursor = 'pointer';
 			div.title = 'Click to copy password';
-			div.addEventListener('click', function() {
-				navigator.clipboard.writeText('VGhlIHBhc3N3b3JkIHRvIHRoZSByZWN5Y2xlIGJpbiBpcyBEYXh4eU9Te3RoaXNfaXNfbXlfYmlufQ==').then(() => {
-					div.textContent = 'Copied!';
+			div.addEventListener('click', function () {
+				navigator.clipboard.writeText('RGF4eHlPU3t0aGlzX2lzX215X2Jpbn0=').then(() => {
+					div.textContent = 'RGF4eHlPU3t0aGlzX2lzX215X2Jpbn0= (Copied!)';
 					setTimeout(() => { div.textContent = text; }, 1200);
 				});
 			});
@@ -341,47 +377,98 @@
 		terminalOutput.appendChild(div);
 		terminalOutput.scrollTop = terminalOutput.scrollHeight;
 	}
+
 	function handleTerminalCmd(cmd) {
 		const trimmed = cmd.trim();
-		if (!trimmed) return;
-		printTerminal('$ ' + trimmed, true);
-		if ( trimmed === 'ls -la') {
-			printTerminal('secret.txt');
-		} else if (trimmed === 'cat secret.txt') {
-			printTerminal(secretMessage);
-		} else if (trimmed === 'clear') {
-			terminalOutput.innerHTML = '';
-		} else {
-			printTerminal('Command not found: ' + trimmed);
+		if (!trimmed) {
+			renderTerminalPrompt();
+			return;
 		}
-	}
-	// Add event listener for terminal input Enter key
-	if (terminalInput) {
-		terminalInput.addEventListener('keydown', function(e) {
-			if (e.key === 'Enter') {
-				handleTerminalCmd(terminalInput.value);
-				terminalInput.value = '';
+		printTerminal(terminalPrompt() + trimmed, true);
+		if (terminalUser === 'daxxyOS') {
+			if (trimmed === 'ls') {
+				// No output
+			} else if (trimmed === 'root') {
+				terminalUser = 'root';
+				printTerminal('Switched to root user.');
+			} else if (trimmed === 'whoami') {
+				printTerminal('daxxyOS');
+			} else if (trimmed === 'exit' || trimmed === 'logout') {
+				terminalModal.setAttribute('aria-hidden', 'true');
+				terminalModal.style.display = 'none';
+			} else if (trimmed === 'clear') {
+				terminalOutput.innerHTML = '';
+			} else {
+				printTerminal('Command not found: ' + trimmed);
 			}
-		});
+		} else if (terminalUser === 'root') {
+			if (trimmed === 'ls') {
+				// No output
+			} else if (trimmed === 'ls -la') {
+				printTerminal('secret.txt');
+			} else if (trimmed === 'cat secret.txt') {
+				printTerminal(secretMessage);
+			} else if (trimmed === 'clear') {
+				terminalOutput.innerHTML = '';
+			} else if (trimmed === 'whoami') {
+				printTerminal('root');
+			} else if (trimmed === 'exit' || trimmed === 'logout') {
+				terminalUser = 'daxxyOS';
+			} else {
+				printTerminal('Command not found: ' + trimmed);
+			}
+		}
+		renderTerminalPrompt();
 	}
+
+	// Inline terminal input logic - FIXED
+	terminalModal.addEventListener('keydown', function (e) {
+		if (terminalModal.getAttribute('aria-hidden') === 'true') return;
+
+		// Prevent default for all keys except when typing in input fields
+		if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
+			e.preventDefault();
+		}
+
+		const inputSpan = terminalOutput.querySelector('.terminal-prompt-line:last-child #terminalInputSpan');
+		if (!inputSpan) return;
+
+		if (e.key === 'Enter') {
+			handleTerminalCmd(terminalInputValue);
+			terminalInputValue = '';
+		} else if (e.key === 'Backspace') {
+			terminalInputValue = terminalInputValue.slice(0, -1);
+		} else if (e.key.length === 1 && !e.ctrlKey && !e.altKey && !e.metaKey) {
+			terminalInputValue += e.key;
+		}
+		inputSpan.textContent = terminalInputValue;
+	});
+
 	terminalIcon?.addEventListener('dblclick', (e) => {
 		e.preventDefault();
 		terminalModal.setAttribute('aria-hidden', 'false');
+		terminalModal.style.display = 'block';
 		terminalOutput.innerHTML = '';
-		printTerminal('Welcome to DaxxyOS CTF Terminal!');
-		terminalInput.value = '';
-		terminalInput.focus();
+		terminalUser = 'daxxyOS';
+		terminalInputValue = '';
+		printTerminal('Welcome to DaxxyOS CTF Terminal! Type "help" for available commands.');
+		printTerminal('Try "root" to switch to root user and explore further.');
+		renderTerminalPrompt();
 	});
 	terminalIcon?.addEventListener('click', (e) => {
 		if (e.detail === 2) return;
 		terminalModal.setAttribute('aria-hidden', 'false');
+		terminalModal.style.display = 'block';
 		terminalOutput.innerHTML = '';
-		printTerminal('Welcome to DaxxyOS CTF Terminal!');
-		terminalInput.value = '';
-		terminalInput.focus();
+		terminalUser = 'daxxyOS';
+		terminalInputValue = '';
+		printTerminal('Welcome to DaxxyOS CTF Terminal! Type "help" for available commands.');
+		printTerminal('Try "root" to switch to root user and explore further.');
+		renderTerminalPrompt();
 	});
 	closeTerminal?.addEventListener('click', () => {
 		terminalModal.setAttribute('aria-hidden', 'true');
+		terminalModal.style.display = 'none';
 	});
 
 	// Center and show modals for Recycle Bin and Terminal
@@ -403,32 +490,37 @@
 		modal.setAttribute('aria-hidden', 'true');
 		modal.style.display = 'none';
 	}
+
 	// Double-click handlers for icons
 	function setupIconModals() {
 		document.querySelectorAll('.icon').forEach(icon => {
-			icon.addEventListener('dblclick', function(e) {
+			icon.addEventListener('dblclick', function (e) {
 				e.preventDefault();
 				const id = icon.getAttribute('data-id');
 				if (id === 'recyclebin') {
 					recycleBinModal.setAttribute('aria-hidden', 'false');
+					recycleBinModal.style.display = 'block';
 					recycleBinUnlocked = false;
 					updateRecycleBinList();
 				} else if (id === 'terminal') {
 					terminalModal.setAttribute('aria-hidden', 'false');
+					terminalModal.style.display = 'block';
 					terminalOutput.innerHTML = '';
-					printTerminal('Welcome to DaxxyOS CTF Terminal!');
-					terminalInput.value = '';
-					terminalInput.focus();
+					printTerminal('Welcome to DaxxyOS CTF Terminal! Type "help" for available commands.');
+					printTerminal('Try "root" to switch to root user and explore further.');
+					terminalInputValue = '';
 				}
 			});
 		});
 		document.getElementById('closeRecycleBin').onclick = () => {
 			recycleBinModal.setAttribute('aria-hidden', 'true');
+			recycleBinModal.style.display = 'none';
 			recycleBinUnlocked = false;
 			if (recycleBinPasswordInput) recycleBinPasswordInput.value = '';
 		};
 		document.getElementById('closeTerminal').onclick = () => {
 			terminalModal.setAttribute('aria-hidden', 'true');
+			terminalModal.style.display = 'none';
 		};
 	}
 	window.addEventListener('DOMContentLoaded', setupIconModals);
@@ -459,7 +551,7 @@
 		if (w) {
 			try {
 				w.opener = null;
-			} catch (e) {}
+			} catch (e) { }
 		}
 	}
 
@@ -481,14 +573,16 @@
 			const id = icon.getAttribute('data-id');
 			if (id === 'recyclebin') {
 				recycleBinModal.setAttribute('aria-hidden', 'false');
+				recycleBinModal.style.display = 'block';
 				recycleBinUnlocked = false;
 				updateRecycleBinList();
 			} else if (id === 'terminal') {
 				terminalModal.setAttribute('aria-hidden', 'false');
+				terminalModal.style.display = 'block';
 				terminalOutput.innerHTML = '';
-				printTerminal('Welcome to DaxxyOS CTF Terminal!');
-				terminalInput.value = '';
-				terminalInput.focus();
+				printTerminal('Welcome to DaxxyOS CTF Terminal! Type "help" for available commands.');
+				printTerminal('Try "root" to switch to root user and explore further.');
+				terminalInputValue = '';
 			} else {
 				openURL(icon.getAttribute('data-url'));
 			}
@@ -674,7 +768,7 @@
 		desktop.classList.remove('free-layout');
 		try {
 			localStorage.removeItem('icon-pos');
-		} catch {}
+		} catch { }
 		clearAbsoluteStyles();
 		if (autoArrange) autoArrangeIcons();
 	}
@@ -775,7 +869,7 @@
 		icon.style.opacity = '0.85';
 		try {
 			icon.setPointerCapture(e.pointerId);
-		} catch {}
+		} catch { }
 		// prevent scroll during drag on touch
 		document.body.style.overscrollBehavior = 'contain';
 		document.body.style.touchAction = 'none';
@@ -810,7 +904,7 @@
 		icon.style.pointerEvents = 'none';
 		try {
 			icon.setPointerCapture(e.pointerId);
-		} catch {}
+		} catch { }
 		// prevent scroll during drag on touch
 		document.body.style.overscrollBehavior = 'contain';
 		document.body.style.touchAction = 'none';
@@ -888,7 +982,7 @@
 		if (!isDragging) {
 			try {
 				dragEl.releasePointerCapture?.(e.pointerId);
-			} catch {}
+			} catch { }
 			dragEl = null;
 			cancelRAF();
 			return;
@@ -906,7 +1000,7 @@
 			dragEl.style.opacity = '';
 			try {
 				dragEl.releasePointerCapture(e.pointerId);
-			} catch {}
+			} catch { }
 			dragEl = null;
 			cancelRAF();
 			return;
@@ -929,7 +1023,7 @@
 		saveOrder();
 		try {
 			dragEl.releasePointerCapture(e.pointerId);
-		} catch {}
+		} catch { }
 		endProxy();
 		dragEl = null;
 		startIndex = -1;
@@ -982,36 +1076,60 @@
 	const observer = new MutationObserver(updateDesktopVisibility);
 	observer.observe(powerOverlay, { attributes: true });
 
-	// Window modal drag logic for recycle bin and terminal
+	// Window modal drag logic for recycle bin and terminal (FIXED accurate offset)
 	function makeDraggable(modalId, barId) {
 		const modal = document.getElementById(modalId);
 		const bar = document.getElementById(barId);
-		let isDragging = false, startX = 0, startY = 0, startLeft = 0, startTop = 0;
+		let isDragging = false, offsetX = 0, offsetY = 0;
+
 		if (!modal || !bar) return;
+
+		// Ensure modal has proper positioning
+		modal.style.position = 'fixed';
+
 		bar.addEventListener('mousedown', (e) => {
 			if (e.button !== 0) return;
 			isDragging = true;
-			startX = e.clientX;
-			startY = e.clientY;
+
+			// FIXED: Calculate offset from mouse to modal's top-left corner
 			const rect = modal.getBoundingClientRect();
-			startLeft = rect.left;
-			startTop = rect.top;
+			offsetX = e.clientX - rect.left;
+			offsetY = e.clientY - rect.top;
+
 			document.body.style.userSelect = 'none';
+			modal.style.cursor = 'grabbing';
 		});
+
 		window.addEventListener('mousemove', (e) => {
 			if (!isDragging) return;
-			let dx = e.clientX - startX;
-			let dy = e.clientY - startY;
-			let left = Math.max(0, Math.min(startLeft + dx, window.innerWidth - modal.offsetWidth));
-			let top = Math.max(0, Math.min(startTop + dy, window.innerHeight - modal.offsetHeight));
+
+			// FIXED: Calculate new position using accurate offset
+			let left = e.clientX - offsetX;
+			let top = e.clientY - offsetY;
+
+			// Constrain to viewport
+			left = Math.max(0, Math.min(left, window.innerWidth - modal.offsetWidth));
+			top = Math.max(0, Math.min(top, window.innerHeight - modal.offsetHeight));
+
 			modal.style.left = left + 'px';
 			modal.style.top = top + 'px';
+			modal.style.transform = 'none'; // Remove any centering transform
 		});
+
 		window.addEventListener('mouseup', () => {
 			isDragging = false;
 			document.body.style.userSelect = '';
+			modal.style.cursor = '';
 		});
 	}
+
+	// Initialize draggable windows
 	makeDraggable('recycleBinModal', 'recycleBinBar');
 	makeDraggable('terminalModal', 'terminalBar');
+
+	// Add thick blinking cursor style
+	const style = document.createElement('style');
+	style.textContent = `@keyframes blink-cursor { 0% { opacity: 1; } 50% { opacity: 0; } 100% { opacity: 1; } }
+.terminal-cursor { border-left: 3px solid #00ea65; animation: blink-cursor 1s steps(1) infinite; }`;
+	document.head.appendChild(style);
 })();
