@@ -154,14 +154,24 @@
 	function saveLabelMap(map) {
 		localStorage.setItem('icon-labels', JSON.stringify(map));
 	}
+	function getDefaultLabel(id) {
+		const icon = icons().find(i => i.dataset.id === id);
+		if (!icon) return id;
+		const labelSpan = icon.querySelector('.label');
+		return labelSpan ? labelSpan.getAttribute('data-default') || labelSpan.textContent : id;
+	}
 	function applyLabels() {
 		const map = getLabelMap();
 		icons().forEach((icon) => {
 			const id = icon.dataset.id;
+			const labelSpan = icon.querySelector('.label');
+			if (!labelSpan) return;
+			if (!labelSpan.hasAttribute('data-default')) labelSpan.setAttribute('data-default', labelSpan.textContent);
 			const label = map[id];
 			if (label) {
-				const labelSpan = icon.querySelector('.label');
-				if (labelSpan) labelSpan.textContent = label;
+				labelSpan.textContent = label;
+			} else {
+				labelSpan.textContent = labelSpan.getAttribute('data-default');
 			}
 		});
 	}
@@ -171,10 +181,18 @@
 		const labelSpan = ctxTarget.querySelector('.label');
 		if (!labelSpan) return hideCtx();
 		const current = labelSpan.textContent;
+		const defaultLabel = labelSpan.getAttribute('data-default') || current;
 		const newLabel = prompt('Rename app label:', current);
-		if (newLabel && newLabel.trim() && newLabel !== current) {
+		const map = getLabelMap();
+		if (!newLabel || !newLabel.trim()) {
+			labelSpan.textContent = defaultLabel;
+			delete map[ctxTarget.dataset.id];
+			saveLabelMap(map);
+			hideCtx();
+			return;
+		}
+		if (newLabel !== current) {
 			labelSpan.textContent = newLabel.trim();
-			const map = getLabelMap();
 			map[ctxTarget.dataset.id] = newLabel.trim();
 			saveLabelMap(map);
 		}
@@ -210,7 +228,210 @@
 		deleted.add(id);
 		saveDeletedSet(deleted);
 		hideCtx();
+		updateRecycleBinList();
 	});
+
+	// Recycle Bin logic
+	const recycleBinIcon = document.querySelector('[data-id="recyclebin"]');
+	const recycleBinModal = document.getElementById('recycleBinModal');
+	const recycleBinList = document.getElementById('recycleBinList');
+	const closeRecycleBin = document.getElementById('closeRecycleBin');
+	const recycleBinPasswordWrap = document.getElementById('recycleBinPasswordWrap');
+	const recycleBinPasswordInput = document.getElementById('recycleBinPasswordInput');
+	const recycleBinPasswordBtn = document.getElementById('recycleBinPasswordBtn');
+	const RECYCLE_BIN_PASSWORD = 'DaxxyOS{this_is_my_bin}';
+	let recycleBinUnlocked = false;
+
+	function updateRecycleBinList() {
+		if (!recycleBinUnlocked) {
+			recycleBinList.innerHTML = '';
+			if (recycleBinPasswordWrap) recycleBinPasswordWrap.style.display = 'block';
+			return;
+		}
+		if (recycleBinPasswordWrap) recycleBinPasswordWrap.style.display = 'none';
+		const deleted = Array.from(getDeletedSet());
+		const labelMap = getLabelMap();
+		recycleBinList.innerHTML = '';
+		if (!deleted.length) {
+			recycleBinList.innerHTML = '<div style="color:#aaa;padding:12px;">Recycle Bin is empty.</div>';
+			return;
+		}
+		deleted.forEach(id => {
+			const label = labelMap[id] || id;
+			const item = document.createElement('div');
+			item.className = 'recyclebin-item';
+			item.textContent = label;
+			item.setAttribute('data-id', id);
+			item.style.cursor = 'pointer';
+			item.addEventListener('contextmenu', (e) => {
+				e.preventDefault();
+				restoreDeletedIcon(id);
+			});
+			recycleBinList.appendChild(item);
+		});
+	}
+	function restoreDeletedIcon(id) {
+		const deleted = getDeletedSet();
+		deleted.delete(id);
+		saveDeletedSet(deleted);
+		// Restore icon to desktop
+		const order = loadOrder();
+		if (!order.includes(id)) order.push(id);
+		localStorage.setItem('icon-order', JSON.stringify(order));
+		location.reload();
+	}
+	recycleBinIcon?.addEventListener('dblclick', (e) => {
+		e.preventDefault();
+		recycleBinModal.setAttribute('aria-hidden', 'false');
+		recycleBinUnlocked = false;
+		updateRecycleBinList();
+	});
+	recycleBinIcon?.addEventListener('click', (e) => {
+		// Only open modal if not double-click (handled above)
+		if (e.detail === 2) return;
+		recycleBinModal.setAttribute('aria-hidden', 'false');
+		recycleBinUnlocked = false;
+		updateRecycleBinList();
+	});
+	closeRecycleBin?.addEventListener('click', () => {
+		recycleBinModal.setAttribute('aria-hidden', 'true');
+		recycleBinUnlocked = false;
+		if (recycleBinPasswordInput) recycleBinPasswordInput.value = '';
+	});
+	if (recycleBinPasswordBtn) {
+		recycleBinPasswordBtn.addEventListener('click', () => {
+			if (recycleBinPasswordInput.value === RECYCLE_BIN_PASSWORD) {
+				recycleBinUnlocked = true;
+				updateRecycleBinList();
+			} else {
+				alert('Incorrect password.');
+			}
+		});
+	}
+	if (recycleBinPasswordInput) {
+		recycleBinPasswordInput.addEventListener('keydown', (e) => {
+			if (e.key === 'Enter') {
+				recycleBinPasswordBtn.click();
+			}
+		});
+	}
+
+	// Terminal logic
+	const terminalIcon = document.querySelector('[data-id="terminal"]');
+	const terminalModal = document.getElementById('terminalModal');
+	const terminalOutput = document.getElementById('terminalOutput');
+	const terminalInput = document.getElementById('terminalInput');
+	const closeTerminal = document.getElementById('closeTerminal');
+	const secretMessage = 'Bin\'s secret VGhlIHBhc3N3b3JkIHRvIHRoZSByZWN5Y2xlIGJpbiBpcyBEYXh4eU9Te3RoaXNfaXNfbXlfYmlufQ==';
+	function printTerminal(text, isCmd = false) {
+		const div = document.createElement('div');
+		div.textContent = text;
+		if (isCmd) div.style.color = '#00ea65';
+		// If printing the secret message, make it clickable to copy password
+		if (text === secretMessage) {
+			div.style.cursor = 'pointer';
+			div.title = 'Click to copy password';
+			div.addEventListener('click', function() {
+				navigator.clipboard.writeText('VGhlIHBhc3N3b3JkIHRvIHRoZSByZWN5Y2xlIGJpbiBpcyBEYXh4eU9Te3RoaXNfaXNfbXlfYmlufQ==').then(() => {
+					div.textContent = 'Copied!';
+					setTimeout(() => { div.textContent = text; }, 1200);
+				});
+			});
+		}
+		terminalOutput.appendChild(div);
+		terminalOutput.scrollTop = terminalOutput.scrollHeight;
+	}
+	function handleTerminalCmd(cmd) {
+		const trimmed = cmd.trim();
+		if (!trimmed) return;
+		printTerminal('$ ' + trimmed, true);
+		if ( trimmed === 'ls -la') {
+			printTerminal('secret.txt');
+		} else if (trimmed === 'cat secret.txt') {
+			printTerminal(secretMessage);
+		} else if (trimmed === 'clear') {
+			terminalOutput.innerHTML = '';
+		} else {
+			printTerminal('Command not found: ' + trimmed);
+		}
+	}
+	// Add event listener for terminal input Enter key
+	if (terminalInput) {
+		terminalInput.addEventListener('keydown', function(e) {
+			if (e.key === 'Enter') {
+				handleTerminalCmd(terminalInput.value);
+				terminalInput.value = '';
+			}
+		});
+	}
+	terminalIcon?.addEventListener('dblclick', (e) => {
+		e.preventDefault();
+		terminalModal.setAttribute('aria-hidden', 'false');
+		terminalOutput.innerHTML = '';
+		printTerminal('Welcome to DaxxyOS CTF Terminal!');
+		terminalInput.value = '';
+		terminalInput.focus();
+	});
+	terminalIcon?.addEventListener('click', (e) => {
+		if (e.detail === 2) return;
+		terminalModal.setAttribute('aria-hidden', 'false');
+		terminalOutput.innerHTML = '';
+		printTerminal('Welcome to DaxxyOS CTF Terminal!');
+		terminalInput.value = '';
+		terminalInput.focus();
+	});
+	closeTerminal?.addEventListener('click', () => {
+		terminalModal.setAttribute('aria-hidden', 'true');
+	});
+
+	// Center and show modals for Recycle Bin and Terminal
+	function showModal(modalId) {
+		const modal = document.getElementById(modalId);
+		if (!modal) return;
+		modal.setAttribute('aria-hidden', 'false');
+		modal.style.display = 'block';
+		// Center modal
+		modal.style.position = 'fixed';
+		modal.style.left = '50%';
+		modal.style.top = '50%';
+		modal.style.transform = 'translate(-50%, -50%)';
+		modal.style.zIndex = '1000';
+	}
+	function hideModal(modalId) {
+		const modal = document.getElementById(modalId);
+		if (!modal) return;
+		modal.setAttribute('aria-hidden', 'true');
+		modal.style.display = 'none';
+	}
+	// Double-click handlers for icons
+	function setupIconModals() {
+		document.querySelectorAll('.icon').forEach(icon => {
+			icon.addEventListener('dblclick', function(e) {
+				e.preventDefault();
+				const id = icon.getAttribute('data-id');
+				if (id === 'recyclebin') {
+					recycleBinModal.setAttribute('aria-hidden', 'false');
+					recycleBinUnlocked = false;
+					updateRecycleBinList();
+				} else if (id === 'terminal') {
+					terminalModal.setAttribute('aria-hidden', 'false');
+					terminalOutput.innerHTML = '';
+					printTerminal('Welcome to DaxxyOS CTF Terminal!');
+					terminalInput.value = '';
+					terminalInput.focus();
+				}
+			});
+		});
+		document.getElementById('closeRecycleBin').onclick = () => {
+			recycleBinModal.setAttribute('aria-hidden', 'true');
+			recycleBinUnlocked = false;
+			if (recycleBinPasswordInput) recycleBinPasswordInput.value = '';
+		};
+		document.getElementById('closeTerminal').onclick = () => {
+			terminalModal.setAttribute('aria-hidden', 'true');
+		};
+	}
+	window.addEventListener('DOMContentLoaded', setupIconModals);
 
 	// Clock with seconds (digital) — update both taskbar and center clock
 	const clock = $('#clock');
@@ -247,16 +468,38 @@
 			icons().forEach((i) => i.classList.remove('selected'));
 			icon.classList.add('selected');
 			const now = Date.now();
-			if (now - lastClickTime < dblDelay)
-				openURL(icon.getAttribute('data-url'));
+			if (now - lastClickTime < dblDelay) {
+				const id = icon.getAttribute('data-id');
+				if (id !== 'recyclebin' && id !== 'terminal') {
+					openURL(icon.getAttribute('data-url'));
+				}
+			}
 			lastClickTime = now;
 		});
 		icon.addEventListener('dblclick', (e) => {
 			e.preventDefault();
-			openURL(icon.getAttribute('data-url'));
+			const id = icon.getAttribute('data-id');
+			if (id === 'recyclebin') {
+				recycleBinModal.setAttribute('aria-hidden', 'false');
+				recycleBinUnlocked = false;
+				updateRecycleBinList();
+			} else if (id === 'terminal') {
+				terminalModal.setAttribute('aria-hidden', 'false');
+				terminalOutput.innerHTML = '';
+				printTerminal('Welcome to DaxxyOS CTF Terminal!');
+				terminalInput.value = '';
+				terminalInput.focus();
+			} else {
+				openURL(icon.getAttribute('data-url'));
+			}
 		});
 		icon.addEventListener('keydown', (e) => {
-			if (e.key === 'Enter') openURL(icon.getAttribute('data-url'));
+			if (e.key === 'Enter') {
+				const id = icon.getAttribute('data-id');
+				if (id !== 'recyclebin' && id !== 'terminal') {
+					openURL(icon.getAttribute('data-url'));
+				}
+			}
 		});
 	});
 
@@ -738,4 +981,37 @@
 	});
 	const observer = new MutationObserver(updateDesktopVisibility);
 	observer.observe(powerOverlay, { attributes: true });
+
+	// Window modal drag logic for recycle bin and terminal
+	function makeDraggable(modalId, barId) {
+		const modal = document.getElementById(modalId);
+		const bar = document.getElementById(barId);
+		let isDragging = false, startX = 0, startY = 0, startLeft = 0, startTop = 0;
+		if (!modal || !bar) return;
+		bar.addEventListener('mousedown', (e) => {
+			if (e.button !== 0) return;
+			isDragging = true;
+			startX = e.clientX;
+			startY = e.clientY;
+			const rect = modal.getBoundingClientRect();
+			startLeft = rect.left;
+			startTop = rect.top;
+			document.body.style.userSelect = 'none';
+		});
+		window.addEventListener('mousemove', (e) => {
+			if (!isDragging) return;
+			let dx = e.clientX - startX;
+			let dy = e.clientY - startY;
+			let left = Math.max(0, Math.min(startLeft + dx, window.innerWidth - modal.offsetWidth));
+			let top = Math.max(0, Math.min(startTop + dy, window.innerHeight - modal.offsetHeight));
+			modal.style.left = left + 'px';
+			modal.style.top = top + 'px';
+		});
+		window.addEventListener('mouseup', () => {
+			isDragging = false;
+			document.body.style.userSelect = '';
+		});
+	}
+	makeDraggable('recycleBinModal', 'recycleBinBar');
+	makeDraggable('terminalModal', 'terminalBar');
 })();

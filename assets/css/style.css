@@ -780,3 +780,153 @@ body {
         box-shadow: 0 0 48px 16px #ff2222, 0 0 0 0 #b50003;
     }
 }
+
+/* Modal window styles for Terminal and Recycle Bin */
+.modal.window-modal {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    min-width: 320px;
+    max-width: 96vw;
+    min-height: 180px;
+    max-height: 80vh;
+    background: rgba(17, 24, 39, 0.98);
+    border-radius: 16px;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, .45), 0 1.5px 0 rgba(255, 255, 255, .08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    z-index: 1000;
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+    animation: dx-fade-in 420ms ease-out both;
+}
+
+.modal.window-modal[aria-hidden="false"] {
+    display: flex;
+}
+
+.window-bar {
+    background: linear-gradient(90deg, #222 0%, #2a2a2a 100%);
+    color: #fff;
+    font-weight: 700;
+    padding: 10px 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: move;
+    user-select: none;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+}
+
+.window-close {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 22px;
+    font-weight: 700;
+    cursor: pointer;
+    padding: 0 8px;
+    border-radius: 6px;
+    transition: background 0.2s;
+}
+
+.window-close:hover {
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.window-content {
+    padding: 18px 20px;
+    overflow-y: auto;
+    background: transparent;
+    flex: 1;
+    color: #e5e7eb;
+    font-size: 15px;
+}
+
+.terminal-content {
+    background: #18181b;
+    color: #00ea65;
+    font-family: 'Share Tech Mono', 'Orbitron', ui-monospace, monospace;
+    font-size: 15px;
+    border-radius: 0 0 16px 16px;
+    padding: 18px 20px 12px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.terminal-output {
+    background: #18181b;
+    color: #e5e7eb;
+    font-family: 'Share Tech Mono', 'Orbitron', ui-monospace, monospace;
+    font-size: 15px;
+    border-radius: 8px;
+    padding: 10px;
+    min-height: 80px;
+    max-height: 180px;
+    overflow-y: auto;
+    margin-bottom: 8px;
+}
+
+.terminal-input {
+    background: #222;
+    color: #00ea65;
+    font-family: 'Share Tech Mono', 'Orbitron', ui-monospace, monospace;
+    font-size: 15px;
+    border: 1px solid #333;
+    border-radius: 6px;
+    padding: 7px 12px;
+    outline: none;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 2px;
+}
+
+.terminal-input:focus {
+    border-color: #00ea65;
+}
+
+.recyclebin-item {
+    background: #222;
+    color: #e5e7eb;
+    border-radius: 7px;
+    padding: 8px 12px;
+    margin-bottom: 7px;
+    font-size: 14px;
+    transition: background 0.2s;
+    cursor: pointer;
+}
+
+.recyclebin-item:hover {
+    background: #3b82f6;
+    color: #fff;
+}
+
+@media (max-width: 640px) {
+    .modal.window-modal {
+        min-width: 220px;
+        max-width: 99vw;
+        min-height: 120px;
+        max-height: 90vh;
+        border-radius: 10px;
+    }
+
+    .window-bar {
+        padding: 8px 10px;
+        font-size: 15px;
+        border-radius: 10px 10px 0 0;
+    }
+
+    .window-content {
+        padding: 12px 10px;
+        font-size: 13px;
+    }
+
+    .terminal-content {
+        padding: 12px 10px 8px 10px;
+        font-size: 13px;
+    }
+}
