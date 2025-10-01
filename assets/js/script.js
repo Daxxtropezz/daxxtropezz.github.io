@@ -213,7 +213,10 @@
 	function applyDeletedIcons() {
 		const deleted = getDeletedSet();
 		icons().forEach((icon) => {
-			if (deleted.has(icon.dataset.id)) {
+			const id = icon.dataset.id;
+			// Never remove recyclebin or terminal from the DOM
+			if (id === 'recyclebin' || id === 'terminal') return;
+			if (deleted.has(id)) {
 				icon.remove();
 			}
 		});
@@ -244,6 +247,50 @@
 	let recycleBinUnlocked = false;
 	let incorrectPasswordCount = 0;
 
+	// If no deleted state exists, default to putting all apps in the Recycle Bin
+	if (localStorage.getItem('icon-deleted') === null) {
+		try {
+			const ids = icons().map(i => i.dataset.id).filter(Boolean).filter(id => id !== 'recyclebin' && id !== 'terminal');
+			localStorage.setItem('icon-deleted', JSON.stringify(ids));
+		} catch (e) { /* ignore */ }
+	}
+
+	// Small helper: show a simple sweet-alert style confirmation, returns Promise<boolean>
+	function showSweetAlert(title, text, confirmText = 'Restore', cancelText = 'Cancel') {
+		return new Promise((resolve) => {
+			const overlay = document.createElement('div');
+			overlay.style.position = 'fixed';
+			overlay.style.left = '0';
+			overlay.style.top = '0';
+			overlay.style.right = '0';
+			overlay.style.bottom = '0';
+			overlay.style.background = 'rgba(0,0,0,0.45)';
+			overlay.style.zIndex = '20000';
+			const box = document.createElement('div');
+			box.style.width = '320px';
+			box.style.maxWidth = '90%';
+			box.style.margin = '12% auto';
+			box.style.background = '#111';
+			box.style.border = '1px solid #333';
+			box.style.borderRadius = '8px';
+			box.style.padding = '18px';
+			box.style.color = '#ddd';
+			box.style.fontFamily = 'Share Tech Mono, monospace';
+			box.style.textAlign = 'center';
+			const h = document.createElement('div'); h.style.fontWeight = '700'; h.style.marginBottom = '8px'; h.textContent = title;
+			const p = document.createElement('div'); p.style.marginBottom = '14px'; p.textContent = text;
+			const btnWrap = document.createElement('div'); btnWrap.style.display = 'flex'; btnWrap.style.justifyContent = 'center'; btnWrap.style.gap = '8px';
+			const ok = document.createElement('button'); ok.textContent = confirmText; ok.style.background = '#10b981'; ok.style.border = 'none'; ok.style.color = '#fff'; ok.style.padding = '8px 12px'; ok.style.borderRadius = '6px';
+			const cancel = document.createElement('button'); cancel.textContent = cancelText; cancel.style.background = '#333'; cancel.style.border = 'none'; cancel.style.color = '#fff'; cancel.style.padding = '8px 12px'; cancel.style.borderRadius = '6px';
+			btnWrap.appendChild(ok); btnWrap.appendChild(cancel);
+			box.appendChild(h); box.appendChild(p); box.appendChild(btnWrap);
+			overlay.appendChild(box);
+			document.body.appendChild(overlay);
+			ok.addEventListener('click', () => { overlay.remove(); resolve(true); });
+			cancel.addEventListener('click', () => { overlay.remove(); resolve(false); });
+		});
+	}
+
 	function updateRecycleBinList() {
 		if (!recycleBinUnlocked) {
 			recycleBinList.innerHTML = '';
@@ -262,16 +309,41 @@
 			const label = labelMap[id] || id;
 			const item = document.createElement('div');
 			item.className = 'recyclebin-item';
-			item.textContent = label;
+			item.style.display = 'flex';
+			item.style.alignItems = 'center';
+			item.style.justifyContent = 'space-between';
+			item.style.padding = '8px';
+			item.style.borderBottom = '1px solid rgba(255,255,255,0.03)';
+			const txt = document.createElement('span');
+			txt.textContent = label;
+			const btn = document.createElement('button');
+			btn.textContent = 'Restore';
+			btn.style.background = '#2563eb';
+			btn.style.color = '#fff';
+			btn.style.border = 'none';
+			btn.style.padding = '6px 8px';
+			btn.style.borderRadius = '4px';
+			btn.style.cursor = 'pointer';
+			btn.addEventListener('click', async (ev) => {
+				ev.stopPropagation();
+				const ok = await showSweetAlert('Restore Application', `Are you sure you want to restore '${label}'?`, 'Restore', 'Cancel');
+				if (ok) {
+					restoreDeletedIcon(id);
+				}
+			});
+			item.appendChild(txt);
+			item.appendChild(btn);
 			item.setAttribute('data-id', id);
-			item.style.cursor = 'pointer';
+			item.style.cursor = 'default';
 			item.addEventListener('contextmenu', (e) => {
 				e.preventDefault();
-				restoreDeletedIcon(id);
+				// also offer restore via context menu
+				showSweetAlert('Restore Application', `Restore '${label}'?`, 'Restore', 'Cancel').then((ok) => { if (ok) restoreDeletedIcon(id); });
 			});
 			recycleBinList.appendChild(item);
 		});
 	}
+
 	function restoreDeletedIcon(id) {
 		const deleted = getDeletedSet();
 		deleted.delete(id);
@@ -349,106 +421,87 @@
 	let terminalUser = 'daxxyOS';
 	let terminalPrompt = () => `${terminalUser}@daxxyOS:~$ `;
 	let terminalInputValue = '';
+	let terminalCursorPos = 0;
 	let waitingForRootPassword = false;
 	let passwordInputValue = '';
 	let passwordInputActive = false;
 	let terminalHistory = [];
 	let terminalHistoryIndex = -1;
 
-	// Make terminalModal focusable
+	function addToHistory(cmd) {
+		if (!cmd) return;
+		terminalHistory.push(cmd);
+		if (terminalHistory.length > 200) terminalHistory.shift();
+		terminalHistoryIndex = terminalHistory.length;
+		updateHistoryUI();
+	}
+
+	function updateHistoryUI() {
+		// No persistent history panel — history is shown on demand via the 'history' command
+		// Remove any existing history panel if present
+		if (!terminalModal) return;
+		const existing = terminalModal.querySelector('.terminal-history');
+		if (existing) existing.remove();
+	}
+
+	setTimeout(updateHistoryUI, 0);
+
+	// Make modal focusable for keyboard events
 	if (terminalModal) terminalModal.tabIndex = 0;
 
-	function renderTerminalPrompt() {
-		const promptDiv = document.createElement('div');
-		promptDiv.className = 'terminal-prompt-line';
-		if (waitingForRootPassword) {
-			promptDiv.innerHTML = `<span style="font-weight:bold;">Password for root:</span><span id="terminalInputSpan"></span><span class="terminal-cursor" style="font-weight:bold;border-left:3px solid #00ea65;animation:blink-cursor 1s steps(1) infinite;">&nbsp;</span>`;
-			passwordInputActive = true;
-		} else {
-			promptDiv.innerHTML = `<span style="font-weight:bold;">${terminalPrompt()}</span><span id="terminalInputSpan"></span><span class="terminal-cursor" style="font-weight:bold;border-left:3px solid #00ea65;animation:blink-cursor 1s steps(1) infinite;">&nbsp;</span>`;
-			passwordInputActive = false;
-		}
-		terminalOutput.appendChild(promptDiv);
-		terminalOutput.scrollTop = terminalOutput.scrollHeight;
+	function escapeHtml(s) {
+		return String(s)
+			.replace(/&/g, '&amp;')
+			.replace(/</g, '&lt;')
+			.replace(/>/g, '&gt;')
+			.replace(/\"/g, '&quot;')
+			.replace(/\'/g, '&#039;');
+	}
 
-		// Mobile: show input field for typing
-		if (window.innerWidth <= 640) {
-			let input = document.getElementById('terminalRealInput');
-			if (!input) {
-				input = document.createElement('input');
-				input.type = passwordInputActive ? 'password' : 'text';
-				input.id = 'terminalRealInput';
-				input.className = 'terminal-input';
-				input.autocomplete = 'off';
-				input.style.marginTop = '8px';
-				input.style.width = '100%';
-				input.style.fontFamily = 'Share Tech Mono, monospace';
-				input.style.fontSize = '15px';
-				input.style.background = '#222';
-				input.style.color = '#00ea65';
-				input.style.borderRadius = '6px';
-				input.style.border = '1px solid #333';
-				input.addEventListener('keydown', function (e) {
-					if (e.key === 'Enter') {
-						if (input.value.trim()) terminalHistory.push(input.value);
-						terminalHistoryIndex = terminalHistory.length;
-						handleTerminalCmd(input.value);
-						input.value = '';
-					}
-					if (e.key === 'ArrowUp') {
-						if (terminalHistory.length && terminalHistoryIndex > 0) {
-							terminalHistoryIndex--;
-							input.value = terminalHistory[terminalHistoryIndex] || '';
-						}
-					}
-					if (e.key === 'ArrowDown') {
-						if (terminalHistory.length && terminalHistoryIndex < terminalHistory.length - 1) {
-							terminalHistoryIndex++;
-							input.value = terminalHistory[terminalHistoryIndex] || '';
-						} else if (terminalHistoryIndex === terminalHistory.length - 1) {
-							terminalHistoryIndex++;
-							input.value = '';
-						}
-						if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'v') {
-							// Allow paste
-							return;
-						}
-						if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'c') {
-							input.value = '';
-							handleTerminalCmd('clear');
-							return;
-						}
-					}
-				});
-				input.addEventListener('paste', function (e) {
-					// Allow paste
-				});
-				terminalModal.appendChild(input);
-			}
-			input.type = passwordInputActive ? 'password' : 'text';
-			input.focus();
-		} else {
-			// Desktop: focus modal for inline typing
-			terminalModal.focus();
-		}
+	function updateInputDisplay() {
+		const inputSpan = terminalOutput.querySelector('.terminal-prompt-line:last-child #terminalInputSpan');
+		if (!inputSpan) return;
+		const val = terminalInputValue || '';
+		const pos = Math.max(0, Math.min(terminalCursorPos, val.length));
+		const before = escapeHtml(val.slice(0, pos));
+		const after = escapeHtml(val.slice(pos));
+		inputSpan.innerHTML = before + '<span class="inline-caret" aria-hidden="true"></span>' + after;
+		// Ensure the blinking cursor style is present (the caret will inherit animation)
 	}
 
 	function printTerminal(text, isCmd = false) {
 		const div = document.createElement('div');
 		div.textContent = text;
 		if (isCmd) div.style.color = '#00ea65';
-		if (text === secretMessage) {
+		// Make outputs clickable to copy (only when not a command)
+		if (!isCmd) {
 			div.style.cursor = 'pointer';
+			div.title = 'Click to copy';
+			div.addEventListener('click', function () {
+				navigator.clipboard.writeText(text).then(() => {
+					const prev = div.textContent;
+					div.textContent = 'Copied to clipboard!';
+					setTimeout(() => { div.textContent = prev; }, 1200);
+				}).catch(() => {
+					// ignore clipboard errors
+				});
+			});
+		}
+		// Existing special-case for secretMessage
+		if (text === secretMessage) {
 			div.title = 'Click to copy password';
+			// ensure click handler copies secret raw base64
 			div.addEventListener('click', function () {
 				navigator.clipboard.writeText('VGhlIHBhc3N3b3JkIHRvIHRoZSByZWN5Y2xlIGJpbiBpcyBSR0Y0ZUhsUFUzdDBhR2x6WDJselgyMTVYMkpwYm4wPQ==').then(() => {
+					const prev = div.textContent;
 					div.textContent = 'Copied to clipboard!';
-					setTimeout(() => { div.textContent = text; }, 1200);
+					setTimeout(() => { div.textContent = prev; }, 1200);
 				});
 			});
 		}
 		terminalOutput.appendChild(div);
 		terminalOutput.scrollTop = terminalOutput.scrollHeight;
+		return div;
 	}
 
 	function handleTerminalCmd(cmd) {
@@ -472,13 +525,39 @@
 			renderTerminalPrompt();
 			return;
 		}
+
+		// History commands
+		if (trimmed === 'history') {
+			if (!terminalHistory.length) {
+				printTerminal('No history.');
+			} else {
+				terminalHistory.forEach((h, idx) => printTerminal(`${idx + 1}  ${h}`));
+			}
+			renderTerminalPrompt();
+			return;
+		}
+		if (trimmed === 'history -c') {
+			terminalHistory = [];
+			terminalHistoryIndex = -1;
+			updateHistoryUI();
+			printTerminal('History cleared.');
+			renderTerminalPrompt();
+			return;
+		}
+
 		printTerminal(terminalPrompt() + trimmed, true);
 		// Support echo "..." | base64 -d (decode)
 		const echoDecodeMatch = trimmed.match(/^echo\s+"([^"]+)"\s*\|\s*base64\s*-d$/);
 		if (echoDecodeMatch) {
 			try {
 				const decoded = atob(echoDecodeMatch[1]);
-				printTerminal(decoded);
+				const outDiv = printTerminal(decoded);
+				navigator.clipboard.writeText(decoded).then(() => {
+					outDiv.textContent = decoded + ' (Copied to clipboard!)';
+					setTimeout(() => { outDiv.textContent = decoded; }, 1200);
+				}).catch(() => {
+					// clipboard write failed or denied; nothing else to do
+				});
 			} catch {
 				printTerminal('Invalid base64 string.');
 			}
@@ -490,7 +569,13 @@
 		if (echoEncodeMatch) {
 			try {
 				const encoded = btoa(echoEncodeMatch[1]);
-				printTerminal(encoded);
+				const outDiv = printTerminal(encoded);
+				navigator.clipboard.writeText(encoded).then(() => {
+					outDiv.textContent = encoded + ' (Copied to clipboard!)';
+					setTimeout(() => { outDiv.textContent = encoded; }, 1200);
+				}).catch(() => {
+					// ignore clipboard errors
+				});
 			} catch {
 				printTerminal('Unable to encode string.');
 			}
@@ -548,94 +633,186 @@
 		renderTerminalPrompt();
 	}
 
+	function renderTerminalPrompt() {
+		const promptDiv = document.createElement('div');
+		promptDiv.className = 'terminal-prompt-line';
+		if (waitingForRootPassword) {
+			// Use only the dynamic input span; inline-caret will be inserted by updateInputDisplay
+			promptDiv.innerHTML = `<span style="font-weight:bold;">Password for root:</span><span id="terminalInputSpan"></span>`;
+			passwordInputActive = true;
+		} else {
+			// Use only the dynamic input span; inline-caret will be inserted by updateInputDisplay
+			promptDiv.innerHTML = `<span style="font-weight:bold;">${terminalPrompt()}</span><span id="terminalInputSpan"></span>`;
+			passwordInputActive = false;
+		}
+		terminalOutput.appendChild(promptDiv);
+		terminalOutput.scrollTop = terminalOutput.scrollHeight;
+		// reset cursor position for new prompt
+		terminalCursorPos = terminalInputValue.length;
+		updateInputDisplay();
+
+		// Mobile: show input field for typing
+		if (window.innerWidth <= 640) {
+			let input = document.getElementById('terminalRealInput');
+			if (!input) {
+				input = document.createElement('input');
+				input.id = 'terminalRealInput';
+				input.className = 'terminal-input';
+				input.autocomplete = 'off';
+				input.style.marginTop = '8px';
+				input.style.width = '100%';
+				input.style.fontFamily = 'Share Tech Mono, monospace';
+				input.style.fontSize = '15px';
+				input.style.background = '#222';
+				input.style.color = '#00ea65';
+				input.style.borderRadius = '6px';
+				input.style.border = '1px solid #333';
+				input.addEventListener('keydown', function (e) {
+					if (e.key === 'Enter') {
+						if (input.value.trim()) addToHistory(input.value);
+						handleTerminalCmd(input.value);
+						input.value = '';
+					}
+				});
+				input.addEventListener('paste', function (e) {
+					// allow default paste
+				});
+				terminalModal.appendChild(input);
+			}
+			input.type = passwordInputActive ? 'password' : 'text';
+			input.focus();
+		} else {
+			// Desktop: focus modal for inline typing
+			terminalModal.focus();
+		}
+	}
+
 	// Inline terminal input logic - FIXED
 	terminalModal.addEventListener('keydown', async function (e) {
 		if (terminalModal.getAttribute('aria-hidden') === 'true') return;
 
-		// Prevent default for all keys except when typing in input fields
-		if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
-			e.preventDefault();
-		}
+		// If the user is typing in a real input or textarea (mobile input), do not run the custom handler
+		if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA')) return;
+
+		// Prevent default for all keys handled by the custom terminal
+		e.preventDefault();
 
 		const inputSpan = terminalOutput.querySelector('.terminal-prompt-line:last-child #terminalInputSpan');
 		if (!inputSpan) return;
 
+		// Handle password-entry state separately
 		if (waitingForRootPassword) {
 			if (e.key === 'Enter') {
-				if (terminalInputValue.trim()) terminalHistory.push(terminalInputValue);
-				terminalHistoryIndex = terminalHistory.length;
+				if (terminalInputValue.trim()) addToHistory(terminalInputValue);
 				handleTerminalCmd(terminalInputValue);
 				terminalInputValue = '';
 				passwordInputValue = '';
+				terminalCursorPos = 0;
 			} else if (e.key === 'Backspace') {
-				passwordInputValue = passwordInputValue.slice(0, -1);
-				terminalInputValue = passwordInputValue;
-			} else if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'v') {
-				// Paste from clipboard
-				let pasteText = '';
-				try {
-					pasteText = await navigator.clipboard.readText();
-				} catch { }
-				if (pasteText) {
-					passwordInputValue += pasteText;
+				if (terminalCursorPos > 0) {
+					passwordInputValue = passwordInputValue.slice(0, terminalCursorPos - 1) + passwordInputValue.slice(terminalCursorPos);
+					terminalCursorPos--;
 					terminalInputValue = passwordInputValue;
-					inputSpan.textContent = ''.repeat(passwordInputValue.length);
 				}
+			} else if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'v') {
+				let pasteText = '';
+				try { pasteText = await navigator.clipboard.readText(); } catch { }
+				if (pasteText) {
+					passwordInputValue = passwordInputValue.slice(0, terminalCursorPos) + pasteText + passwordInputValue.slice(terminalCursorPos);
+					terminalCursorPos += pasteText.length;
+					terminalInputValue = passwordInputValue;
+				}
+				updateInputDisplay();
 				return;
 			} else if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'c') {
 				terminalInputValue = '';
 				passwordInputValue = '';
 				handleTerminalCmd('clear');
 				return;
+			} else if (e.key === 'ArrowLeft') {
+				if (terminalCursorPos > 0) terminalCursorPos--;
+			} else if (e.key === 'ArrowRight') {
+				if (terminalCursorPos < passwordInputValue.length) terminalCursorPos++;
 			} else if (e.key.length === 1 && !e.ctrlKey && !e.altKey && !e.metaKey) {
-				passwordInputValue += e.key;
+				passwordInputValue = passwordInputValue.slice(0, terminalCursorPos) + e.key + passwordInputValue.slice(terminalCursorPos);
+				terminalCursorPos++;
 				terminalInputValue = passwordInputValue;
 			}
-			inputSpan.textContent = ''.repeat(passwordInputValue.length);
+			inputSpan.textContent = '•'.repeat(passwordInputValue.length);
 			return;
 		}
 
+		// Normal input editing
 		if (e.key === 'Enter') {
-			if (terminalInputValue.trim()) {
-				terminalHistory.push(terminalInputValue);
-			}
-			terminalHistoryIndex = terminalHistory.length;
+			if (terminalInputValue.trim()) addToHistory(terminalInputValue);
 			handleTerminalCmd(terminalInputValue);
 			terminalInputValue = '';
-		} else if (e.key === 'Backspace') {
-			terminalInputValue = terminalInputValue.slice(0, -1);
-		} else if (e.key === 'ArrowUp') {
+			terminalCursorPos = 0;
+			updateInputDisplay();
+			return;
+		}
+		if (e.key === 'Backspace') {
+			if (terminalCursorPos > 0) {
+				terminalInputValue = terminalInputValue.slice(0, terminalCursorPos - 1) + terminalInputValue.slice(terminalCursorPos);
+				terminalCursorPos--;
+			}
+			updateInputDisplay();
+			return;
+		}
+		if (e.key === 'ArrowUp') {
 			if (terminalHistory.length && terminalHistoryIndex > 0) {
 				terminalHistoryIndex--;
 				terminalInputValue = terminalHistory[terminalHistoryIndex] || '';
+				terminalCursorPos = terminalInputValue.length;
+				updateInputDisplay();
 			}
-		} else if (e.key === 'ArrowDown') {
+			return;
+		}
+		if (e.key === 'ArrowDown') {
 			if (terminalHistory.length && terminalHistoryIndex < terminalHistory.length - 1) {
 				terminalHistoryIndex++;
 				terminalInputValue = terminalHistory[terminalHistoryIndex] || '';
+				terminalCursorPos = terminalInputValue.length;
+				updateInputDisplay();
 			} else if (terminalHistoryIndex === terminalHistory.length - 1) {
 				terminalHistoryIndex++;
 				terminalInputValue = '';
-			}
-		} else if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'v') {
-			// Paste from clipboard
-			let pasteText = '';
-			try {
-				pasteText = await navigator.clipboard.readText();
-			} catch { }
-			if (pasteText) {
-				terminalInputValue += pasteText;
-				inputSpan.textContent = terminalInputValue;
+				terminalCursorPos = 0;
+				updateInputDisplay();
 			}
 			return;
-		} else if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'c') {
+		}
+		if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'v') {
+			let pasteText = '';
+			try { pasteText = await navigator.clipboard.readText(); } catch { }
+			if (pasteText) {
+				terminalInputValue = terminalInputValue.slice(0, terminalCursorPos) + pasteText + terminalInputValue.slice(terminalCursorPos);
+				terminalCursorPos += pasteText.length;
+				updateInputDisplay();
+			}
+			return;
+		}
+		if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'c') {
 			terminalInputValue = '';
 			handleTerminalCmd('clear');
 			return;
-		} else if (e.key.length === 1 && !e.ctrlKey && !e.altKey && !e.metaKey) {
-			terminalInputValue += e.key;
 		}
-		inputSpan.textContent = terminalInputValue;
+		if (e.key === 'ArrowLeft') {
+			if (terminalCursorPos > 0) terminalCursorPos--;
+			updateInputDisplay();
+			return;
+		}
+		if (e.key === 'ArrowRight') {
+			if (terminalCursorPos < terminalInputValue.length) terminalCursorPos++;
+			updateInputDisplay();
+			return;
+		}
+		// Printable character
+		if (e.key.length === 1 && !e.ctrlKey && !e.altKey && !e.metaKey) {
+			terminalInputValue = terminalInputValue.slice(0, terminalCursorPos) + e.key + terminalInputValue.slice(terminalCursorPos);
+			terminalCursorPos++;
+			updateInputDisplay();
+		}
 	});
 
 	// Enable right-click paste in terminal
@@ -1282,6 +1459,7 @@
 	window.addEventListener('DOMContentLoaded', () => {
 		if (!getPowerState()) {
 			powerOverlay.setAttribute('aria-hidden', 'false');
+			updateHistoryUI();
 		} else {
 			powerOverlay.setAttribute('aria-hidden', 'true');
 		}
@@ -1346,4 +1524,106 @@
 	style.textContent = `@keyframes blink-cursor { 0% { opacity: 1; } 50% { opacity: 0; } 100% { opacity: 1; } }
 .terminal-cursor { border-left: 3px solid #00ea65; animation: blink-cursor 1s steps(1) infinite; }`;
 	document.head.appendChild(style);
+
+	// add resizer handle to terminal modal
+	(function addTerminalResizer() {
+		if (!terminalModal) return;
+		const handle = document.createElement('div');
+		handle.className = 'terminal-resize-handle';
+		handle.style.position = 'absolute';
+		handle.style.right = '4px';
+		handle.style.bottom = '4px';
+		handle.style.width = '18px';
+		handle.style.height = '18px';
+		handle.style.cursor = 'nwse-resize';
+		handle.style.zIndex = 10010;
+		terminalModal.appendChild(handle);
+		let resizing = false;
+		let startX = 0, startY = 0, startW = 0, startH = 0;
+		handle.addEventListener('pointerdown', function (e) {
+			e.preventDefault();
+			resizing = true;
+			startX = e.clientX; startY = e.clientY;
+			startW = terminalModal.offsetWidth; startH = terminalModal.offsetHeight;
+			document.body.style.userSelect = 'none';
+		});
+		window.addEventListener('pointermove', function (e) {
+			if (!resizing) return;
+			let w = Math.max(240, startW + (e.clientX - startX));
+			let h = Math.max(120, startH + (e.clientY - startY));
+			terminalModal.style.width = w + 'px';
+			terminalModal.style.height = h + 'px';
+		});
+		window.addEventListener('pointerup', function () {
+			if (!resizing) return;
+			resizing = false;
+			document.body.style.userSelect = '';
+		});
+	})();
+
+	// append caret and resize CSS into existing style block (if present) or inject new
+	(function ensureCaretStyles() {
+		const css = `
+@keyframes blink-cursor { 0% { opacity: 1; } 50% { opacity: 0; } 100% { opacity: 1; } }
+.inline-caret { display: inline-block; width: 2px; height: 1em; background: #00ea65; vertical-align: middle; animation: blink-cursor 1s steps(1) infinite; margin: 0 2px; }
+.terminal-resize-handle { background: rgba(255,255,255,0.03); border-radius:3px; }
+`;
+		const s = document.createElement('style');
+		s.textContent = css;
+		document.head.appendChild(s);
+	})();
+
+	function adjustTerminalContentSize() {
+		if (!terminalModal || !terminalOutput) return;
+		// Try to find header/bar height if present
+		const bar = document.getElementById('terminalBar') || terminalModal.querySelector('.window-bar') || null;
+		const footer = terminalModal.querySelector('.window-footer') || null;
+		const modalStyles = getComputedStyle(terminalModal);
+		const padTop = parseInt(modalStyles.paddingTop || 0, 10) || 0;
+		const padBottom = parseInt(modalStyles.paddingBottom || 0, 10) || 0;
+		const headerH = bar ? (bar.offsetHeight || 0) : 40; // fallback
+		const footerH = footer ? (footer.offsetHeight || 0) : 8;
+		// Set terminalOutput height to fill remaining modal area
+		const innerH = terminalModal.clientHeight - headerH - footerH - padTop - padBottom - 16; // extra gap
+		terminalOutput.style.maxHeight = Math.max(80, innerH) + 'px';
+		terminalOutput.style.overflow = 'auto';
+		terminalOutput.style.width = '100%';
+	}
+
+	// Observe modal size changes (works while user drags resizer)
+	if (window.ResizeObserver && terminalModal) {
+		try {
+			const ro = new ResizeObserver(() => adjustTerminalContentSize());
+			ro.observe(terminalModal);
+		} catch (e) {
+			// ignore
+		}
+	}
+
+	// Ensure content adjusts when prompts are rendered or modal opened
+	const origRenderTerminalPrompt = renderTerminalPrompt;
+	function renderTerminalPromptWrapper() {
+		origRenderTerminalPrompt();
+		adjustTerminalContentSize();
+	}
+	// replace reference if function exists
+	if (typeof renderTerminalPrompt === 'function') renderTerminalPrompt = renderTerminalPromptWrapper;
+
+	// Call adjust when opening terminal
+	(function hookTerminalOpen() {
+		if (!terminalIcon) return;
+		const openHandler = (e) => {
+			if (e.detail === 2) return; // dbl handled elsewhere
+			terminalModal.setAttribute('aria-hidden', 'false');
+			terminalModal.style.display = 'block';
+			adjustTerminalContentSize();
+		};
+		terminalIcon.addEventListener('click', openHandler);
+		terminalIcon.addEventListener('dblclick', (e) => {
+			e.preventDefault();
+			terminalModal.setAttribute('aria-hidden', 'false');
+			terminalModal.style.display = 'block';
+			adjustTerminalContentSize();
+		});
+	})();
 })();
