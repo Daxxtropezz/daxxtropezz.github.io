@@ -217,16 +217,29 @@
 			// Never remove recyclebin or terminal from the DOM
 			if (id === 'recyclebin' || id === 'terminal') return;
 			if (deleted.has(id)) {
-				icon.remove();
+				icon.style.display = 'none';
+				icon.classList.add('deleted');
+			} else {
+				icon.style.display = '';
+				icon.classList.remove('deleted');
 			}
 		});
 	}
 	applyDeletedIcons();
+	// Prevent deleting protected system icons; show sweet alert on attempt
 	ctxDelete?.addEventListener('click', () => {
 		if (!ctxTarget) return hideCtx();
 		const id = ctxTarget.dataset.id;
 		if (!id) return hideCtx();
-		ctxTarget.remove();
+		if (id === 'recyclebin' || id === 'terminal') {
+			hideCtx();
+			// reuse existing sweet alert helper
+			showSweetAlert('Invalid action!', 'You cannot delete the Recycle Bin or the Terminal.', 'OK', 'Cancel');
+			return;
+		}
+		// hide the icon instead of removing it so it can be restored without a page reload
+		ctxTarget.style.display = 'none';
+		ctxTarget.classList.add('deleted');
 		const deleted = getDeletedSet();
 		deleted.add(id);
 		saveDeletedSet(deleted);
@@ -292,13 +305,34 @@
 	}
 
 	function updateRecycleBinList() {
+		// gather deleted items excluding system icons
+		const deletedAll = Array.from(getDeletedSet()).filter(id => id !== 'recyclebin' && id !== 'terminal');
+		const rbtn = document.getElementById('restoreAllBtn');
 		if (!recycleBinUnlocked) {
 			recycleBinList.innerHTML = '';
 			if (recycleBinPasswordWrap) recycleBinPasswordWrap.style.display = 'block';
+			// show Restore All when there are deleted items but keep it disabled until unlocked
+			if (rbtn) {
+				if (deletedAll.length) {
+					rbtn.style.display = 'inline-block';
+					rbtn.disabled = true;
+					rbtn.style.opacity = '0.5';
+					rbtn.title = 'Unlock Recycle Bin to enable Restore All';
+				} else {
+					rbtn.style.display = 'none';
+				}
+			}
 			return;
 		}
 		if (recycleBinPasswordWrap) recycleBinPasswordWrap.style.display = 'none';
-		const deleted = Array.from(getDeletedSet());
+		// enable Restore All when unlocked (only if there are deleted items)
+		if (rbtn) {
+			rbtn.style.display = deletedAll.length ? 'inline-block' : 'none';
+			rbtn.disabled = false;
+			rbtn.style.opacity = '';
+			rbtn.title = '';
+		}
+		const deleted = deletedAll;
 		const labelMap = getLabelMap();
 		recycleBinList.innerHTML = '';
 		if (!deleted.length) {
@@ -346,13 +380,22 @@
 
 	function restoreDeletedIcon(id) {
 		const deleted = getDeletedSet();
-		deleted.delete(id);
-		saveDeletedSet(deleted);
-		// Restore icon to desktop
+		if (deleted.has(id)) {
+			deleted.delete(id);
+			saveDeletedSet(deleted);
+		}
+		// Restore icon to desktop without reloading
+		const el = document.querySelector(`[data-id="${id}"]`);
+		if (el) {
+			el.style.display = '';
+			el.classList.remove('deleted');
+		}
+		// Ensure order includes id
 		const order = loadOrder();
 		if (!order.includes(id)) order.push(id);
 		localStorage.setItem('icon-order', JSON.stringify(order));
-		location.reload();
+		// Update recycle list UI
+		updateRecycleBinList();
 	}
 	recycleBinIcon?.addEventListener('dblclick', (e) => {
 		e.preventDefault();
@@ -845,6 +888,8 @@
 		printTerminal('Welcome to DaxxyOS CTF Terminal! Type "man" for available commands.');
 		printTerminal('Try to switch to root user and explore further.');
 		renderTerminalPrompt();
+		// ensure modal gets keyboard focus (defer to allow render)
+		setTimeout(() => { try { terminalModal && terminalModal.focus(); } catch (e) { } }, 0);
 	});
 	terminalIcon?.addEventListener('click', (e) => {
 		if (e.detail === 2) return;
@@ -856,10 +901,8 @@
 		printTerminal('Welcome to DaxxyOS CTF Terminal! Type "man" for available commands.');
 		printTerminal('Tryto switch to root user and explore further.');
 		renderTerminalPrompt();
-	});
-	closeTerminal?.addEventListener('click', () => {
-		terminalModal.setAttribute('aria-hidden', 'true');
-		terminalModal.style.display = 'none';
+		// ensure modal gets keyboard focus (defer to allow render)
+		setTimeout(() => { try { terminalModal && terminalModal.focus(); } catch (e) { } }, 0);
 	});
 
 	// Center and show modals for Recycle Bin and Terminal
@@ -1455,6 +1498,8 @@
 	}
 	powerBtn?.addEventListener('click', () => {
 		hidePowerOverlay();
+		// When user powers on, also attempt to enter fullscreen
+		tryEnterFullscreen();
 	});
 	window.addEventListener('DOMContentLoaded', () => {
 		if (!getPowerState()) {
@@ -1617,6 +1662,8 @@
 			terminalModal.setAttribute('aria-hidden', 'false');
 			terminalModal.style.display = 'block';
 			adjustTerminalContentSize();
+			// ensure modal gets keyboard focus
+			setTimeout(() => { try { terminalModal && terminalModal.focus(); } catch (e) { } }, 0);
 		};
 		terminalIcon.addEventListener('click', openHandler);
 		terminalIcon.addEventListener('dblclick', (e) => {
@@ -1624,6 +1671,144 @@
 			terminalModal.setAttribute('aria-hidden', 'false');
 			terminalModal.style.display = 'block';
 			adjustTerminalContentSize();
+			// ensure modal gets keyboard focus
+			setTimeout(() => { try { terminalModal && terminalModal.focus(); } catch (e) { } }, 0);
+		});
+	})();
+
+	// Attempt to enter fullscreen on load; if blocked, add a one-time click fallback
+	function tryEnterFullscreen() {
+		const el = document.documentElement;
+		if (document.fullscreenElement) return;
+		if (!el.requestFullscreen) return;
+		// Try to request fullscreen now; if rejected due to no gesture, install one-time click handler
+		el.requestFullscreen().catch(() => {
+			const onClick = () => {
+				el.requestFullscreen().catch(() => { /* ignore */ });
+			};
+			document.addEventListener('click', onClick, { once: true });
+		});
+	}
+
+	// Hook into existing DOMContentLoaded where power overlay is initialized
+	window.addEventListener('DOMContentLoaded', () => {
+		tryEnterFullscreen();
+	});
+
+	function adjustRecycleBinContentSize() {
+		if (!recycleBinModal || !recycleBinList) return;
+		const bar = document.getElementById('recycleBinBar') || recycleBinModal.querySelector('.window-bar') || null;
+		const modalStyles = getComputedStyle(recycleBinModal);
+		const padTop = parseInt(modalStyles.paddingTop || 0, 10) || 0;
+		const padBottom = parseInt(modalStyles.paddingBottom || 0, 10) || 0;
+		const headerH = bar ? (bar.offsetHeight || 0) : 40;
+		const innerH = recycleBinModal.clientHeight - headerH - padTop - padBottom - 16;
+		recycleBinList.style.maxHeight = Math.max(80, innerH) + 'px';
+		recycleBinList.style.overflow = 'auto';
+		recycleBinList.style.width = '100%';
+	}
+
+	// Observe modal size changes (works while user drags resizer)
+	if (window.ResizeObserver && recycleBinModal) {
+		try {
+			const ro = new ResizeObserver(() => adjustRecycleBinContentSize());
+			ro.observe(recycleBinModal);
+		} catch (e) {
+			// ignore
+		}
+	}
+
+	// Ensure content adjusts when modal opened
+	const origUpdateRecycleBinList = updateRecycleBinList;
+	function updateRecycleBinListWrapper() {
+		origUpdateRecycleBinList();
+		adjustRecycleBinContentSize();
+	}
+	// replace reference if function exists
+	if (typeof updateRecycleBinList === 'function') updateRecycleBinList = updateRecycleBinListWrapper;
+
+	// Call adjust when opening recycle bin
+	(function hookRecycleBinOpen() {
+		if (!recycleBinIcon) return;
+		const openHandler = (e) => {
+			if (e.detail === 2) return; // dbl handled elsewhere
+			recycleBinModal.setAttribute('aria-hidden', 'false');
+			recycleBinModal.style.display = 'block';
+			adjustRecycleBinContentSize();
+		};
+		recycleBinIcon.addEventListener('click', openHandler);
+		recycleBinIcon.addEventListener('dblclick', (e) => {
+			e.preventDefault();
+			recycleBinModal.setAttribute('aria-hidden', 'false');
+			recycleBinModal.style.display = 'block';
+			adjustRecycleBinContentSize();
+		});
+	})();
+
+	// Add Restore All button and resizer handle to recycle bin modal
+	(function addRecycleBinControlsAndResizer() {
+		const bar = document.getElementById('recycleBinBar');
+		if (!bar) return;
+		// Restore All button
+		if (!document.getElementById('restoreAllBtn')) {
+			const btn = document.createElement('button');
+			btn.id = 'restoreAllBtn';
+			btn.textContent = 'Restore All';
+			btn.style.marginLeft = '8px';
+			btn.style.background = '#16a34a';
+			btn.style.color = '#fff';
+			btn.style.border = 'none';
+			btn.style.padding = '6px 8px';
+			btn.style.borderRadius = '6px';
+			btn.style.cursor = 'pointer';
+			// hide by default until password unlocks
+			btn.style.display = 'none';
+			const closeBtn = bar.querySelector('.window-close');
+			if (closeBtn) bar.insertBefore(btn, closeBtn);
+			else bar.appendChild(btn);
+			btn.addEventListener('click', async () => {
+				const deleted = Array.from(getDeletedSet()).filter(id => id !== 'recyclebin' && id !== 'terminal');
+				if (!deleted.length) return;
+				const ok = await showSweetAlert('Restore All', 'Restore all items from the Recycle Bin?', 'Restore All', 'Cancel');
+				if (!ok) return;
+				deleted.forEach(id => restoreDeletedIcon(id));
+				updateRecycleBinList();
+			});
+		}
+		// Resizer handle
+		if (document.querySelector('.recyclebin-resize-handle')) return;
+		if (!recycleBinModal) return;
+		const handle = document.createElement('div');
+		handle.className = 'recyclebin-resize-handle';
+		handle.style.position = 'absolute';
+		handle.style.right = '6px';
+		handle.style.bottom = '6px';
+		handle.style.width = '18px';
+		handle.style.height = '18px';
+		handle.style.cursor = 'nwse-resize';
+		handle.style.zIndex = 10010;
+		recycleBinModal.appendChild(handle);
+		let resizing = false;
+		let startX = 0, startY = 0, startW = 0, startH = 0;
+		handle.addEventListener('pointerdown', function (e) {
+			e.preventDefault();
+			resizing = true;
+			startX = e.clientX; startY = e.clientY;
+			startW = recycleBinModal.offsetWidth; startH = recycleBinModal.offsetHeight;
+			document.body.style.userSelect = 'none';
+		});
+		window.addEventListener('pointermove', function (e) {
+			if (!resizing) return;
+			let w = Math.max(240, startW + (e.clientX - startX));
+			let h = Math.max(120, startH + (e.clientY - startY));
+			recycleBinModal.style.width = w + 'px';
+			recycleBinModal.style.height = h + 'px';
+			if (typeof adjustRecycleBinContentSize === 'function') adjustRecycleBinContentSize();
+		});
+		window.addEventListener('pointerup', function () {
+			if (!resizing) return;
+			resizing = false;
+			document.body.style.userSelect = '';
 		});
 	})();
 })();
