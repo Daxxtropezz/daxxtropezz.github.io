@@ -211,6 +211,13 @@
 		localStorage.setItem('icon-deleted', JSON.stringify(Array.from(set)));
 	}
 	function applyDeletedIcons() {
+		// Initialize deleted state if missing so icons hide immediately
+		if (localStorage.getItem('icon-deleted') === null) {
+			try {
+				const ids = icons().map(i => i.dataset.id).filter(Boolean).filter(id => id !== 'recyclebin' && id !== 'terminal');
+				localStorage.setItem('icon-deleted', JSON.stringify(ids));
+			} catch (e) { /* ignore */ }
+		}
 		const deleted = getDeletedSet();
 		icons().forEach((icon) => {
 			const id = icon.dataset.id;
