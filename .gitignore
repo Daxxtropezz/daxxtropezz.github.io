@@ -17,6 +17,7 @@ test
 .env
 .old
 old
+oldies
 
 # Python
 __pycache__/
